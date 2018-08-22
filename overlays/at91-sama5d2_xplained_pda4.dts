@@ -140,3 +140,11 @@
 		status = "okay";
 	};
 };
+
+&can0 {
+	status = "disabled";
+};
+
+&can1 {
+	status = "disabled";
+};
