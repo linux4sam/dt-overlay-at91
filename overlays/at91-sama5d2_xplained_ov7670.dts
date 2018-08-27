@@ -21,6 +21,9 @@
 		port {
 			ov7670_0: endpoint {
 				remote-endpoint = <&isc_0>;
+				hsync-active = <1>;
+				vsync-active = <0>;
+				pclk-sample = <1>;
 			};
 		};
 	};
