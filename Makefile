@@ -1,9 +1,12 @@
+.DEFAULT_GOAL := all
+
 GCC?=$(CROSS_COMPILE)gcc
 DTC?=dtc
 DTC_OPTIONS?=-@
 KERNEL_DIR?=../linux-at91
 
-OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard overlays/*.dtso))
+DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91*/*.dtso))
+ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 
 %.pre.dtso: %.dtso
 	$(GCC) -E -nostdinc -I$(KERNEL_DIR)/include -I$(KERNEL_DIR)/arch/arm/boot/dts -x assembler-with-cpp -undef -o $@ $^
@@ -11,15 +14,18 @@ OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard overlays/*.dtso))
 %.dtbo: %.pre.dtso
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
-fit: obj
+%.itb: %.its
 	cp $(KERNEL_DIR)/arch/arm/boot/dts/at91-sama5d2_xplained.dtb .
-	mkimage -f at91-sama5d2_xplained.its at91-sama5d2_xplained.itb
+	mkimage -f $^ $@
 	rm at91-sama5d2_xplained.dtb
+	
+dtbos: $(DTBO_OBJECTS)
 
-obj: $(OBJECTS)
+itbs: $(ITB_OBJECTS)
 
-all: obj fit
+all: dtbos itbs
 
+.PHONY: clean
 clean:
-	rm -f $(OBJECTS)
-	rm at91-sama5d2_xplained.itb
+	rm -f $(DTBO_OBJECTS)
+	rm -f $(ITB_OBJECTS)

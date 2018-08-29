@@ -5,7 +5,7 @@
 /dts-v1/;
 
 / {
-	description = "Simple Eugen Image";
+	description = "Atmel SAMA5D2 Xplained FIT Image";
 	#address-cells = <1>;
 
 	images {
@@ -26,7 +26,7 @@
 
 		fdt_isc {
 			description = "Device Tree blob ISC overlay";
-			data = /incbin/("./overlays/at91-sama5d2_xplained_isc.dtbo");
+			data = /incbin/("./at91-sama5d2_xplained/at91-sama5d2_xplained_isc.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -41,7 +41,7 @@
 
 		fdt_ov7670 {
 			description = "Device Tree blob Ov7670 overlay";
-			data = /incbin/("./overlays/at91-sama5d2_xplained_ov7670.dtbo");
+			data = /incbin/("./at91-sama5d2_xplained/at91-sama5d2_xplained_ov7670.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -56,7 +56,7 @@
 
 		fdt_pda4 {
 			description = "Device Tree blob pda4300 overlay";
-			data = /incbin/("./overlays/at91-sama5d2_xplained_pda4.dtbo");
+			data = /incbin/("./at91-sama5d2_xplained/at91-sama5d2_xplained_pda4.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
