@@ -11,7 +11,15 @@ OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard overlays/*.dtso))
 %.dtbo: %.pre.dtso
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
-all: $(OBJECTS)
+fit: obj
+	cp $(KERNEL_DIR)/arch/arm/boot/dts/at91-sama5d2_xplained.dtb .
+	mkimage -f at91-sama5d2_xplained.its at91-sama5d2_xplained.itb
+	rm at91-sama5d2_xplained.dtb
+
+obj: $(OBJECTS)
+
+all: obj fit
 
 clean:
 	rm -f $(OBJECTS)
+	rm at91-sama5d2_xplained.itb
