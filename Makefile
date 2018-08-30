@@ -3,9 +3,9 @@
 GCC?=$(CROSS_COMPILE)gcc
 DTC?=dtc
 DTC_OPTIONS?=-@
-KERNEL_DIR?=../linux-at91
+KERNEL_DIR?=../linux
 
-DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91*/*.dtso))
+DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard */*.dtso))
 ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 
 %.pre.dtso: %.dtso
