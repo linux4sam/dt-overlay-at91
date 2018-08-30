@@ -15,9 +15,7 @@ ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
 %.itb: %.its
-	cp $(KERNEL_DIR)/arch/arm/boot/dts/at91-sama5d2_xplained.dtb .
-	mkimage -f $^ $@
-	rm at91-sama5d2_xplained.dtb
+	mkimage -D -i$(KERNEL_DIR)/arch/arm/boot/dts -f $^ $@
 	
 dtbos: $(DTBO_OBJECTS)
 
