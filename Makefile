@@ -15,8 +15,8 @@ ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
 %.itb: %.its
-	mkimage -D -i$(KERNEL_DIR)/arch/arm/boot/dts -f $^ $@
-	
+	mkimage -D "-i$(KERNEL_DIR)/arch/arm/boot/dts -p 500" -f $^ $@
+
 dtbos: $(DTBO_OBJECTS)
 
 itbs: $(ITB_OBJECTS)
