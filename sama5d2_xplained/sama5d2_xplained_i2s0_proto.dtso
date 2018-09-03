@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * sama5d2_xplained_i2s0_proto.dtso - Device Tree file for SAMA5D2 Xplained board
+ * overlay blob for I2S with PROTO board. The blob uses i2s0 and i2c0.
+ *
+ *  Copyright (C) 2018 Microchip Technology, Inc.
+ *                2018 Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+
+&i2s0 {
+	status = "okay";
+};
+
+&i2c0 {
+	wm8731: wm8731@1a {
+		compatible = "wlf,wm8731";
+		reg = <0x1a>;
+	};
+};
+
+&{/} {
+	sound {
+		compatible = "mikroe,mikroe-proto";
+		model = "wm8731 @ sama5d2_xplained";
+		i2s-controller = <&i2s0>;
+		audio-codec = <&wm8731>;
+		dai-format = "i2s";
+        };
+};
+
+&can0 {
+	status = "disabled";
+};
