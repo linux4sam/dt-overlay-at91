@@ -39,13 +39,13 @@
 				remote-endpoint = <&panel_input>;
 			};
 		};
-
-		hlcdc_pwm: hlcdc-pwm {
-					pinctrl-names = "default";
-					pinctrl-0 = <&pinctrl_lcd_pwm>;
-		};
+	};
+	hlcdc_pwm: hlcdc-pwm {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_pwm>;
 	};
 };
+
 
 &pioA {
 	pinctrl_qt1070_irq: pinctrl_qt1070_irq {
