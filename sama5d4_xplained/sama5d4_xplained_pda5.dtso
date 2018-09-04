@@ -29,19 +29,17 @@
 	status = "okay";
 
 	hlcdc-display-controller {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb666>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb666>;
 		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			hlcdc_panel_output: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&panel_input>;
 			};
 		};
 	};
- hlcdc_pwm: hlcdc-pwm {                                                   
-                pinctrl-names = "default";                                       
-                pinctrl-0 = <&pinctrl_lcd_pwm>;                                  
-        };     
 };
 
 &pinctrl {
