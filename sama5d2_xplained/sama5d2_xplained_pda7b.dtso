@@ -3,6 +3,7 @@
 /plugin/;
 
 #include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
 
 &i2c1 {
 	qt1070: keyboard@1b {
@@ -64,7 +65,7 @@
 			 <PIN_PD1__LCDDEN>,
 			 <PIN_PD0__LCDPCK>;
 		bias-disable;
-		//drive-strength = <ATMEL_PIO_DRVSTR_ME>;
+		drive-strength = <ATMEL_PIO_DRVSTR_ME>;
 	};
 
 	pinctrl_lcd_pwm: pinctrl_lcd_pwm {
@@ -97,6 +98,7 @@
 
 &{/} {
 	model = "Atmel SAMA5D2 Xplained TM7000B";
+
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		pwms = <&hlcdc_pwm 0 50000 0>;
