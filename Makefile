@@ -4,6 +4,7 @@ GCC?=$(CROSS_COMPILE)gcc
 DTC?=dtc
 DTC_OPTIONS?=-@
 KERNEL_DIR?=../linux
+KERNEL_BUILD_DIR?=../linux
 
 DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard */*.dtso))
 ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
@@ -15,7 +16,7 @@ ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
 %.itb: %.its
-	mkimage -D "-i$(KERNEL_DIR)/arch/arm/boot/dts -p 500" -f $^ $@
+	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 500" -f $^ $@
 
 dtbos: $(DTBO_OBJECTS)
 
