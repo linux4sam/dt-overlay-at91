@@ -1,0 +1,118 @@
+/*
+ * (c) 2018 Microchip Technology, Inc.
+ *
+ * FIT image description file
+ */
+
+/dts-v1/;
+
+/ {
+	description = "Microchip SAMA5D27 SOM1 EK FIT Image";
+	#address-cells = <1>;
+
+	images {
+		base_fdt {
+			description = "Flattened Device Tree blob";
+			data = /incbin/("./at91-sama5d27_som1_ek.dtb");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23000000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda4 {
+			description = "Device Tree blob pda4300 overlay";
+			data = /incbin/("./sama5d27_som1_ek/sama5d27_som1_ek_pda4.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda5 {
+			description = "Device Tree blob pda5000 overlay";
+			data = /incbin/("./sama5d27_som1_ek/sama5d27_som1_ek_pda5.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23140000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7 {
+			description = "Device Tree blob pda7000 overlay";
+			data = /incbin/("./sama5d27_som1_ek/sama5d27_som1_ek_pda7.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23150000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7b {
+			description = "Device Tree blob pda7000b overlay";
+			data = /incbin/("./sama5d27_som1_ek/sama5d27_som1_ek_pda7b.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23160000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+	};
+
+	configurations {
+		default = "base_dtb";
+
+		base_dtb {
+			description = "FDT blob for base SAMA5D27_SOM1_EK board";
+			fdt = "base_fdt";
+		};
+
+		pda4 {
+			description = "FDT overlay for PDA TM4300 screen";
+			fdt = "fdt_pda4";
+		};
+
+		pda5 {
+			description = "FDT overlay for PDA TM5000 screen";
+			fdt = "fdt_pda5";
+		};
+
+		pda7 {
+			description = "FDT overlay for PDA TM7000 screen";
+			fdt = "fdt_pda7";
+		};
+
+		pda7b {
+			description = "FDT overlay for PDA TM7000B screen";
+			fdt = "fdt_pda7b";
+		};
+	};
+};
