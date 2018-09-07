@@ -65,7 +65,7 @@
 			 <PIN_PD1__LCDDEN>,
 			 <PIN_PD0__LCDPCK>;
 		bias-disable;
-		drive-strength = <ATMEL_PIO_DRVSTR_ME>;
+		atmel,drive-strength = <ATMEL_PIO_DRVSTR_ME>;
 	};
 
 	pinctrl_lcd_pwm: pinctrl_lcd_pwm {
