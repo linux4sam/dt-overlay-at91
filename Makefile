@@ -1,11 +1,11 @@
 .DEFAULT_GOAL := all
 
 GCC?=$(CROSS_COMPILE)gcc
-DTC?=dtc
 DTC_OPTIONS?=-@
 DTC_OPTIONS += -Wno-unit_address_vs_reg -Wno-graph_child_address -Wno-pwms_property
 KERNEL_DIR?=../linux
 KERNEL_BUILD_DIR?=$(KERNEL_DIR)
+DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
 
 DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard */*.dtso))
 ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
