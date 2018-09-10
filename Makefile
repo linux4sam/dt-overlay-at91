@@ -4,7 +4,7 @@ GCC?=$(CROSS_COMPILE)gcc
 DTC?=dtc
 DTC_OPTIONS?=-@
 KERNEL_DIR?=../linux
-KERNEL_BUILD_DIR?=../linux
+KERNEL_BUILD_DIR?=$(KERNEL_DIR)
 
 DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard */*.dtso))
 ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
