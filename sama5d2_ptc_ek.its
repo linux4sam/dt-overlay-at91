@@ -12,7 +12,7 @@
 
 	images {
 		kernel@1 {
-			description = "Linux4SAM 6.0 Linux kernel";
+			description = "Linux4SAM Linux kernel";
 			data = /incbin/("./zImage");
 			type = "kernel";
 			arch = "arm";
@@ -27,6 +27,7 @@
 				algo = "sha1";
 			};
 		};
+
 		base_fdt {
 			description = "Flattened Device Tree blob";
 			data = /incbin/("./at91-sama5d2_ptc_ek.dtb");
@@ -74,7 +75,13 @@
 	};
 
 	configurations {
-		default = "base_dtb";
+		default = "kernel_dtb";
+
+		kernel_dtb {
+			description = "Linux kernel and base FDT blob for SAMA5D2_PTC_EK board";
+			kernel = "kernel@1";
+			fdt = "base_fdt";
+		};
 
 		base_dtb {
 			description = "FDT blob for base SAMA5D2_PTC_EK board";
@@ -83,13 +90,13 @@
 		};
 
 		pda4 {
-			description = "FDT overlay for PDA TM4300 screen";
+			description = "FDT overlay blob for PDA TM4300 screen";
 			kernel = "kernel@1";
 			fdt = "fdt_pda4";
 		};
 
 		pda5 {
-			description = "FDT overlay for PDA TM5000 screen";
+			description = "FDT overlay blob for PDA TM5000 screen";
 			kernel = "kernel@1";
 			fdt = "fdt_pda5";
 		};
