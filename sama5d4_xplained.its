@@ -11,6 +11,23 @@
 	#address-cells = <1>;
 
 	images {
+		kernel@1 {
+			description = "Linux4SAM Linux kernel";
+			data = /incbin/("./zImage");
+			type = "kernel";
+			arch = "arm";
+			os = "linux";
+			compression = "none";
+			load = <0x22000000>;
+			entry = <0x22000000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		base_fdt {
 			description = "Flattened Device Tree blob";
 			data = /incbin/("./at91-sama5d4_xplained.dtb");
@@ -88,7 +105,13 @@
 	};
 
 	configurations {
-		default = "base_dtb";
+		default = "kernel_dtb";
+
+		kernel_dtb {
+			description = "Linux kernel and base FDT blob for SAMA5D4_XPLAINED board";
+			kernel = "kernel@1";
+			fdt = "base_fdt";
+		};
 
 		base_dtb {
 			description = "FDT blob for base SAMA5D4_XPLAINED board";
@@ -96,22 +119,22 @@
 		};
 
 		pda4 {
-			description = "FDT overlay for PDA TM4300 screen";
+			description = "FDT overlay blob for PDA TM4300 screen";
 			fdt = "fdt_pda4";
 		};
 
 		pda5 {
-			description = "FDT overlay for PDA TM5000 screen";
+			description = "FDT overlay blob for PDA TM5000 screen";
 			fdt = "fdt_pda5";
 		};
 
 		pda7 {
-			description = "FDT overlay for PDA TM7000 screen";
+			description = "FDT overlay blob for PDA TM7000 screen";
 			fdt = "fdt_pda7";
 		};
 
 		pda7b {
-			description = "FDT overlay for PDA TM7000B screen";
+			description = "FDT overlay blob for PDA TM7000B screen";
 			fdt = "fdt_pda7b";
 		};
 	};
