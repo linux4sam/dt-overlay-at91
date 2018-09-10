@@ -6,6 +6,8 @@
 #include "dt-bindings/pinctrl/at91.h"
 
 &i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	qt1070: keyboard@1b {
 		compatible = "qt1070";
 		reg = <0x1b>;
@@ -35,6 +37,8 @@
 		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb666>;
 
 		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			hlcdc_panel_output: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&panel_input>;
@@ -66,36 +70,36 @@
 			 <PIN_PC31__LCDHSYNC>,
 			 <PIN_PD1__LCDDEN>,
 			 <PIN_PD0__LCDPCK>;
-			bias-disable;
-			atmel,drive-strength = <ATMEL_PIO_DRVSTR_ME>;
+		bias-disable;
+		atmel,drive-strength = <ATMEL_PIO_DRVSTR_ME>;
 	};
 
 	pinctrl_lcd_pwm: pinctrl_lcd_pwm {
-			pinmux = <PIN_PC28__LCDPWM>;
-			bias-disable;
+		pinmux = <PIN_PC28__LCDPWM>;
+		bias-disable;
 	};
 
-		pinctrl_lcd_rgb666: pinctrl_lcd_rgb666 {
-			pinmux = <PIN_PC10__LCDDAT2>,
-				 <PIN_PC11__LCDDAT3>,
-				 <PIN_PC12__LCDDAT4>,
-				 <PIN_PC13__LCDDAT5>,
-				 <PIN_PC14__LCDDAT6>,
-				 <PIN_PC15__LCDDAT7>,
-				 <PIN_PC16__LCDDAT10>,
-				 <PIN_PC17__LCDDAT11>,
-				 <PIN_PC18__LCDDAT12>,
-				 <PIN_PC19__LCDDAT13>,
-				 <PIN_PC20__LCDDAT14>,
-				 <PIN_PC21__LCDDAT15>,
-				 <PIN_PC22__LCDDAT18>,
-				 <PIN_PC23__LCDDAT19>,
-				 <PIN_PC24__LCDDAT20>,
-				 <PIN_PC25__LCDDAT21>,
-				 <PIN_PC26__LCDDAT22>,
-				 <PIN_PC27__LCDDAT23>;
-			bias-disable;
-		};
+	pinctrl_lcd_rgb666: pinctrl_lcd_rgb666 {
+		pinmux = <PIN_PC10__LCDDAT2>,
+			 <PIN_PC11__LCDDAT3>,
+			 <PIN_PC12__LCDDAT4>,
+			 <PIN_PC13__LCDDAT5>,
+			 <PIN_PC14__LCDDAT6>,
+			 <PIN_PC15__LCDDAT7>,
+			 <PIN_PC16__LCDDAT10>,
+			 <PIN_PC17__LCDDAT11>,
+			 <PIN_PC18__LCDDAT12>,
+			 <PIN_PC19__LCDDAT13>,
+			 <PIN_PC20__LCDDAT14>,
+			 <PIN_PC21__LCDDAT15>,
+			 <PIN_PC22__LCDDAT18>,
+			 <PIN_PC23__LCDDAT19>,
+			 <PIN_PC24__LCDDAT20>,
+			 <PIN_PC25__LCDDAT21>,
+			 <PIN_PC26__LCDDAT22>,
+			 <PIN_PC27__LCDDAT23>;
+		bias-disable;
+	};
 };
 
 &{/} {

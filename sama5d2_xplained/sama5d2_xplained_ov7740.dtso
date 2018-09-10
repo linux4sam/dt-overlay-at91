@@ -6,6 +6,8 @@
 #include "sama5d2-pinfunc.h"
 
 &i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	ov7740: camera@21 {
 		compatible = "ovti,ov7740";
 		reg = <0x21>;

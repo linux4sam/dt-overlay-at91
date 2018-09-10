@@ -6,6 +6,8 @@
 #include <dt-bindings/gpio/gpio.h>
 
 &i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	ov7670: camera@21 {
 		compatible = "ovti,ov7670";
 		reg = <0x21>;

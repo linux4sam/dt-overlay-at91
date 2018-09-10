@@ -5,6 +5,8 @@
 #include "dt-bindings/pinctrl/at91.h"
 
 &i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	qt1070: keyboard@1b {
 		compatible = "qt1070";
 		reg = <0x1b>;
@@ -32,6 +34,8 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb666>;
 		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			hlcdc_panel_output: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&panel_input>;

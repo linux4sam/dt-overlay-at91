@@ -3,6 +3,7 @@
 GCC?=$(CROSS_COMPILE)gcc
 DTC?=dtc
 DTC_OPTIONS?=-@
+DTC_OPTIONS += -Wno-unit_address_vs_reg -Wno-graph_child_address -Wno-pwms_property
 KERNEL_DIR?=../linux
 KERNEL_BUILD_DIR?=$(KERNEL_DIR)
 
@@ -16,7 +17,7 @@ ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard *.its))
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
 %.itb: %.its
-	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000" -f $^ $@
+	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000 $(DTC_OPTIONS)" -f $^ $@
 
 dtbos: $(DTBO_OBJECTS)
 
