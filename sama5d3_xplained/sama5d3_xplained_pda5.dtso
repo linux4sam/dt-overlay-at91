@@ -79,7 +79,7 @@
 	};
 
 	panel: panel {
-		compatible = "shelly,sca07010-bfn-lnn", "simple-panel";
+		compatible = "pda,91-00156-a0", "simple-panel";
 		backlight = <&backlight>;
 		power-supply = <&panel_reg>;
 		#address-cells = <1>;
