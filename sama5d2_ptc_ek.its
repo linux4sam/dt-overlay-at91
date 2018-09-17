@@ -84,20 +84,17 @@
 		};
 
 		base_dtb {
-			description = "FDT blob for base SAMA5D2_PTC_EK board";
-			kernel = "kernel@1";
+			description = "Base FDT blob for SAMA5D2_PTC_EK board";
 			fdt = "base_fdt";
 		};
 
 		pda4 {
 			description = "FDT overlay blob for PDA TM4300 screen";
-			kernel = "kernel@1";
 			fdt = "fdt_pda4";
 		};
 
 		pda5 {
 			description = "FDT overlay blob for PDA TM5000 screen";
-			kernel = "kernel@1";
 			fdt = "fdt_pda5";
 		};
 	};
