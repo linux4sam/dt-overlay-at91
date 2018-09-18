@@ -1,0 +1,15 @@
+This Device Tree Overlay and FIT image description repository
+is provided under:
+
+	SPDX-License-Identifier: GPL-2.0+ OR MIT
+
+This project is dual-licensed: you can use it either under the terms
+of the GPL license or the MIT license, at your option, according with:
+
+	LICENSES/GPL-2.0
+or
+	LICENSES/MIT
+
+The license of each source file of this project is given as a text in the top
+comment of the file.  It uses the Software Package Data Exchange (SPDX) license
+identifiers.  For further information see https://spdx.org/
