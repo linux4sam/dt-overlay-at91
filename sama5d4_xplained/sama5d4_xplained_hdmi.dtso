@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+// Copyright (c) 2018, Microchip Technology Inc.
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	sii9022: hdmi-encoder@39 {
+		compatible = "sil,sii9022";
+		reg = <0x39>;
+		reset-gpios = <&pioB 15 GPIO_ACTIVE_LOW>;
+		interrupts-extended = <&pioA 25 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_sii9022_irq>;
+
+		port {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			hdmi_input: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&hlcdc_hdmi_output>;
+			};
+		};
+	};
+};
+
+&hlcdc {
+	status = "okay";
+
+	hlcdc-display-controller {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb777>;
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			hlcdc_hdmi_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&hdmi_input>;
+			};
+		};
+	};
+};
+
+&pinctrl {
+	board {
+		pinctrl_sii9022_irq: sii9022_irq-0 {
+			atmel,pins =
+				<AT91_PIOA 25 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+		};
+	};
+};
+
+&{/} {
+	model = "Atmel SAMA5D4 Xplained SiI9022";
+	compatible = "atmel,sama5d4-xplained", "atmel,sama5d4", "atmel,sama5";
+};
