@@ -8,8 +8,8 @@ DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
 SAMA5_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama*/*.dtso))
 SAMA5_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard sama*.its))
 
-SAM9_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9*/*.dtso))
-SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard sam9*.its))
+SAM9_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91sam9*/*.dtso))
+SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard at91sam9*.its))
 
 
 %.pre.dtso: %.dtso
