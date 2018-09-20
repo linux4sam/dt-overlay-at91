@@ -1,5 +1,13 @@
-// SPDX-License-Identifier: GPL-2.0+ OR MIT
-// Copyright (c) 2018, Microchip Technology Inc.
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device tree overlay for HDMI.
+ *
+ * Copyright (C) 2018 Microchip Technology Inc.
+ *
+ * Author: Razvan Stefanescu <razvan.stefanescu@microchip.com>
+ *
+ */
+
 /dts-v1/;
 /plugin/;
 
