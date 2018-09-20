@@ -1,4 +1,4 @@
-GCC?=$(CROSS_COMPILE)gcc
+CC?=$(CROSS_COMPILE)gcc
 DTC_OPTIONS?=-@
 DTC_OPTIONS += -Wno-unit_address_vs_reg -Wno-graph_child_address -Wno-pwms_property
 KERNEL_DIR?=../linux
@@ -13,7 +13,7 @@ SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard at91sam9*.its))
 
 
 %.pre.dtso: %.dtso
-	$(GCC) -E -nostdinc -I$(KERNEL_DIR)/include -I$(KERNEL_DIR)/arch/arm/boot/dts -x assembler-with-cpp -undef -o $@ $^
+	$(CC) -E -nostdinc -I$(KERNEL_DIR)/include -I$(KERNEL_DIR)/arch/arm/boot/dts -x assembler-with-cpp -undef -o $@ $^
 
 %.dtbo: %.pre.dtso
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
