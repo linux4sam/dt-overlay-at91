@@ -5,12 +5,12 @@ KERNEL_DIR?=../linux
 KERNEL_BUILD_DIR?=$(KERNEL_DIR)
 DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
 
-SAMA5_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama*/*.dtso))
-SAMA5_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard sama*.its))
-
-SAM9_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91sam9*/*.dtso))
-SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard at91sam9*.its))
-
+AT91SAM9X5EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91sam9x5ek/*.dtso))
+SAMA5D27_SOM1_EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d27_som1_ek/*.dtso))
+SAMA5D2_PTC_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_ptc_ek/*.dtso))
+SAMA5D2_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_xplained/*.dtso))
+SAMA5D3_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d3_xplained/*.dtso))
+SAMA5D4_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d4_xplained/*.dtso))
 
 %.pre.dtso: %.dtso
 	$(CC) -E -nostdinc -I$(KERNEL_DIR)/include -I$(KERNEL_DIR)/arch/arm/boot/dts -x assembler-with-cpp -undef -o $@ $^
@@ -21,19 +21,18 @@ SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard at91sam9*.its))
 %.itb: %.its %_dtbos
 	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000 $(DTC_OPTIONS)" -f $< $@
 
-sama5_dtbos: $(SAMA5_DTBO_OBJECTS)
+at91sam9x5ek_dtbos: $(AT91SAM9X5EK_DTBO_OBJECTS)
 
-sama5_itbs: $(SAMA5_ITB_OBJECTS)
+sama5d27_som1_ek_dtbos: $(SAMA5D27_SOM1_EK_DTBO_OBJECTS)
 
-sam9_dtbos: $(SAM9_DTBO_OBJECTS)
+sama5d2_ptc_ek_dtbos: $(SAMA5D2_PTC_DTBO_OBJECTS)
 
-sam9_itbs: $(SAM9_ITB_OBJECTS)
+sama5d2_xplained_dtbos: $(SAMA5D2_XPLAINED_DTBO_OBJECTS)
 
-sama5: sama5_dtbos sama5_itbs
+sama5d3_xplained_dtbos: $(SAMA5D3_XPLAINED_DTBO_OBJECTS)
 
-sam9: sam9_dtbos sam9_itbs
+sama5d4_xplained_dtbos: $(SAMA5D4_XPLAINED_DTBO_OBJECTS)
 
 .PHONY: clean
 clean:
-	rm -f $(SAMA5_DTBO_OBJECTS) $(SAM9_DTBO_OBJECTS)
-	rm -f $(SAMA5_ITB_OBJECTS) $(SAM9_ITB_OBJECTS)
+	rm -f *sam*/*.dtbo *.itb
