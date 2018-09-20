@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * (c) 2018 Microchip Technology, Inc.
+ * sama5d27_som1_ek.its - Flattened Image Tree file for SAMA5D27-SOM1-EK1 board
  *
- * FIT image description file
+ * Copyright (C) 2018 Microchip Technology, Inc.
+ * Author: Cristian Birsan <cristian.birsan@microchip.com>
+ *
  */
-
 /dts-v1/;
 
 / {
