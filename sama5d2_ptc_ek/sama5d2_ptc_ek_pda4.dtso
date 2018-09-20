@@ -1,5 +1,12 @@
-// SPDX-License-Identifier: GPL-2.0+ OR MIT
-// Copyright (c) 2018, Microchip Technology Inc.
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d2_ptc_ek_pda4.dtso - Device Tree file for SAMA5D2 PTC EK board
+ * overlay blob for PDA4300 LCD.
+ *
+ * Copyright (C) 2018 Microchip Technology, Inc.
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
 /dts-v1/;
 /plugin/;
 
