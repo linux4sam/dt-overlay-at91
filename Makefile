@@ -18,8 +18,8 @@ SAM9_ITB_OBJECTS:= $(patsubst %.its,%.itb,$(wildcard at91sam9*.its))
 %.dtbo: %.pre.dtso
 	$(DTC) $(DTC_OPTIONS) -I dts -O dtb -o $@ $^
 
-%.itb: %.its
-	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000 $(DTC_OPTIONS)" -f $^ $@
+%.itb: %.its %_dtbos
+	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000 $(DTC_OPTIONS)" -f $< $@
 
 sama5_dtbos: $(SAMA5_DTBO_OBJECTS)
 
