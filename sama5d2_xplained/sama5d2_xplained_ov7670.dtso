@@ -32,7 +32,7 @@
 			ov7670_0: endpoint {
 				remote-endpoint = <&isc_0>;
 				hsync-active = <1>;
-				vsync-active = <0>;
+				vsync-active = <1>;
 				pclk-sample = <1>;
 			};
 		};
