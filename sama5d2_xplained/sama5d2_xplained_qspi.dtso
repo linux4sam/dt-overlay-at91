@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * at91-sama5d2_xplained_qspi.dtso - Device Tree file for SAMA5D2 Xplained board
+ * overlay blob for QSPI memory.
+ *
+ * Copyright (C) 2018 Microchip Technology, Inc.
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+&qspi0 {
+	status = "okay";
+};
+
+&sdmmc1 {
+	status = "disabled"; /* conflict on pin, disabling */
+};
+
+&{/} {
+	model = "Atmel SAMA5D2 Xplained QSPI";
+};
