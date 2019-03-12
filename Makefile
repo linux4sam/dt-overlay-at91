@@ -9,6 +9,7 @@ DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
 PATH:=$(shell dirname $(DTC)):$(PATH)
 
 AT91SAM9X5EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91sam9x5ek/*.dtso))
+SAM9X60EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60ek/*.dtso))
 SAMA5D27_SOM1_EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d27_som1_ek/*.dtso))
 SAMA5D2_PTC_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_ptc_ek/*.dtso))
 SAMA5D2_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_xplained/*.dtso))
@@ -26,6 +27,8 @@ SAMA5D4_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d4_xpla
 	mkimage -D "-i$(KERNEL_BUILD_DIR)/arch/arm/boot/ -i$(KERNEL_BUILD_DIR)/arch/arm/boot/dts -p 1000 $(DTC_OPTIONS)" -f $< $@
 
 at91sam9x5ek_dtbos: $(AT91SAM9X5EK_DTBO_OBJECTS)
+
+sam9x60ek_dtbos: $(SAM9X60EK_DTBO_OBJECTS)
 
 sama5d27_som1_ek_dtbos: $(SAMA5D27_SOM1_EK_DTBO_OBJECTS)
 
