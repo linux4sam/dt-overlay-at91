@@ -44,6 +44,21 @@
 				algo = "sha1";
 			};
 		};
+
+		fdt_i2s_proto {
+			description = "Device Tree blob PROTO Audio board overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_i2s_proto.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23170000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
 	};
 
 	configurations {
@@ -59,5 +74,11 @@
 			description = "Base FDT blob for SAM9X60-EK board";
 			fdt = "sam9x60ek_fdt";
 		};
+
+		i2s_proto {
+			description = "FDT overlay blob for I2S PROTO audio board";
+			fdt = "fdt_i2s_proto";
+		};
+
 	};
 };
