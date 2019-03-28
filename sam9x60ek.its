@@ -45,6 +45,21 @@
 			};
 		};
 
+		fdt_pda5 {
+			description = "Device Tree blob pda5000 overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_pda5.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23140000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_i2s_proto {
 			description = "Device Tree blob PROTO Audio board overlay";
 			data = /incbin/("./sam9x60ek/sam9x60ek_i2s_proto.dtbo");
@@ -75,10 +90,14 @@
 			fdt = "sam9x60ek_fdt";
 		};
 
+		pda5 {
+			description = "FDT overlay blob for PDA TM5000 screen";
+			fdt = "fdt_pda5";
+		};
+
 		i2s_proto {
 			description = "FDT overlay blob for I2S PROTO audio board";
 			fdt = "fdt_i2s_proto";
 		};
-
 	};
 };
