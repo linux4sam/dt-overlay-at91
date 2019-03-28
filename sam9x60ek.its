@@ -9,7 +9,7 @@
 /dts-v1/;
 
 / {
-	description = "Microchip SAM9x60-EK FIT Image";
+	description = "Microchip SAM9X60-EK FIT Image";
 	#address-cells = <1>;
 
 	images {
