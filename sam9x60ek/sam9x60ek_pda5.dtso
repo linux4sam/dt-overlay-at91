@@ -57,6 +57,10 @@
 	};
 };
 
+&gpu {
+	status = "okay";
+};
+
 &pinctrl {
 	qt1070 {
 		pinctrl_qt1070_irq: qt1070_irq {
