@@ -45,6 +45,21 @@
 			};
 		};
 
+		fdt_isi {
+			description = "Device Tree blob ISI overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_isi.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23100000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_pda5 {
 			description = "Device Tree blob pda5000 overlay";
 			data = /incbin/("./sam9x60ek/sam9x60ek_pda5.dtbo");
@@ -88,6 +103,11 @@
 		base_dtb {
 			description = "Base FDT blob for SAM9X60-EK board";
 			fdt = "sam9x60ek_fdt";
+		};
+
+		isi {
+			description = "FDT overlay blob for ISI controller";
+			fdt = "fdt_isi";
 		};
 
 		pda5 {
