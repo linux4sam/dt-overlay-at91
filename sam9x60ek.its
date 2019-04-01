@@ -60,6 +60,21 @@
 			};
 		};
 
+		fdt_ov2640 {
+			description = "Device Tree blob ov2640 overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_ov2640.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23110000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_pda5 {
 			description = "Device Tree blob pda5000 overlay";
 			data = /incbin/("./sam9x60ek/sam9x60ek_pda5.dtbo");
@@ -108,6 +123,11 @@
 		isi {
 			description = "FDT overlay blob for ISI controller";
 			fdt = "fdt_isi";
+		};
+
+		ov2640 {
+			description = "FDT overlay blob for ov2640 sensor";
+			fdt = "fdt_ov2640";
 		};
 
 		pda5 {
