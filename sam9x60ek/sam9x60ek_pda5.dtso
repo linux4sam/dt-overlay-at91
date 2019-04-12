@@ -28,7 +28,7 @@
 		compatible = "atmel,atmel_mxt_ts";
 		reg = <0x4a>;
 		interrupt-parent = <&pioC>;
-		interrupts = <25 0x0>;
+		interrupts = <25 0x8>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_mxt_irq>;
 		wakeup-source;
