@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * at91-sama5d4_xplained_wilc_spi.dtso - Device Tree file for SAMA5D4 Xplained
+ * board overlay blob for WILC SPI devices.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc.
+ * Author: Claudiu Beznea <claudiu.beznea@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+
+&spi1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-name = "default";
+	pinctrl-0 = <&pinctrl_spi1_cs_gpio_default>;
+	status = "okay";
+
+	wilc_spi: wilc_spi@0 {
+		compatible = "microchip,wilc1000", "microchip,wilc3000";
+		pinctrl-name = "default";
+		pinctrl-0 = <&pinctrl_wilc_spi_reset_gpio_default
+			     &pinctrl_wilc_spi_irq_gpio_default
+			     &pinctrl_wilc_spi_chip_en_gpio_default>;
+		spi-max-frequency = <48000000>;
+		reg = <0>;
+		irq-gpios = <&pioC 27 0>;
+		reset-gpios = <&pioB 28 0>;
+		chip_en-gpios = <&pioC 30 0>;
+		status = "okay";
+	};
+};
+
+&pinctrl {
+	spi1_cs {
+		pinctrl_spi1_cs_gpio_default: pinctrl_spi1_cs_gpio {
+			atmel,pins = <AT91_PIOB 21 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+
+	wilc_spi {
+		pinctrl_wilc_spi_reset_gpio_default: pinctrl_wilc_spi_reset_gpio {
+			atmel,pins = <AT91_PIOB 28 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_wilc_spi_irq_gpio_default: pinctrl_wilc_spi_irq_gpio {
+			atmel,pins = <AT91_PIOC 27 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_wilc_spi_chip_en_gpio_default: pinctrl_wilc_spi_chip_en_gpio {
+			atmel,pins = <AT91_PIOC 30 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+};
