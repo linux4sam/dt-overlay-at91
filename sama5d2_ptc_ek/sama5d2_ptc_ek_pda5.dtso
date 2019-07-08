@@ -111,6 +111,8 @@
 };
 
 &{/} {
+	model = "Microchip SAMA5D2 PTC EK TM5000";
+
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		pwms = <&hlcdc_pwm 0 50000 0>;
