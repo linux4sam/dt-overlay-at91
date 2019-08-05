@@ -1,0 +1,158 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_wlsom1_ek_pda5.dtso - Device Tree file for SAMA5D27 WLSOM1 EK board
+ * overlay blob for PDA5000 LCD.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc.
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	qt1070: keyboard@1b {
+		compatible = "qt1070";
+		reg = <0x1b>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PA17 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_qt1070_irq>;
+		wakeup-source;
+	};
+
+	atmel_mxt_ts@4a {
+		compatible = "atmel,atmel_mxt_ts";
+		reg = <0x4a>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PB4 0x0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mxt_irq>;
+	};
+};
+
+&hlcdc {
+	status = "okay";
+
+	hlcdc-display-controller {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb_666>;
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&panel_input>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_pwm>;
+	};
+};
+
+
+&pioA {
+	pinctrl_qt1070_irq: pinctrl_qt1070_irq {
+		pinmux = <PIN_PA17__GPIO>;
+		bias-pull-up;
+		input-debounce = <1>;
+	};
+
+	pinctrl_mxt_irq: pinctrl_mxt_irq {
+		pinmux = <PIN_PB4__GPIO>;
+		bias-pull-up;
+		input-debounce = <1>;
+	};
+
+	pinctrl_lcd_base: pinctrl_lcd_base {
+		pinmux = <PIN_PC30__LCDVSYNC>,
+			 <PIN_PC31__LCDHSYNC>,
+			 <PIN_PD1__LCDDEN>,
+			 <PIN_PD0__LCDPCK>;
+		bias-disable;
+	};
+
+	pinctrl_lcd_rgb_666: pinctrl_lcd_rgb {
+		pinmux = <PIN_PC10__LCDDAT2>,
+			<PIN_PC11__LCDDAT3>,
+			<PIN_PC12__LCDDAT4>,
+			<PIN_PC13__LCDDAT5>,
+			<PIN_PC14__LCDDAT6>,
+			<PIN_PC15__LCDDAT7>,
+			<PIN_PC16__LCDDAT10>,
+			<PIN_PC17__LCDDAT11>,
+			<PIN_PC18__LCDDAT12>,
+			<PIN_PC19__LCDDAT13>,
+			<PIN_PC20__LCDDAT14>,
+			<PIN_PC21__LCDDAT15>,
+			<PIN_PC22__LCDDAT18>,
+			<PIN_PC23__LCDDAT19>,
+			<PIN_PC24__LCDDAT20>,
+			<PIN_PC25__LCDDAT21>,
+			<PIN_PC26__LCDDAT22>,
+			<PIN_PC27__LCDDAT23>;
+		bias-disable;
+	};
+
+	pinctrl_lcd_pwm: pinctrl_lcd_pwm {
+		pinmux = <PIN_PC28__LCDPWM>;
+		bias-disable;
+	};
+};
+
+&{/} {
+	model = "Microchip SAMA5D27 WLSOM1 EK TM5000";
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&hlcdc_pwm 0 50000 0>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&bl_reg>;
+		status = "okay";
+	};
+
+	bl_reg: backlight_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight-power-supply";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		status = "okay";
+	};
+
+	panel: panel {
+		compatible = "pda,91-00156-a0", "simple-panel";
+		backlight = <&backlight>;
+		power-supply = <&panel_reg>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		port@0 {
+			reg = <0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			panel_input: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+	};
+
+	panel_reg: panel_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "panel-power-supply";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		status = "okay";
+	};
+};
