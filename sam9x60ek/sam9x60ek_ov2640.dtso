@@ -14,7 +14,7 @@
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/pinctrl/at91.h>
 
-&i2c1 {
+&i2c0 {
 	#address-cells = <1>;
 	#size-cells = <0>;
 
@@ -22,8 +22,9 @@
 		compatible = "ovti,ov2640";
 		reg = <0x30>;
 		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_pck0_as_isi_mck &pinctrl_sensor_power>;
+		pinctrl-0 = <&pinctrl_pck0_as_isi_mck &pinctrl_sensor_power &pinctrl_sensor_reset>;
 		pwdn-gpios = <&pioC 24 GPIO_ACTIVE_HIGH>;
+		resetb-gpios = <&pioC 16 GPIO_ACTIVE_LOW>;
 		clocks = <&pmc PMC_TYPE_SYSTEM 8>;
 		clock-names = "xvclk";
 		assigned-clocks = <&pmc PMC_TYPE_SYSTEM 8>;
@@ -62,6 +63,10 @@
 		pinctrl_sensor_power: sensor_power-0 {
 			atmel,pins =
 				<AT91_PIOC 24 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+		pinctrl_sensor_reset: sensor_reset-0 {
+			atmel,pins =
+				<AT91_PIOC 16 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
 	};
 };
