@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * at91-sama5d27_wlsom1_ek_ov7740.dtso - Device Tree file for SAMA5D27 WLSOM1 EK
+ * overlay blob for Image Sensor Controller Omnivision ov7740 sensor.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc.
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include "sama5d2-pinfunc.h"
+
+&i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	ov7740: camera@21 {
+		compatible = "ovti,ov7740";
+		reg = <0x21>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_sensor_power &pinctrl_sensor_reset>;
+		clocks = <&isc>;
+		clock-names = "xvclk";
+		assigned-clocks = <&isc>;
+		assigned-clock-rates = <24000000>;
+		reset-gpios = <&pioA PIN_PC9 GPIO_ACTIVE_LOW>;
+		powerdown-gpios = <&pioA PIN_PC7 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+
+		port {
+			ov7740_0: endpoint {
+				remote-endpoint = <&isc_0>;
+				hsync-active = <1>;
+				vsync-active = <0>;
+				pclk-sample = <1>;
+			};
+		};
+	};
+};
+
+&isc {
+	port {
+		isc_0: endpoint@0 {
+			remote-endpoint = <&ov7740_0>;
+			hsync-active = <1>;
+			vsync-active = <0>;
+			pclk-sample = <1>;
+		};
+	};
+};
+
+&pioA {
+	pinctrl_sensor_power: sensor_power {
+		pinmux = <PIN_PC7__GPIO>;
+		bias-disable;
+	};
+
+	pinctrl_sensor_reset: sensor_reset {
+		pinmux = <PIN_PC9__GPIO>;
+		bias-disable;
+	};
+};

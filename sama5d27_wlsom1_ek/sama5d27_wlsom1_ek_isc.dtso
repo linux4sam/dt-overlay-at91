@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * at91-sama5d27_wlsom1_ek_isc.dtso - Device Tree file for SAMA5D27 WLSOM1 EK
+ * board overlay blob for Image Sensor Controller.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc.
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&isc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_isc_base &pinctrl_isc_data_8bit>;
+	status = "okay";
+};
+
+&pioA {
+	pinctrl_isc_base: isc_base {
+		pinmux = <PIN_PC21__ISC_PCK>,
+			 <PIN_PC22__ISC_VSYNC>,
+			 <PIN_PC23__ISC_HSYNC>,
+			 <PIN_PC24__ISC_MCK>;
+		bias-disable;
+	};
+
+	pinctrl_isc_data_8bit: isc_data_8bit {
+		pinmux = <PIN_PC20__ISC_D11>,
+			 <PIN_PC19__ISC_D10>,
+			 <PIN_PC18__ISC_D9>,
+			 <PIN_PC17__ISC_D8>,
+			 <PIN_PC16__ISC_D7>,
+			 <PIN_PC15__ISC_D6>,
+			 <PIN_PC14__ISC_D5>,
+			 <PIN_PC13__ISC_D4>;
+		bias-disable;
+	};
+};
