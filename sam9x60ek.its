@@ -75,6 +75,21 @@
 			};
 		};
 
+		fdt_pda4 {
+			description = "Device Tree blob pda4300 overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_pda4.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_pda5 {
 			description = "Device Tree blob pda5000 overlay";
 			data = /incbin/("./sam9x60ek/sam9x60ek_pda5.dtbo");
@@ -82,6 +97,36 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23140000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7 {
+			description = "Device Tree blob pda7000 overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_pda7.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23150000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7b {
+			description = "Device Tree blob pda7000b overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_pda7b.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23160000>;
 			hash@1 {
 				algo = "crc32";
 			};
@@ -130,9 +175,24 @@
 			fdt = "fdt_ov2640";
 		};
 
+		pda4 {
+			description = "FDT overlay blob for PDA TM4300 screen";
+			fdt = "fdt_pda4";
+		};
+
 		pda5 {
 			description = "FDT overlay blob for PDA TM5000 screen";
 			fdt = "fdt_pda5";
+		};
+
+		pda7 {
+			description = "FDT overlay blob for PDA TM7000 screen";
+			fdt = "fdt_pda7";
+		};
+
+		pda7b {
+			description = "FDT overlay blob for PDA TM7000B screen";
+			fdt = "fdt_pda7b";
 		};
 
 		i2s_proto {
