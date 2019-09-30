@@ -13,8 +13,10 @@
 #include "dt-bindings/pinctrl/at91.h"
 
 &i2c0 {
+	dmas = <0>, <0>;
 	#address-cells = <1>;
 	#size-cells = <0>;
+
 	qt1070: keyboard@1b {
 		compatible = "qt1070";
 		reg = <0x1b>;
