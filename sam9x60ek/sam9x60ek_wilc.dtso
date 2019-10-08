@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x60-ek_wilc.dtso - Device Tree file for SAM9x60-EK board
+ * overlay blob for ATWILC3000 - Wireless Modules.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc.
+ * Author: Cristian Birsan <cristian.birsan@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&sdmmc1 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		wilc: wilc@1 {
+			compatible = "microchip,wilc1000", "microchip,wilc3000";
+			reg = <1>;
+			irq-gpios = <&pioA 28 0>;
+			bus-width = <4>;
+			status = "okay";
+		};
+};
+
+&{/} {
+	wifi_pwrseq: wifi_pwrseq {
+		compatible = "mmc-pwrseq-wilc";
+		reset-gpios = <&pioC 31 GPIO_ACTIVE_HIGH>;
+		powerdown-gpios = <&pioA 29 GPIO_ACTIVE_HIGH>;
+		pinctrl-0 = <&pinctrl_wilc_pwrseq_default>;
+		pinctrl-names = "default";
+		status = "disabled";
+	};
+};
+
+&pinctrl {
+		wilc_pwrseq {
+			pinctrl_wilc_pwrseq_default: pinctrl_wilc_pwrseq {
+				atmel,pins =
+					<AT91_PIOA 29 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_DOWN
+					 AT91_PIOC 31 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_DOWN>;
+			};
+		};
+};
+
