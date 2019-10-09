@@ -44,3 +44,4 @@
 &hlcdc {
 	status = "disabled";	/* conflict with ISI */
 };
+
