@@ -38,6 +38,14 @@
 				 AT91_PIOC 6 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D6, conflicts with LCDDAT6 */
 				 AT91_PIOC 7 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* ISI_D7, conflicts with LCDDAT7 */
 		};
+
+		pinctrl_isi_data_8_11: isi-0-data-8-11 {
+			atmel,pins =
+				<AT91_PIOC 8 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D8, conflicts with LCDDAT8 */
+				 AT91_PIOC 9 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D9, conflicts with LCDDAT9 */
+				 AT91_PIOC 10 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D10, conflicts with LCDDAT10 */
+				 AT91_PIOC 11 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* ISI_D11, conflicts with LCDDAT11 */
+		};
 	};
 };
 

@@ -1,0 +1,132 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x60ek_mt9v022.dtso - Device Tree file for SAM9X60-EK board
+ * overlay blob for Image Sensor Controller Micron mt9v022 sensor.
+ * This also includes support for board CAMx-MT9V022-EB_REVA with gpio expander
+ * and programmable bit shift for ISI data lines alignment.
+ * This overlay provides 8 bits lanes from the sensor to ISI:
+ * ISI_D0..ISI_D7 to Y2..Y9
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc. and its subsidiaries
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	gpio_expander_camx: gpio@18 {
+		compatible = "nxp,pca9557";
+		reg = <0x18>;
+		#gpio-cells = <2>;
+		ngpios = <8>;
+		gpio-controller;
+		gpio-line-names =
+			"OE_UVC", "OE_8B_Y2_Y9", "OE_10B_Y0_Y1", "OE_10B_Y2_Y9",
+			"OE_12B_Y2_Y9", "EXPOSURE", "GREEN", "RED";
+
+		status = "okay";
+
+		/* inactive */
+		oe_uvc {
+			gpio-hog;
+			gpios = <0 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "OE_UVC";
+		};
+		/* active */
+		oe_8b_y2_y9 {
+			gpio-hog;
+			gpios = <1 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "OE_8B_Y2_Y9";
+		};
+		/* inactive */
+		oe_10b_y0_y1 {
+			gpio-hog;
+			gpios = <2 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "OE_10B_Y0_Y1";
+		};
+		/* inactive */
+		oe_12b_y2_y9 {
+			gpio-hog;
+			gpios = <4 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "OE_12B_Y2_Y9";
+		};
+		/* inactive */
+		red {
+			gpio-hog;
+			gpios = <7 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "RED";
+		};
+		/* active */
+		green {
+			gpio-hog;
+			gpios = <6 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "GREEN";
+		};
+	};
+
+	mt9v022: camera@48 {
+		compatible = "aptina,mt9v022m";
+		reg = <0x48>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pck0_as_isi_mck &pinctrl_sensor_reset>;
+		clocks = <&pmc PMC_TYPE_SYSTEM 8>;
+		clock-names = "xvclk";
+		assigned-clocks = <&pmc PMC_TYPE_SYSTEM 8>;
+		assigned-clock-rates = <24000000>;
+		reset-gpios = <&pioC 16 GPIO_ACTIVE_LOW>;
+
+		port {
+			mt9v022_0: endpoint {
+				remote-endpoint = <&isi_0>;
+				bus-width = <10>;
+				hsync-active = <1>;
+				vsync-active = <1>;
+				link-frequencies = /bits/ 64
+                                        <24000000 13000000 26600000 27000000>;
+				pclk-sample = <1>;
+			};
+		};
+	};
+};
+
+&isi {
+	pinctrl-0 = <&pinctrl_isi_base &pinctrl_isi_data_0_7 &pinctrl_isi_data_8_11>;
+
+	port {
+		isi_0: endpoint@0 {
+			remote-endpoint = <&mt9v022_0>;
+			bus-width = <10>;
+			hsync-active = <1>;
+			vsync-active = <1>;
+		};
+	};
+};
+
+&pinctrl {
+	camera_sensor {
+		pinctrl_pck0_as_isi_mck: pck0_as_isi_mck-0 {
+			atmel,pins =
+				<AT91_PIOC 15 AT91_PERIPH_C AT91_PINCTRL_NONE>; /* ISI_MCK */
+		};
+
+		pinctrl_sensor_reset: sensor_reset-0 {
+			atmel,pins =
+				<AT91_PIOC 16 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+};
+
