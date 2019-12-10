@@ -120,6 +120,20 @@
 			};
 		};
 
+		fdt_mt9v022 {
+			description = "Device Tree blob MT9V022 overlay";
+			data = /incbin/("./sama5d27_som1_ek/sama5d27_som1_ek_mt9v022.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23180000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
 	};
 
 	configurations {
@@ -133,6 +147,11 @@
 		base_dtb {
 			description = "FDT blob for base SAMA5D27_SOM1_EK board";
 			fdt = "base_fdt";
+		};
+
+		mt9v022 {
+			description = "FDT overlay blob for mt9v022 sensor";
+			fdt = "fdt_mt9v022";
 		};
 
 		pda4 {

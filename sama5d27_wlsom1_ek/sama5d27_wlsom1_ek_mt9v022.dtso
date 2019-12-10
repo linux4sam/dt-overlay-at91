@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_wlsom1_ek_mt9v022.dtso - Device Tree file for SAMA5D27 WLSOM1 EK board
+ * overlay blob for Image Sensor Controller Micron mt9v022 sensor.
+ * This also includes support for board CAMx-MT9V022-EB_REVA with gpio expander
+ * and programmable bit shift for ISC data lines alignment.
+ *
+ * Copyright (C) 2019 Microchip Technology, Inc. and its subsidiaries
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include "sama5d2-pinfunc.h"
+
+&i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	gpio_expander: gpio@18 {
+		compatible = "nxp,pca9557";
+		reg = <0x18>;
+		#gpio-cells = <2>;
+		ngpios = <8>;
+		gpio-controller;
+		gpio-line-names =
+			"OE_UVC", "OE_8B_Y2_Y9", "OE_10B_Y0_Y1", "OE_10B_Y2_Y9",
+			"OE_12B_Y2_Y9", "EXPOSURE", "GREEN", "RED";
+
+		status = "okay";
+
+		oe_12b_y2_y9 {
+			gpio-hog;
+			gpios = <4 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "OE_12B_Y2_Y9";
+		};
+
+		oe_uvc {
+			gpio-hog;
+			gpios = <0 GPIO_ACTIVE_HIGH>;
+			output-low;
+			line-name = "OE_UVC";
+		};
+
+		green {
+			gpio-hog;
+			gpios = <6 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "GREEN";
+		};
+	};
+
+	mt9v022: camera@48 {
+		compatible = "aptina,mt9v022m";
+		reg = <0x48>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_sensor_reset>;
+		clocks = <&isc>;
+		clock-names = "xvclk";
+		assigned-clocks = <&isc>;
+		assigned-clock-rates = <24000000>;
+		reset-gpios = <&pioA PIN_PC9 GPIO_ACTIVE_LOW>;
+
+		port {
+			mt9v022_0: endpoint {
+				remote-endpoint = <&isc_0>;
+				bus-width = <10>;
+				hsync-active = <1>;
+				vsync-active = <1>;
+				link-frequencies = /bits/ 64
+                                        <24000000 13000000 26600000 27000000>;
+				pclk-sample = <1>;
+			};
+		};
+	};
+};
+
+&isc {
+	port {
+		isc_0: endpoint@0 {
+			remote-endpoint = <&mt9v022_0>;
+			bus-width = <10>;
+			hsync-active = <1>;
+			vsync-active = <1>;
+		};
+	};
+};
+
+&pioA {
+	pinctrl_sensor_reset: sensor_reset {
+		pinmux = <PIN_PC9__GPIO>;
+		bias-disable;
+	};
+};
+
