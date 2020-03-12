@@ -1,0 +1,62 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d2_xplained_flx0_i2c.dtso - Device Tree file for SAMA5D2 Xplained board
+ * overlay blob to configure Flexcom0 as I2C.
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&isc {
+	status = "disabled";
+};
+
+&uart5 {
+	status = "disabled";
+};
+
+&{/ahb/apb/pinctrl@fc038000} {
+	pinctrl_i2c3_gpio: i2c3_gpio {
+		pinmux = <PIN_PB28__GPIO>,
+			 <PIN_PB29__GPIO>;
+		bias-disable;
+	};
+};
+
+&flx0 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay"; /* conflict with ISC_D2 & ISC_D3 data pins */
+	#address-cells = <1>;
+	#size-cells = <1>;
+	i2c3: i2c@600 {
+		compatible = "atmel,sama5d2-i2c";
+		i2c-sda-hold-time-ns = <350>;
+		reg = <0x600 0x200>;
+		interrupt-parent = <&aic>;
+		interrupts = <19 IRQ_TYPE_LEVEL_HIGH 7>;
+		dmas = <0>, <0>;
+		dma-names = "tx", "rx";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		atmel,fifo-size = <16>;
+		clocks = <&pmc PMC_TYPE_PERIPHERAL 19>;
+		pinctrl-names = "default", "gpio";
+		pinctrl-0 = <&pinctrl_flx0_default>;
+		pinctrl-1 = <&pinctrl_i2c3_gpio>;
+		sda-gpios = <&pioA PIN_PB28 GPIO_ACTIVE_HIGH>;
+		scl-gpios = <&pioA PIN_PB29 GPIO_ACTIVE_HIGH>;
+		i2c-analog-filter;
+		i2c-digital-filter;
+		i2c-digital-filter-width-ns = <35>;
+		status = "okay";
+	};
+};
