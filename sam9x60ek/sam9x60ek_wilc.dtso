@@ -13,9 +13,14 @@
 #include "dt-bindings/pinctrl/at91.h"
 #include <dt-bindings/gpio/gpio.h>
 
+&flx4 {
+		status = "disabled";
+};
+
 &sdmmc1 {
 		#address-cells = <1>;
 		#size-cells = <0>;
+		status = "okay"; /* Conflict with flx4*/
 		wilc: wilc@1 {
 			compatible = "microchip,wilc1000", "microchip,wilc3000";
 			reg = <1>;
