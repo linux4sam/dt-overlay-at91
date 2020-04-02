@@ -59,7 +59,7 @@
 
 		ck_cd {
 			pinmux = <PIN_PA22__SDMMC1_CK>,
-					<PIN_PA28__SDMMC1_CMD>;
+				 <PIN_PA28__SDMMC1_CMD>;
 			bias-disable;
 		};
 	};
