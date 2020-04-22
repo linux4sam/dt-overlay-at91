@@ -15,13 +15,13 @@
 &spi1 {
 	#address-cells = <1>;
 	#size-cells = <0>;
-	pinctrl-name = "default";
+	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_spi1_cs_gpio_default>;
 	status = "okay";
 
 	wilc_spi: wilc_spi@0 {
 		compatible = "microchip,wilc1000", "microchip,wilc3000";
-		pinctrl-name = "default";
+		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_wilc_spi_reset_gpio_default
 			     &pinctrl_wilc_spi_irq_gpio_default
 			     &pinctrl_wilc_spi_chip_en_gpio_default>;
