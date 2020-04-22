@@ -12,6 +12,10 @@
 
 #include "dt-bindings/pinctrl/at91.h"
 
+&adc0 {
+	status = "disabled"; /* conflict on PC30. */
+};
+
 &spi1 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -23,15 +27,23 @@
 		compatible = "microchip,wilc1000", "microchip,wilc3000";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_wilc_spi_reset_gpio_default
-			     &pinctrl_wilc_spi_irq_gpio_default
 			     &pinctrl_wilc_spi_chip_en_gpio_default>;
 		spi-max-frequency = <48000000>;
 		reg = <0>;
-		irq-gpios = <&pioC 27 0>;
+		interrupt-parent = <&pioC>;
+		interrupts = <27 0>;
 		reset-gpios = <&pioB 28 0>;
 		chip_en-gpios = <&pioC 30 0>;
 		status = "okay";
 	};
+};
+
+&usart4 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_wilc_spi_usart4>;
+	atmel,use-dma-rx;
+	atmel,use-dma-tx;
+	status = "okay";
 };
 
 &pinctrl {
@@ -46,12 +58,17 @@
 			atmel,pins = <AT91_PIOB 28 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
 
-		pinctrl_wilc_spi_irq_gpio_default: pinctrl_wilc_spi_irq_gpio {
-			atmel,pins = <AT91_PIOC 27 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
-		};
-
 		pinctrl_wilc_spi_chip_en_gpio_default: pinctrl_wilc_spi_chip_en_gpio {
 			atmel,pins = <AT91_PIOC 30 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+
+	wilc_spi_usart4 {
+		pinctrl_wilc_spi_usart4 {
+			atmel,pins = <AT91_PIOE 26 AT91_PERIPH_B AT91_PINCTRL_PULL_UP	/* RXD */
+				      AT91_PIOE 27 AT91_PERIPH_B AT91_PINCTRL_NONE	/* TXD */
+				      AT91_PIOE 28 AT91_PERIPH_B AT91_PINCTRL_NONE	/* RTS */
+				      AT91_PIOE 0 AT91_PERIPH_C AT91_PINCTRL_NONE>;	/* CTS */
 		};
 	};
 };
