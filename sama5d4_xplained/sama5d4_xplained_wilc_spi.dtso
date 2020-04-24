@@ -47,7 +47,7 @@
 };
 
 &pinctrl {
-	spi1_cs {
+	wilc_spi1_cs {
 		pinctrl_spi1_cs_gpio_default: pinctrl_spi1_cs_gpio {
 			atmel,pins = <AT91_PIOB 21 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
