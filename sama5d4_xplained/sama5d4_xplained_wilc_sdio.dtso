@@ -11,7 +11,7 @@
 /plugin/;
 
 #include "dt-bindings/pinctrl/at91.h"
-#include "dt-bindings/gpio/gpio.h"
+#include <dt-bindings/gpio/gpio.h>
 
 &{/} {
 	wifi_pwrseq: wifi_pwrseq {
