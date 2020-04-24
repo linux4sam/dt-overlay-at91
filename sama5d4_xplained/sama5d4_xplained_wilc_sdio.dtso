@@ -50,7 +50,7 @@
 
 &usart4 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_wilc_sdio_usart4>;
+	pinctrl-0 = <&pinctrl_wilc_sdio_usart4_default>;
 	atmel,use-dma-rx;
 	atmel,use-dma-tx;
 	status = "okay";
@@ -58,7 +58,7 @@
 
 &pinctrl {
 	wilc_sdio_usart4 {
-		pinctrl_wilc_sdio_usart4 {
+		pinctrl_wilc_sdio_usart4_default: pinctrl_wilc_sdio_usart4 {
 			atmel,pins = <AT91_PIOE 26 AT91_PERIPH_B AT91_PINCTRL_PULL_UP	/* RXD */
 				      AT91_PIOE 27 AT91_PERIPH_B AT91_PINCTRL_NONE	/* TXD */
 				      AT91_PIOE 28 AT91_PERIPH_B AT91_PINCTRL_NONE	/* RTS */
