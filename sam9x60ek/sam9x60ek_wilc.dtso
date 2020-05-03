@@ -21,6 +21,7 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 		status = "okay"; /* Conflict with flx4*/
+		mmc-pwrseq = <&wifi_pwrseq>;
 		wilc: wilc@1 {
 			compatible = "microchip,wilc1000", "microchip,wilc3000";
 			reg = <1>;
