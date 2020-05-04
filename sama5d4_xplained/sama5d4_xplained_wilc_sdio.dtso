@@ -20,7 +20,7 @@
 		powerdown-gpios = <&pioC 30 GPIO_ACTIVE_HIGH>;
 		pinctrl-0 = <&pinctrl_wilc_pwrseq_default>;
 		pinctrl-names = "default";
-		status = "okay";
+		status = "disabled";
 	};
 };
 
@@ -40,6 +40,8 @@
 
 	wifi: slot@0 {
 		compatible = "microchip,wilc1000", "microchip,wilc3000", "atmel,wilc_sdio";
+		reset-gpios = <&pioB 28 GPIO_ACTIVE_HIGH>;
+		chip_en-gpios = <&pioC 30 GPIO_ACTIVE_HIGH>;
 		interrupt-parent = <&pioC>;
 		interrupts = <27 0>;
 		reg = <0>;
