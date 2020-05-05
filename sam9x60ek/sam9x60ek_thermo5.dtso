@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x60_thermo5.dtso - Device Tree file for SAM9x60-EK board
+ * overlay blob for Mikroe Thermo5 Click board.
+ * The blob uses i2c1 on flx6.
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Darren Wenn <darren.wenn@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+&i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	temperature-sensor@4c {
+		compatible = "lm75";
+		reg = <0x4c>;
+		status = "okay";
+	};
+};
+
+&{/} {
+	model = "Atmel SAM9x60ek with Thermo5";
+};
+
