@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_som1_ek_thermo5.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * overlay blob for Mikroe Thermo5 Click board.
+ * The blob uses i2c2 on flx5. 
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Darren Wenn <darren.wenn@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+&i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	temperature-sensor@4c {
+		compatible = "lm75";
+		reg = <0x4c>;
+		status = "okay";
+	};
+};
+
+&{/} {
+	model = "Atmel SAMA5D27 SOM1 EK with Thermo5";
+};
+
