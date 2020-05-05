@@ -1,0 +1,18 @@
+/dts-v1/;
+/plugin/;
+
+&i2c1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	temperature-sensor@4c {
+		compatible = "lm75";
+		reg = <0x4c>;
+		status = "okay";
+	};
+};
+
+&{/} {
+	model = "Atmel SAM9x60ek with Thermo5";
+};
+
