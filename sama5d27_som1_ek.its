@@ -149,7 +149,6 @@
                                 algo = "sha1";
                         };
                 };
-
 	};
 
 	configurations {
@@ -196,9 +195,8 @@
 		};
 
                 thermo5 {
-                        description = "FDY overlay for Thermo5 click";
+                        description = "FDT overlay for Thermo5 click";
                         fdt = "fdt_thermo5";
                 };
-
 	};
 };

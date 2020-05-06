@@ -1,3 +1,13 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_som1_ek_thermo5.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * overlay blob for Mikroe Thermo5 Click board.
+ * The blob uses i2c2 on flx5. 
+ *
+ * Copyright (C) 2020 Microchip Technology, Inc.
+ * Author: Darren Wenn <darren.wenn@microchip.com>
+ *
+ */
 /dts-v1/;
 /plugin/;
 
