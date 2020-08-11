@@ -1,0 +1,138 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama7g5ek_isc_imx219.dtso - Device Tree file for SAMA7G5-EK board
+ * overlay blob for ISC with imx219 sensor. The blob uses isc and i2c8
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama7g5-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&csi_dphy {
+	status = "okay";
+};
+
+&csi2host {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	status = "okay";
+
+	port@1 {
+		reg = <1>;
+		csi2host_in: endpoint {
+			remote-endpoint = <&imx219_out>;
+			data-lanes = <1 2>;
+			bus-type = <4>;
+			clock-lanes = <0>;
+		};
+	};
+};
+
+&csi2dc {
+	status = "okay";
+};
+
+&i2c8 {
+	/*
+	 * Camera sensor add-on board Raspberry Pi v2.1 Camera extension
+	 *
+	 * Sensor i2c address is fixed at 0x10
+	 *
+	 * 24 Mhz crystal is soldered on the board and hardwired to sensor
+	 *
+	 * Power supplies are present on the board and supplied by 3v3
+	 * rail from sama7g5ek PMIC
+	 */
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx219: camera@10 {
+		compatible = "sony,imx219";
+		reg = <0x10>;
+		clocks = <&imx219_clk>;
+		clock-names = "xclk";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_sensor_power &pinctrl_sensor_reset>;
+		VANA-supply = <&vana_imx219>; /* 2.8v */
+		VDIG-supply = <&vdig_imx219>; /* 1.8v */
+		VDDL-supply = <&vddl_imx219>; /* 1.2v */
+		reset-gpios = <&pioA PIN_PE1 GPIO_ACTIVE_HIGH>,
+				<&pioA PIN_PE2 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+
+		imx219_clk: camera-clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+		};
+
+		port {
+			imx219_out: endpoint {
+				remote-endpoint = <&csi2host_in>;
+				clock-lanes = <0>;
+				data-lanes = <1 2>;
+				link-frequencies = /bits/ 64 <456000000>;
+				clock-noncontinuous;
+			};
+		};
+
+		vana_imx219: fixed-regulator-vana {
+			compatible = "regulator-fixed";
+
+			regulator-name = "VANA-supply";
+			regulator-min-microvolt = <2800000>;
+			regulator-max-microvolt = <2800000>;
+			regulator-always-on;
+			regulator-boot-on;
+			status = "okay";
+		};
+
+		vdig_imx219: fixed-regulator-vdig {
+			compatible = "regulator-fixed";
+
+			regulator-name = "VDIG-supply";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-always-on;
+			regulator-boot-on;
+			vin-supply = <&vana_imx219>;
+			status = "okay";
+		};
+
+		vddl_imx219: fixed-regulator-vddl {
+			compatible = "regulator-fixed";
+
+			regulator-name = "VDDL-supply";
+			regulator-min-microvolt = <1200000>;
+			regulator-max-microvolt = <1200000>;
+			regulator-always-on;
+			regulator-boot-on;
+			vin-supply = <&vana_imx219>;
+			status = "okay";
+		};
+	};
+};
+
+&pioA {
+	pinctrl_sensor_power: sensor_power {
+		pinmux = <PIN_PE1__GPIO>;
+		bias-disable;
+	};
+
+	pinctrl_sensor_reset: sensor_reset {
+		pinmux = <PIN_PE2__GPIO>;
+		bias-disable;
+	};
+};
+
+&xisc {
+	status = "okay";
+};
+
