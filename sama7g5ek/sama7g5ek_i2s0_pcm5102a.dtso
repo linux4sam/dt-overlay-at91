@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama7g5ek_i2s0_pcm5102a.dtso - Device Tree file for SAMA7G5-EK board
+ * overlay blob for I2S with PCM5102A codec. The blob uses i2s0.
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama7g5-pinfunc.h"
+
+&i2s0 {
+	status = "okay";
+};
+
+&sound {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	/* make sure id from dai-link@<id> and reg = <id> is unique */
+	simple-audio-card,dai-link@3 {
+		reg = <3>;
+		format = "i2s";			/* "i2s" if FMT low, "left_j" if FMT high */
+		bitclock-master = <&dai_link_master3>;
+		frame-master = <&dai_link_master3>;
+		dai_link_master3: cpu {		/* make sure label is unique */
+			sound-dai = <&i2s0>;
+		};
+		codec {
+			sound-dai = <&pcm5102a>;
+		};
+	};
+};
+
+&{/} {
+	pcm5102a: pcm5102a {
+		#sound-dai-cells = <0>;
+		compatible = "ti,pcm5102a";
+	};
+};
