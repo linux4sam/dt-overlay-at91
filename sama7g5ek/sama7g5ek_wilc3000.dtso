@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama7g5ek_wilc3000.dtso - Device Tree file for SAMA7G5-EK board
+ * overlay blob for wilc3000 add-on.
+ *
+ * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama7g5-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&{/}
+{
+	wifi_pwrseq: wifi_pwrseq {
+		compatible = "mmc-pwrseq-wilc";
+		reset-gpios = <&pioA PIN_PD2 GPIO_ACTIVE_HIGH>;
+		powerdown-gpios = <&pioA PIN_PE0 GPIO_ACTIVE_HIGH>;
+		pinctrl-0 = <&pinctrl_wilc_pwrseq_default>;
+		pinctrl-names = "default";
+		status = "okay";
+	};
+};
+
+&flx0 {
+	status = "okay";
+
+	uart0: serial@200 {
+		status = "okay";
+	};
+};
+
+&sdmmc2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	no-1-8-v;
+	non-removable;
+	mmc-pwrseq = <&wifi_pwrseq>;
+	status = "okay";
+
+	wilc: wilc@1 {
+		compatible = "microchip,wilc1000", "microchip,wilc3000";
+		reg = <1>;
+		irq-gpios = <&pioA PIN_PD10 0>;
+		bus-width = <4>;
+		status = "okay";
+	};
+};
+
+&pioA {
+	pinctrl_wilc_pwrseq_default: pinctrl_wilc_pwrseq {
+		pinmux = <PIN_PD2__GPIO>,
+			 <PIN_PE0__GPIO>;
+		bias-pull-down;
+	};
+};
+
