@@ -6,6 +6,14 @@
  * Copyright (C) 2019 Microchip Technology, Inc.
  * Author: Cristian Birsan <cristian.birsan@microchip.com>
  *
+ * NOTE: this device tree implements also the errata 5.3 recommendation
+ * to separate the reset line by cutting it and rewiring it from the
+ * J16 connector. Therefore pin PC31 is used as reset GPIO. If the errata
+ * modification is not implemented, this should be switched to PB25 in
+ * both occourences in this file.
+ *
+ * For more details see section 5.3 of:
+ * https://ww1.microchip.com/downloads/en/DeviceDoc/SAM9X60-EK-UG-DS50002907B.pdf
  */
 /dts-v1/;
 /plugin/;
