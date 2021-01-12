@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Overlay description for Image Sensor Interface Omnivision ov7740 sensor
+ *
+ * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Nicolas Ferre <nicolas.ferre@microchip.com>
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	ov7740: camera@21 {
+		compatible = "ovti,ov7740";
+		reg = <0x21>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pck0_as_isi_mck &pinctrl_sensor_power &pinctrl_sensor_reset>;
+		powerdown-gpios = <&pioC 24 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&pioC 16 GPIO_ACTIVE_LOW>;
+		clocks = <&pmc PMC_TYPE_SYSTEM 8>;
+		clock-names = "xvclk";
+		assigned-clocks = <&pmc PMC_TYPE_SYSTEM 8>;
+		assigned-clock-rates = <25000000>;
+		status = "okay";
+
+		port {
+			ov7740_0: endpoint {
+				remote-endpoint = <&isi_0>;
+				bus-width = <8>;
+				vsync-active = <0>;
+				hsync-active = <1>;
+				pclk-sample = <1>;
+			};
+		};
+	};
+};
+
+&isi {
+	port {
+		isi_0: endpoint@0 {
+			remote-endpoint = <&ov7740_0>;
+			bus-width = <8>;
+			vsync-active = <0>;
+			hsync-active = <1>;
+			pclk-sample = <1>;
+		};
+	};
+};
+
+&pinctrl {
+	camera_sensor {
+		pinctrl_pck0_as_isi_mck: pck0_as_isi_mck-0 {
+			atmel,pins =
+				<AT91_PIOC 15 AT91_PERIPH_C AT91_PINCTRL_NONE>; /* ISI_MCK */
+		};
+
+		pinctrl_sensor_power: sensor_power-0 {
+			atmel,pins =
+				<AT91_PIOC 24 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+		pinctrl_sensor_reset: sensor_reset-0 {
+			atmel,pins =
+				<AT91_PIOC 16 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+};

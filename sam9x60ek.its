@@ -75,6 +75,21 @@
 			};
 		};
 
+		fdt_ov7740 {
+			description = "Device Tree blob ov7740 overlay";
+			data = /incbin/("./sam9x60ek/sam9x60ek_ov7740.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23110000>;
+			hash@1 {
+				algo = "crc32";
+			};
+			hash@2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_pda4 {
 			description = "Device Tree blob pda4300 overlay";
 			data = /incbin/("./sam9x60ek/sam9x60ek_pda4.dtbo");
@@ -234,6 +249,11 @@
 		ov2640 {
 			description = "FDT overlay blob for ov2640 sensor";
 			fdt = "fdt_ov2640";
+		};
+
+		ov7740 {
+			description = "FDT overlay blob for ov7740 sensor";
+			fdt = "fdt_ov7740";
 		};
 
 		mt9v022 {
