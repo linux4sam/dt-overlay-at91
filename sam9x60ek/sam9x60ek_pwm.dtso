@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Overlay description for PMW signals on sam9x60-ek
+ *
+ * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Nicolas Ferre <nicolas.ferre@microchip.com>
+ *
+ * Overlay allowing the use of PWM signals on sam9x60-ek board.
+ * PWM0 Channel 2 is used by the PWM pin on mikroBUS 1. It's present
+ * on SoC pin: PB13. Channels 0, 1 and 2 also go to the RGB LED.
+ * It removes the use of Linux gpio-leds driver.
+ */
+/dts-v1/;
+/plugin/;
+
+&pwm0 {
+	status = "okay";
+};
+
+&{/} {
+	leds {
+		status = "disabled"; /* Conflict with pwm0. */
+	};
+};
