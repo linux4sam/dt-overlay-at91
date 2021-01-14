@@ -197,7 +197,7 @@
 
 		fdt_pwm {
 			description = "Device Tree blob PWM overlay";
-			data = /incbin/("./sam9x60ek/sam9x60ek_mikrobus_pwm.dtbo");
+			data = /incbin/("./sam9x60ek/sam9x60ek_pwm.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
