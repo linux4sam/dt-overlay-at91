@@ -1,0 +1,104 @@
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2.dtsi"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&{/aliases} {
+    serial1 = &uart5; /* /dev/ttyS1 RS485 port */
+};
+
+&usb0 {
+    status = "disabled";
+};
+
+&usb1 {
+    num-ports = <2>;
+};
+
+&usb2 {
+    status = "disabled";
+};
+
+&uart0 {
+    status = "disabled";
+};
+
+&uart3 {
+    status = "disabled";
+};
+
+&can0 {
+    status = "disabled";
+};
+
+&can1 {
+    status = "disabled";
+};
+
+&isc {
+    status = "disabled";
+};
+
+&i2c2 {
+    status = "disabled";
+};
+
+&flx0 {
+  atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_USART>;
+  status = "okay"; /* conflict with ISC_D2 & ISC_D3 data pins */
+  uart5: serial@200 {
+    status = "okay";
+    pinctrl-names = "default";
+          pinctrl-0 = <&pinctrl_flx0_ioset1>;
+    linux,rs485-enabled-at-boot-time;
+          rs485-rts-delay = <0 20>;
+  };
+};
+
+&flx4 {
+    status = "disabled";
+};
+
+&adc {
+    pinctrl-0 = <&pinctrl_adc_default>;
+};
+
+&pwm0 {
+    pinctrl-0 = <&pinctrl_pwm0_dac>;
+    status = "okay";
+};
+
+
+&pioA {
+  pinctrl_adc_default: adc_default {
+        pinmux = <PIN_PD23__GPIO>;
+        bias-disable;
+    };
+  
+  pinctrl_pwm0_dac: pwm0_dac {
+        pinmux = <PIN_PB6__PWML2>;
+  };
+
+  pinctrl_flx0_ioset1: flx0_ioset1 {
+        pinmux = <PIN_PB28__FLEXCOM0_IO0>, /* TX */
+                 <PIN_PB29__FLEXCOM0_IO1>, /* RX */
+                 <PIN_PB31__FLEXCOM0_IO3>, /* CTS */
+                 <PIN_PC0__FLEXCOM0_IO4>;  /* RTS */
+        bias-disable;
+  };
+};
+
+&{/} {
+  gpio_keys {
+    status = "disabled";
+  };
+};
+
+&{/} {
+  leds {
+    status = "disabled";
+  };
+};
