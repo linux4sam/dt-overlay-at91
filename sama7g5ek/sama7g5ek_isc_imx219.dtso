@@ -17,6 +17,43 @@
 	status = "okay";
 };
 
+&{/} {
+	vana_imx219: fixed-regulator-vana {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VANA-supply";
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
+		regulator-always-on;
+		regulator-boot-on;
+		status = "okay";
+	};
+
+	vdig_imx219: fixed-regulator-vdig {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VDIG-supply";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-always-on;
+		regulator-boot-on;
+		vin-supply = <&vana_imx219>;
+		status = "okay";
+	};
+
+	vddl_imx219: fixed-regulator-vddl {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VDDL-supply";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+		regulator-always-on;
+		regulator-boot-on;
+		vin-supply = <&vana_imx219>;
+		status = "okay";
+	};
+};
+
 &csi2host {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -81,41 +118,6 @@
 				link-frequencies = /bits/ 64 <456000000>;
 				clock-noncontinuous;
 			};
-		};
-
-		vana_imx219: fixed-regulator-vana {
-			compatible = "regulator-fixed";
-
-			regulator-name = "VANA-supply";
-			regulator-min-microvolt = <2800000>;
-			regulator-max-microvolt = <2800000>;
-			regulator-always-on;
-			regulator-boot-on;
-			status = "okay";
-		};
-
-		vdig_imx219: fixed-regulator-vdig {
-			compatible = "regulator-fixed";
-
-			regulator-name = "VDIG-supply";
-			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <1800000>;
-			regulator-always-on;
-			regulator-boot-on;
-			vin-supply = <&vana_imx219>;
-			status = "okay";
-		};
-
-		vddl_imx219: fixed-regulator-vddl {
-			compatible = "regulator-fixed";
-
-			regulator-name = "VDDL-supply";
-			regulator-min-microvolt = <1200000>;
-			regulator-max-microvolt = <1200000>;
-			regulator-always-on;
-			regulator-boot-on;
-			vin-supply = <&vana_imx219>;
-			status = "okay";
 		};
 	};
 };
