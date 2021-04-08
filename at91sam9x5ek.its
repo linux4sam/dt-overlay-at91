@@ -13,7 +13,7 @@
 	#address-cells = <1>;
 
 	images {
-		kernel@1 {
+		kernel {
 			description = "Linux4SAM Linux kernel";
 			data = /incbin/("./zImage");
 			type = "kernel";
@@ -111,31 +111,31 @@
 
 		sam9g15 {
 			description = "Linux kernel and base FDT blob for SAM9G15-EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "sam9g15ek_fdt";
 		};
 
 		sam9g25 {
 			description = "Linux kernel and base FDT blob for SAM9G25-EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "sam9g25ek_fdt";
 		};
 
 		sam9g35 {
 			description = "Linux kernel and base FDT blob for SAM9G35-EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "sam9g35ek_fdt";
 		};
 
 		sam9x25 {
 			description = "Linux kernel and base FDT blob for SAM9X25-EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "sam9x25ek_fdt";
 		};
 
 		sam9x35 {
 			description = "Linux kernel and base FDT blob for SAM9X35-EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "sam9x35ek_fdt";
 		};
 	};

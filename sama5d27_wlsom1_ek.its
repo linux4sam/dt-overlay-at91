@@ -13,7 +13,7 @@
 	#address-cells = <1>;
 
 	images {
-		kernel@1 {
+		kernel {
 			description = "Linux4SAM Linux kernel";
 			data = /incbin/("./zImage");
 			type = "kernel";
@@ -201,7 +201,7 @@
 
 		kernel_dtb {
 			description = "Linux kernel and base FDT blob for SAMA5D27_WLSOM1_EK board";
-			kernel = "kernel@1";
+			kernel = "kernel";
 			fdt = "base_fdt";
 		};
 		base_dtb {
