@@ -80,6 +80,7 @@
 
 &isc {
 	pinctrl-0 = <&pinctrl_isc_base &pinctrl_isc_data_8bit>;
+	status = "okay";
 
 	port {
 		isc_0: endpoint@0 {
