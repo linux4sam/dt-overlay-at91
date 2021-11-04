@@ -96,12 +96,11 @@
 		clocks = <&imx219_clk>;
 		clock-names = "xclk";
 		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_sensor_power &pinctrl_sensor_reset>;
+		pinctrl-0 = <&pinctrl_sensor_reset>;
 		VANA-supply = <&vana_imx219>; /* 2.8v */
 		VDIG-supply = <&vdig_imx219>; /* 1.8v */
 		VDDL-supply = <&vddl_imx219>; /* 1.2v */
-		reset-gpios = <&pioA PIN_PE1 GPIO_ACTIVE_HIGH>,
-				<&pioA PIN_PE2 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&pioA PIN_PE1 GPIO_ACTIVE_HIGH>;
 		status = "okay";
 
 		imx219_clk: camera-clk {
@@ -123,13 +122,8 @@
 };
 
 &pioA {
-	pinctrl_sensor_power: sensor_power {
-		pinmux = <PIN_PE1__GPIO>;
-		bias-disable;
-	};
-
 	pinctrl_sensor_reset: sensor_reset {
-		pinmux = <PIN_PE2__GPIO>;
+		pinmux = <PIN_PE1__GPIO>;
 		bias-disable;
 	};
 };
