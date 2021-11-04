@@ -69,10 +69,26 @@
 			clock-lanes = <0>;
 		};
 	};
+
+	port@2 {
+		reg = <2>;
+		csi2host_out: endpoint {
+			remote-endpoint = <&csi2dc_in>;
+		};
+	};
 };
 
 &csi2dc {
 	status = "okay";
+
+	ports {
+		port@0 {
+			csi2dc_in: endpoint {
+				remote-endpoint = <&csi2host_out>;
+				bus-type = <4>; /* MIPI CSI2 D-PHY */
+			};
+		};
+	};
 };
 
 &i2c8 {
