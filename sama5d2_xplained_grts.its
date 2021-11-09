@@ -23,10 +23,10 @@
 			compression = "none";
 			load = <0x22000000>;
 			entry = <0x22000000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -38,10 +38,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23000000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -53,10 +53,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x23190000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};

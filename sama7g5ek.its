@@ -22,10 +22,10 @@
 			compression = "none";
 			load = <0x62000000>;
 			entry = <0x62000000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -37,10 +37,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x61000000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -52,10 +52,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x61100000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -67,10 +67,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x61200000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -82,10 +82,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x61300000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
@@ -97,10 +97,10 @@
 			arch = "arm";
 			compression = "none";
 			load = <0x61400000>;
-			hash@1 {
+			hash-1 {
 				algo = "crc32";
 			};
-			hash@2 {
+			hash-2 {
 				algo = "sha1";
 			};
 		};
