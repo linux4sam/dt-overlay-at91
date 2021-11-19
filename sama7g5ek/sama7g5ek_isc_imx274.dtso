@@ -1,0 +1,101 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama7g5ek_isc_imx274.dtso - Device Tree file for SAMA7G5-EK board
+ * overlay blob for ISC with imx274 sensor. The blob uses isc and i2c8
+ *
+ * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries
+ * Author: Eugen Hristev <eugen.hristev@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama7g5-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&csi_dphy {
+	status = "okay";
+};
+
+&csi2host {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	status = "okay";
+
+	port@1 {
+		reg = <1>;
+		csi2host_in: endpoint {
+			remote-endpoint = <&imx274_out>;
+			data-lanes = <1 2>;
+			bus-type = <4>;
+			clock-lanes = <0>;
+		};
+	};
+
+	port@2 {
+		reg = <2>;
+		csi2host_out: endpoint {
+			remote-endpoint = <&csi2dc_in>;
+		};
+	};
+};
+
+&csi2dc {
+	status = "okay";
+
+	ports {
+		port@0 {
+			csi2dc_in: endpoint {
+				remote-endpoint = <&csi2host_out>;
+				bus-type = <4>; /* MIPI CSI2 D-PHY */
+			};
+		};
+	};
+};
+
+&i2c8 {
+	/*
+	 * Camera sensor add-on for IMX274 Leopard Imaging LI-IMX274-MIPI-CS
+	 *
+	 * LI-IMX274-MIPI-CS must be connected with an adapter from I-PEX cable
+	 * to Raspberry Pi CSI2 ribbon cable.
+	 *
+	 * Sensor i2c address is fixed at 0x1a
+	 *
+	 */
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx274: camera@1a {
+		compatible = "sony,imx274";
+		reg = <0x1a>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_sensor_reset>;
+		reset-gpios = <&pioA PIN_PE1 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+
+		port {
+			imx274_out: endpoint {
+				remote-endpoint = <&csi2host_in>;
+				bus-type = <4>;
+				clock-lanes = <0>;
+				/* sama7g5 only supports 2 data lanes */
+				data-lanes = <1 2>;
+			};
+		};
+	};
+};
+
+&pioA {
+	pinctrl_sensor_reset: sensor_reset {
+		pinmux = <PIN_PE1__GPIO>;
+		bias-disable;
+	};
+};
+
+&xisc {
+	status = "okay";
+};
+
