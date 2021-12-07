@@ -33,7 +33,7 @@
 
 &{/} {
 	wifi_pwrseq: wifi_pwrseq {
-		compatible = "mmc-pwrseq-wilc";
+		compatible = "mmc-pwrseq-wilc1000", "mmc-pwrseq-wilc";
 		reset-gpios = <&pioC 31 GPIO_ACTIVE_HIGH>;
 		powerdown-gpios = <&pioA 29 GPIO_ACTIVE_HIGH>;
 		pinctrl-0 = <&pinctrl_wilc_pwrseq_default>;
