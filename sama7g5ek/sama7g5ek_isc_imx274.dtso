@@ -96,6 +96,7 @@
 };
 
 &xisc {
+	microchip,mipi-mode;
 	status = "okay";
 };
 
