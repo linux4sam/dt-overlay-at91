@@ -10,6 +10,7 @@
 /dts-v1/;
 /plugin/;
 
+#include "dt-bindings/sound/microchip,asrc-card.h"
 #include "sama7g5-pinfunc.h"
 
 &i2s0 {
@@ -20,13 +21,16 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
-	/* make sure id from dai-link@<id> and reg = <id> is unique */
-	simple-audio-card,dai-link@3 {
+	/* make sure id from dai-link@<id> and reg are unique */
+	microchip,dai-link@3 {
 		reg = <3>;
-		format = "i2s";			/* "i2s" if FMT low, "left_j" if FMT high */
-		bitclock-master = <&dai_link_master3>;
-		frame-master = <&dai_link_master3>;
-		dai_link_master3: cpu {		/* make sure label is unique */
+		microchip,format = "i2s";	/* "i2s" if FMT low, "left_j" if FMT high */
+		microchip,frame-master = <&dailink3_master>;
+		microchip,bitclock-master = <&dailink3_master>;
+		microchip,convert-channels = <2>;
+		microchip,convert-rate = <48000>;
+		microchip,convert-sample-format = <MCHP_ASRC_PCM_FORMAT_S24_LE>;
+		dailink3_master: cpu {		/* make sure label is unique */
 			sound-dai = <&i2s0>;
 		};
 		codec {
