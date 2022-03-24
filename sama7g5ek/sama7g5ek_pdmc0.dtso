@@ -12,6 +12,7 @@
 /dts-v1/;
 /plugin/;
 
+#include "dt-bindings/sound/microchip,asrc-card.h"
 #include "sama7g5-pinfunc.h"
 
 &gmac1 {
@@ -26,12 +27,15 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
-	/* make sure id from dai-link@<id> and reg = <id> is unique */
-	simple-audio-card,dai-link@2 {
+	/* make sure id from dai-link@<id> and reg are unique */
+	microchip,dai-link@2 {
 		reg = <2>;
-		format = "pdm";
-		bitclock-master = <&dai_link_master2>;
-		dai_link_master2: cpu {
+		microchip,convert-channels = <4>;
+		microchip,convert-rate = <48000>;
+		microchip,convert-sample-format = <MCHP_ASRC_PCM_FORMAT_S24_LE>;
+		microchip,format = "pdm";
+		microchip,bitclock-master = <&dai_link_master2>;
+		dai_link_master2: cpu {		/* make sure label is unique */
 			sound-dai = <&pdmc0>;
 		};
 		codec {
