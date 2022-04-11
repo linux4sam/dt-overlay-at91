@@ -21,6 +21,7 @@ SAMA5D3_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d3_xpla
 SAMA5D4_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d4_xplained/*.dtso))
 SAMA7G5EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama7g5ek/*.dtso))
 SAM9X60_CURIOSITY_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60_curiosity/*.dtso))
+MPFS_ICICLE_KIT_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs-icicle/*.dtso))
 
 %.pre.dtso: %.dtso
 	$(CC) -E -nostdinc -I$(KERNEL_DIR)/include -I$(KERNEL_DIR)/arch/$(ARCH)/boot/dts -x assembler-with-cpp -undef -o $@ $^
@@ -55,6 +56,8 @@ sama7g5ek_dtbos: $(SAMA7G5EK_DTBO_OBJECTS)
 
 sam9x60_curiosity_dtbos: $(SAM9X60_CURIOSITY_DTBO_OBJECTS)
 
+icicle_kit_dtbos: $(MPFS_ICICLE_KIT_OBJECTS)
+
 .PHONY: clean
 clean:
-	rm -f *sam*/*.dtbo *.itb
+	rm -f *sam*/*.dtbo *mpfs*/*.dtbo *.itb
