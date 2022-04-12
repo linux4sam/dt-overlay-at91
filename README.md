@@ -13,7 +13,8 @@ of various types and enhances integrity protection of images with stronger check
 
 To build the overlays for a board make sure the following steps are done:
 
-* the environment variables ARCH and CROSS_COMPILE are set correctly
+* the environment variables ARCH and CROSS_COMPILE are set correctly. By default,
+ARCH is set to arm and will need to be explicitly overridden for riscv.
 * (optional) the environment variable KERNEL_DIR points to Linux kernel and the 
 kernel was already built for the board. This is needed because the DT Overlay 
 repository uses the Device Tree Compiler (dtc) from the kernel source tree. By default, 
@@ -34,7 +35,8 @@ The following example shows how to build the overlays for sama5d2_xplained:
  To build the FIT image with overlays for a board make sure the following steps 
 are done:
 
-* the environment variables ARCH and CROSS_COMPILE are set correctly
+* the environment variables ARCH and CROSS_COMPILE are set correctly. By default,
+ARCH is set to arm and will need to be explicitly overridden for riscv.
 * (optional) the environment variable KERNEL_DIR points to Linux kernel and the 
 kernel was already built for the board. This is needed because the DT Overlay 
 repository uses the Device Tree Compiler (dtc) from the kernel source tree. By 
