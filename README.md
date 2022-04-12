@@ -1,4 +1,4 @@
-# AT91 Device Tree Overlays and FIT image
+# Microchip Device Tree Overlays and FIT image
 
 ## 1. Introduction
 
@@ -80,7 +80,7 @@ Example to load the image sensor controller Device Tree overlay + sensor omnivis
 
 ## 5. Contributing
 
-To contribute to AT91 Device Tree Overlays you should submit the patches for 
+To contribute to Microchip Device Tree Overlays, you should submit patches for 
 review to the github pull-request facility directly. Do not forget to Cc the 
 maintainers.
 
@@ -90,7 +90,7 @@ Cristian Birsan <cristian.birsan@microchip.com>
 
 Nicolas Ferre <nicolas.ferre@microchip.com>
 
-When creating patches insert the [dt-overlay-at91] tag in the subject, for example
+When creating patches insert the [dt-overlay-mchp] tag in the subject, for example
 use something like:
 
-    git format-patch -s --subject-prefix='dt-overlay-at91][PATCH' <origin>
+    git format-patch -s --subject-prefix='dt-overlay-mchp][PATCH' <origin>
