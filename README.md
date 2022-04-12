@@ -90,6 +90,10 @@ Cristian Birsan <cristian.birsan@microchip.com>
 
 Nicolas Ferre <nicolas.ferre@microchip.com>
 
+For PolarFire SoC (MPFS), please also Cc:
+
+Valentina Fernandez Alanis <valentina.fernandezalanis@microchip.com>
+
 When creating patches insert the [dt-overlay-mchp] tag in the subject, for example
 use something like:
 
