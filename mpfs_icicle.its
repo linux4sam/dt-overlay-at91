@@ -16,7 +16,7 @@
         images {
                 vmlinux.bin {
                         description = "Linux kernel";
-                        data = /incbin/("./vmlinux.bin");
+                        data = /incbin/("./Image");
                         type = "kernel";
                         arch = "riscv";
                         os = "linux";
@@ -27,20 +27,9 @@
                                 algo = "sha256";
                         };
                 };
-                initramfs.cpio.gz {
-                        description = "buildroot initramfs";
-                        data = /incbin/("./initramfs.cpio.gz");
-                        type = "ramdisk";
-                        arch = "riscv";
-                        os = "linux";
-                        load = <0x10 0x40000000>;
-                        hash-1 {
-                                algo = "sha256";
-                        };
-                };
-                riscvpc.dtb {
+               riscvpc.dtb {
                         description = "Flattened Device Tree blob";
-                        data = /incbin/("./riscvpc.dtb");
+                        data = /incbin/("./microchip-mpfs-icicle-kit.dtb");
                         type = "flat_dt";
                         arch = "riscv";
                         compression = "none";
