@@ -56,7 +56,7 @@ sama7g5ek_dtbos: $(SAMA7G5EK_DTBO_OBJECTS)
 
 sam9x60_curiosity_dtbos: $(SAM9X60_CURIOSITY_DTBO_OBJECTS)
 
-mpfs_icicle_dtbos: $(MPFS_ICICLE_KIT_OBJECTS)
+mpfs_icicle_dtbos: $(MPFS_ICICLE_DTBO_OBJECTS)
 
 .PHONY: clean
 clean:
