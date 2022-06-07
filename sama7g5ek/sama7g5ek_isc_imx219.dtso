@@ -12,6 +12,7 @@
 
 #include "sama7g5-pinfunc.h"
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
 
 &csi_dphy {
 	status = "okay";
@@ -89,6 +90,11 @@
 			};
 		};
 	};
+};
+
+&flx8 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
 };
 
 &i2c8 {
