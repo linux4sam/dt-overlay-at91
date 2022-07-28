@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x60_curiosity_wilc3000.dtso - Device Tree file for SAM9x60-CURIOSITY board
+ * overlay blob for ATWILC3000 - Wireless Modules.
+ *
+ * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
+ * Author: Durai Manickam KR <durai.manickamkr@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&sdmmc1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	mmc-pwrseq = <&wifi_pwrseq>;
+	wilc: wilc@1 {
+		compatible = "microchip,wilc1000", "microchip,wilc3000";
+		reg = <1>;
+		bus-width = <4>;
+		status = "okay";
+	};
+};
+
+&{/} {
+	wifi_pwrseq: wifi_pwrseq {
+		compatible = "mmc-pwrseq-wilc1000", "mmc-pwrseq-wilc";
+		reset-gpios = <&pioA 14 GPIO_ACTIVE_HIGH>;
+		powerdown-gpios = <&pioC 8 GPIO_ACTIVE_HIGH>;
+		pinctrl-0 = <&pinctrl_wilc_pwrseq_default>;
+		pinctrl-names = "default";
+		status = "okay";
+	};
+};
+
+&pinctrl {
+	wilc_pwrseq {
+		pinctrl_wilc_pwrseq_default: pinctrl_wilc_pwrseq {
+			atmel,pins = <AT91_PIOC 8 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_DOWN
+				      AT91_PIOA 14 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_DOWN>;
+		};
+	};
+};
+

@@ -58,7 +58,23 @@
 			hash-2 {
 				algo = "sha1";
 			};
-		}
+		};
+
+		fdt_wilc3000 {
+			description = "Device Tree blob WILC3000 overlay";
+			data =
+			/incbin/("./sam9x60_curiosity/sam9x60_curiosity_wilc3000.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23110000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
 
     };
 
@@ -79,6 +95,11 @@
 		pda5 {
 			description = "FDT overlay blob for PDA TM5000 screen";
 			fdt = "fdt_pda5";
+		};
+
+		wilc {
+			description = "FDT overlay blob for WILC3000";
+			fdt = "fdt_wilc3000";
 		};
 	};
 };
