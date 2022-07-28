@@ -1,0 +1,168 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x60_curiosity_pda5.dtso - Device Tree file for SAM9X60-CURIOSITY board
+ * overlay blob for PDA5000 LCD.
+ *
+ * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
+ * Author: Durai Manickam KR <durai.manickamkr@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+
+&i2c6 {
+	dmas = <0>, <0>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	qt1070: keyboard@1b {
+		compatible = "qt1070";
+		reg = <0x1b>;
+		interrupt-parent = <&pioC>;
+		interrupts = <31 0x0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_qt1070_irq>;
+	};
+
+	mxt: atmel_mxt_ts@4a {
+		compatible = "atmel,atmel_mxt_ts";
+		reg = <0x4a>;
+		interrupt-parent = <&pioC>;
+		interrupts = <25 0x8>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mxt_irq>;
+		wakeup-source;
+	};
+};
+
+&hlcdc {
+	status = "okay";
+
+	hlcdc-display-controller {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb666>;
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&panel_input>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_pwm>;
+	};
+};
+
+&gpu {
+	status = "okay";
+};
+
+&pinctrl {
+	qt1070 {
+		pinctrl_qt1070_irq: qt1070_irq {
+			atmel,pins = <AT91_PIOC 31 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+		};
+	};
+
+	mxt {
+		pinctrl_mxt_irq: mxt_irq {
+			atmel,pins = <AT91_PIOC 25 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+		};
+	};
+
+	lcd {
+		pinctrl_lcd_base: lcd-base-0 {
+			atmel,pins = <AT91_PIOC 27 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDVSYNC */
+				      AT91_PIOC 28 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDHSYNC */
+				      AT91_PIOC 24 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDDISP */
+				      AT91_PIOC 29 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDDEN */
+				      AT91_PIOC 30 AT91_PERIPH_A AT91_PINCTRL_NONE>;	/* LCDPCK */
+		};
+
+		pinctrl_lcd_rgb666: lcd-rgb-3 {
+			atmel,pins = <AT91_PIOC 2 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD2 pin */
+				      AT91_PIOC 3 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD3 pin */
+				      AT91_PIOC 4 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD4 pin */
+				      AT91_PIOC 5 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD5 pin */
+				      AT91_PIOC 6 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD6 pin */
+				      AT91_PIOC 7 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD7 pin */
+				      AT91_PIOC 10 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD10 pin */
+				      AT91_PIOC 11 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD11 pin */
+				      AT91_PIOC 12 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD12 pin */
+				      AT91_PIOC 13 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD13 pin */
+				      AT91_PIOC 14 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD14 pin */
+				      AT91_PIOC 15 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD15 pin */
+				      AT91_PIOC 18 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD18 pin */
+				      AT91_PIOC 19 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD19 pin */
+				      AT91_PIOC 20 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD20 pin */
+				      AT91_PIOC 21 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD21 pin */
+				      AT91_PIOC 22 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDD22 pin */
+				      AT91_PIOC 23 AT91_PERIPH_A AT91_PINCTRL_NONE>;	/* LCDD23 pin */
+		};
+
+		pinctrl_lcd_pwm: lcd_pwm {
+			atmel,pins = <AT91_PIOC 26 AT91_PERIPH_A AT91_PINCTRL_NONE>;
+		};
+	};
+};
+
+&{/} {
+	model = "Microchip SAM9X60-CURIOSITY TM5000";
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&hlcdc_pwm 0 50000 0>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&bl_reg>;
+		status = "okay";
+	};
+
+	bl_reg: backlight_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight-power-supply";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		status = "okay";
+	};
+
+	panel: panel {
+		compatible = "pda,91-00156-a0", "simple-panel";
+		backlight = <&backlight>;
+		power-supply = <&panel_reg>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		port@0 {
+			reg = <0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			panel_input: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+	};
+
+	panel_reg: panel_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "panel-power-supply";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		status = "okay";
+	};
+};
+
+&isi {
+	status = "disabled";
+};
+
