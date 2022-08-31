@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay for Mikroe Flash 5 Click + Pi 3 click shield
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Author: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "microchip,mpfs-icicle-kit", "microchip,mpfs";
+};
+
+&qspi {
+	flash@0 {
+		compatible = "spi-nand";
+		reg = <0>;
+		spi-max-frequency = <100000000>;
+		spi-tx-bus-width = <4>;
+		spi-rx-bus-width = <4>;
+	};
+};
