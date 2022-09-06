@@ -33,7 +33,40 @@
 				type = "flat_dt";
 				arch = "riscv";
 				compression = "none";
-				load = <0x10 0x60000000>;
+				load = <0x10 0x40000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt_rpi {
+				description = "Device Tree blob RPI Sense Hat";
+				data = /incbin/("./mpfs_icicle/mpfs_icicle_rpi_sense_hat.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x10 0x70000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt_f5c {
+				description = "Device Tree blob Flash 5 Click";
+				data = /incbin/("./mpfs_icicle/mpfs_icicle_flash5_click.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x10 0x80000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt_pmod3 {
+				description = "Device Tree blob Pmod SF3";
+				data = /incbin/("./mpfs_icicle/mpfs_icicle_pmod_sf3.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x10 0x90000000>;
 				hash-1 {
 					algo = "sha256";
 				};
@@ -46,6 +79,26 @@
 				description = "1 Linux kernel, FDT blob";
 				kernel = "kernel";
 				fdt = "base_fdt";
+			};
+
+			base_dtb {
+				description = "Base FDT blob for MPFS Icicle board";
+				fdt = "base_fdt";
+			};
+
+			rpi {
+				description = "FDT overlay blob for RPI Sense Hat";
+				fdt = "fdt_rpi";
+			};
+
+			f5c {
+				description = "FDT overlay blob for Flash 5 Click";
+				fdt = "fdt_f5c";
+			};
+
+			pmod3 {
+				description = "FDT overlay blob for Pmod SF3";
+				fdt = "fdt_pmod3";
 			};
 		};
 };
