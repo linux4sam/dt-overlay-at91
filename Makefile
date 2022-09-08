@@ -5,6 +5,7 @@ DTC_OPTIONS += -Wno-unit_address_vs_reg -Wno-graph_child_address -Wno-pwms_prope
 KERNEL_DIR?=../linux
 KERNEL_BUILD_DIR?=$(KERNEL_DIR)
 DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
+BDIR?=sam9x60ek sama5d27_som1_ek sama5d27_wlsom1_ek sama5d2_icp sama5d2_ptc_ek sama5d2_xplained sama5d2_xplained_grts sama5d3_xplained sama5d4_xplained sama7g5ek sam9x60_curiosity mpfs_icicle
 
 # workaround to make mkimage use the same dtc as we do
 PATH:=$(shell dirname $(DTC)):$(PATH)
@@ -57,6 +58,9 @@ sama7g5ek_dtbos: $(SAMA7G5EK_DTBO_OBJECTS)
 sam9x60_curiosity_dtbos: $(SAM9X60_CURIOSITY_DTBO_OBJECTS)
 
 mpfs_icicle_dtbos: $(MPFS_ICICLE_DTBO_OBJECTS)
+
+check:
+	$(foreach DIR, $(BDIR), ./scripts/dt_overlay_check.sh -b $(DIR) -v;)
 
 .PHONY: clean
 clean:
