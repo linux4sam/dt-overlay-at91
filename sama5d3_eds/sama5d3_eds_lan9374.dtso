@@ -1,0 +1,146 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan9374.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the LAN9374 RGMII addon board.
+ *
+ * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
+ *   Author:	 2022 Jerry Ray <jerry.ray@microchip.com>
+ *
+ * 8-Port 100BASE-T1 Gigabit Ethernet Switch
+ * https://www.microchip.com/en-us/product/LAN9374
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+	};
+};
+
+&macb1 {
+	status = "disabled";
+};
+
+&spi0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	lan9374: lan9374@0 {
+		compatible = "microchip,lan9374";
+		reg = <0>;
+		pinctrl-0 = <&pinctrl_rgmii_rstn>;
+		pinctrl-1 = <&pinctrl_spi_irqn>;
+		interrupt-parent = <&pioB>;
+		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+		resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
+		spi-max-frequency = <44000000>;
+		led-t1-sel = <07754321077>;    /* Note this value is octal. */
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				phy-handle=<&t1phy0>;
+				phy-mode = "internal";
+				label = "lan1";
+			};
+			port@1 {
+				reg = <1>;
+				phy-handle=<&t1phy1>;
+				phy-mode = "internal";
+				label = "lan2";
+			};
+			port@2 {
+				reg = <2>;
+				phy-handle=<&t1phy2>;
+				phy-mode = "internal";
+				label = "lan4";
+			};
+			port@3 {
+				reg = <3>;
+				phy-handle=<&t1phy3>;
+				phy-mode = "internal";
+				label = "lan6";
+			};
+			port@5 {
+				reg = <5>;
+				phy-mode = "rgmii-id";
+				rx-internal-delay-ps = <2000>;
+				tx-internal-delay-ps = <2000>;
+				ethernet = <&macb0>;
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
+			};
+			port@4 {
+				reg = <4>;
+				phy-mode = "rgmii-id";
+				tx-internal-delay-ps = <2000>;
+				rx-internal-delay-ps = <2000>;
+				label = "lan7";
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
+			};
+			port@6 {
+				reg = <6>;
+				phy-handle=<&t1phy4>;
+				phy-mode = "internal";
+				label = "lan5";
+			};
+			port@7 {
+				reg = <7>;
+				phy-handle=<&t1phy5>;
+				phy-mode = "internal";
+				label = "lan3";
+			};
+		};
+
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			t1phy0: ethernet-phy@0{
+				reg = <0x0>;
+			};
+			t1phy1: ethernet-phy@1{
+				reg = <0x1>;
+			};
+			t1phy2: ethernet-phy@2{
+				reg = <0x2>;
+			};
+			t1phy3: ethernet-phy@3{
+				reg = <0x3>;
+			};
+			t1phy4: ethernet-phy@6{
+				reg = <0x6>;
+			};
+			t1phy5: ethernet-phy@7{
+				reg = <0x7>;
+			};
+		};
+	};
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: LAN9374";
+};

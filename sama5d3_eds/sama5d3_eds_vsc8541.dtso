@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan9374.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the VSC8541 RGMII PHY addon board.
+ *
+ * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
+ *   Author:	 2022 Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Single-port 1000BASE-Tx Gigabit Ethernet PHY
+ * https://www.microchip.com/en-us/product/VSC8541
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii-id";
+	phy-handle = <&vsc8541>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		vsc8541: ethernet-phy@3 {
+			reg = <0x3>;
+			compatible = "ethernet-phy-id0007.0771";
+			pinctrl-0 = <&pinctrl_rgmii_rstn>;
+			pinctrl-1 = <&pinctrl_spi_irqn>;
+			interrupt-parent = <&pioB>;
+			interrupts = <28 IRQ_TYPE_EDGE_FALLING>;
+			resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
+			status = "okay";
+		};
+	};
+};
+
+&macb1 {
+	status = "disabled";
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: VSC8541";
+};

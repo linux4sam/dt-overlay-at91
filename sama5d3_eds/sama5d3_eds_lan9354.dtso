@@ -1,0 +1,76 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan9354.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the LAN9354 RMII addon board.
+ *
+ * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
+ *   Author:	 2022 Jerry Ray <jerry.ray@microchip.com>
+ *
+ * 3-Port 10/100 Managed Ethernet Switch with RMII
+ * https://www.microchip.com/en-us/product/LAN9354
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	status = "disabled";
+};
+
+&macb1 {
+	phy-handle = <&lan9354switch>;
+	phy-mode = "rmii";
+	status = "okay";
+
+	fixed-link {
+		speed = <100>;
+		full-duplex;
+	};
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		lan9354switch: ethernet-phy@0 {
+			compatible = "microchip,lan9354-mdio";
+			reg = <0>;
+			dsa,member = <0 0>;
+			interrupt-parent = <&pioB>;
+			interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+			pinctrl-0 = <&pinctrl_spi_irqn>;
+			status = "okay";
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				port@0 {
+					reg = <0>;
+					phy-mode = "rmii";
+					label = "cpu";
+					ethernet = <&macb1>;
+					fixed-link {
+						speed = <100>;
+						full-duplex;
+					};
+				};
+				port@1 { /* external port 1 */
+					reg = <1>;
+					max-speed = <100>;
+					label = "lan1";
+				};
+				port@2 { /* external port 2 */
+					reg = <2>;
+					max-speed = <100>;
+					label = "lan2";
+				};
+			};
+		};
+	};
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: LAN9354";
+};
