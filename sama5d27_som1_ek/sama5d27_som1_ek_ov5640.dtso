@@ -60,12 +60,12 @@
 
 &pioA {
 	pinctrl_sensor_power: sensor_power {
-		pinmux = <PIN_PB12__GPIO>;
+		pinmux = <PIN_PD7__GPIO>;
 		bias-disable;
 	};
 
 	pinctrl_sensor_reset: sensor_reset {
-		pinmux = <PIN_PB11__GPIO>;
+		pinmux = <PIN_PD6__GPIO>;
 		bias-disable;
 	};
 };
