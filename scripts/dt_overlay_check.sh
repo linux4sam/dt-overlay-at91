@@ -61,7 +61,8 @@ print_options() {
 		-j	optional, choose number of threads, default is 1 thread.
 		-k	optional, specify the Linux Kernel directory,
 			default value is the \${KERNEL_DIR} environment
-			variable.
+			variable. This becomes obligatory if \${KERNEL_DIR}
+			is empty.
 		-o	optional, set the output directory for the Linux Kernel
 			build commands. Default value is the {O} environment
 			variable if it is set, otherwise the output files are
@@ -149,6 +150,13 @@ update_recipes() {
 # Setup initial variables depending on the value passed through the `-b`
 # command line option.
 setup() {
+	if [[ -z "${KERNEL_DIR}" ]];
+	then
+		echo "-k Option is required!";
+		echo "Otherwise, KERNEL_DIR must be non-empty";
+		exit 1;
+	fi;
+
 	if [[ -z "${DTSO_DIR}" ]];
 	then
 		echo "-b Option is required!";
@@ -224,6 +232,9 @@ handle_interrupt() {
 # Default value for variables that do not come with the environment by default
 THREADS_COUNT=1;
 VERBOSE=false;
+# Error output of `realpath` here is unnecessary as we later check for the
+# result anyway
+KERNEL_DIR=$(realpath -s ${KERNEL_DIR} 2>/dev/null);
 
 # This is used to filter out Kernel build related messages that we do not need,
 # such as DTC, or CHECK or LD related outputs that are issued when building,
