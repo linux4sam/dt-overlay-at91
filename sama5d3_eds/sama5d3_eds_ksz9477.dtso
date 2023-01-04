@@ -1,0 +1,129 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_ksz9893.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the KSZ9893 RGMII addon board.
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Rakesh S <rakesh.sankaranarayanan@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii";
+	status = "okay";
+
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+	};
+};
+
+&spi1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	ksz9477@0 {
+		compatible = "microchip,ksz9477";
+		reg = <0>;
+		spi-max-frequency = <1000000>;
+		spi-cpha;
+		spi-cpol;
+		pinctrl-0 = <&pinctrl_spi_irqn>;
+
+		interrupt-parent = <&pioB>;
+		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				phy-mode = "internal";
+				phy-handle=<&t1phy0>;
+			};
+
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				phy-mode = "internal";
+				phy-handle=<&t1phy1>;
+			};
+
+			port@2 {
+				reg = <2>;
+				label = "lan3";
+				phy-mode = "internal";
+				phy-handle=<&t1phy2>;
+			};
+
+			port@3 {
+				reg = <3>;
+				label = "lan4";
+				phy-mode = "internal";
+				phy-handle=<&t1phy3>;
+			};
+
+			port@4 {
+				reg = <4>;
+				label = "lan5";
+				phy-mode = "internal";
+				phy-handle=<&t1phy4>;
+			};
+
+			port@5 {
+				reg = <5>;
+				label = "cpu";
+				ethernet = <&macb0>;
+				phy-mode = "rgmii";
+				tx-internal-delay-ps = <2000>;
+				rx-internal-delay-ps = <2000>;
+
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
+			};
+		};
+
+		 mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			t1phy0: ethernet-phy@0{
+				reg = <0x0>;
+			};
+			t1phy1: ethernet-phy@1{
+				reg = <0x1>;
+			};
+			t1phy2: ethernet-phy@2{
+				reg = <0x2>;
+			};
+			t1phy3: ethernet-phy@3{
+				reg = <0x3>;
+			};
+			t1phy4: ethernet-phy@4{
+				reg = <0x4>;
+			};
+		 };
+	};
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: KSZ9477";
+};

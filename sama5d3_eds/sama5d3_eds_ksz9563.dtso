@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_ksz9893.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the KSZ9893 RGMII addon board.
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Rakesh S <rakesh.sankaranarayanan@microchip.com>
+ *
+ * 3-Port Gigabit Ethernet Switch
+ * https://www.microchip.com/en-us/product/KSZ9893
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+	};
+};
+
+&spi0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	ksz9563: ksz9563@0 {
+		compatible = "microchip,ksz9563";
+		reg = <0>;
+		pinctrl-0 = <&pinctrl_rgmii_rstn>;
+		pinctrl-1 = <&pinctrl_spi_irqn>;
+
+		interrupt-parent = <&pioB>;
+		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+
+		resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
+		spi-max-frequency = <44000000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				phy-handle=<&t1phy0>;
+				phy-mode = "internal";
+				label = "lan1";
+			};
+			port@1 {
+				reg = <1>;
+				phy-handle=<&t1phy1>;
+				phy-mode = "internal";
+				label = "lan2";
+			};
+			port@2 {
+				reg = <2>;
+				phy-mode = "rgmii-id";
+				rx-internal-delay-ps = <2000>;
+				tx-internal-delay-ps = <2000>;
+				ethernet = <&macb0>;
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
+			};
+		};
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			t1phy0: ethernet-phy@0{
+				reg = <0x0>;
+			};
+			t1phy1: ethernet-phy@1{
+				reg = <0x1>;
+			};
+		};
+	};
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: KSZ9563";
+};
