@@ -1,10 +1,16 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
  * sama5d3_eds_lan9354.dtso - Device Tree file for SAMA5D3 EDS board
- * overlay blob for the LAN9354 RMII addon board.
+ * overlay blob for the LAN9354 RMII add-on board.
  *
- * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
- *   Author:	 2022 Jerry Ray <jerry.ray@microchip.com>
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: 2022 Jerry Ray <jerry.ray@microchip.com>
+ *
+ * The Microchip LAN9354 device is a 3-Port 10/100 managed ethernet
+ * switch connecting to the host processor via RMII and providing 2
+ * 10/100 ports via internal PHYs.  The device is managed through the
+ * MDIO link via extensions to the normal mdio register map.
  *
  * 3-Port 10/100 Managed Ethernet Switch with RMII
  * https://www.microchip.com/en-us/product/LAN9354

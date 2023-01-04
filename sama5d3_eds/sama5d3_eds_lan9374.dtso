@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
  * sama5d3_eds_lan9374.dtso - Device Tree file for SAMA5D3 EDS board
- * overlay blob for the LAN9374 RGMII addon board.
+ * overlay blob for the LAN9374 RGMII add-on board.
  *
- * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
- *   Author:	 2022 Jerry Ray <jerry.ray@microchip.com>
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
  *
  * 8-Port 100BASE-T1 Gigabit Ethernet Switch
  * https://www.microchip.com/en-us/product/LAN9374
