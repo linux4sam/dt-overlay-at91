@@ -75,8 +75,7 @@
 			};
 			port@4 {
 				reg = <4>;
-				phy-mode = "rmii";
-				label = "cpu";
+				phy-mode = "rev-rmii";
 				ethernet = <&macb1>;
 				fixed-link {
 					speed = <100>;

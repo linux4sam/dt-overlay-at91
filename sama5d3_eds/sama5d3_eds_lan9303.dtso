@@ -23,7 +23,6 @@
 };
 
 &macb1 {
-	phy-handle = <&lan9303switch>;
 	phy-mode = "rmii";
 	status = "okay";
 
@@ -39,7 +38,6 @@
 		lan9303switch: ethernet-phy@0 {
 			compatible = "smsc,lan9303-mdio";
 			reg = <0>;
-			dsa,member = <0 0>;
 			interrupt-parent = <&pioB>;
 			interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
 			pinctrl-0 = <&pinctrl_spi_irqn>;
@@ -50,8 +48,7 @@
 				#size-cells = <0>;
 				port@0 {
 					reg = <0>;
-					phy-mode = "rmii";
-					label = "cpu";
+					phy-mode = "rev-rmii";
 					ethernet = <&macb1>;
 					fixed-link {
 						speed = <100>;
