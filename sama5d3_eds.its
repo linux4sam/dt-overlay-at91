@@ -6,6 +6,10 @@
  * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries
  * Author: Jerry Ray <jerry.ray@microchip.com>
  *
+ * The following convention is used on this board.
+ * Overlays for RMII connector add-on boards are loaded at 0x23120000.
+ * Overlays for RGMII connector add-on boards are loaded at 0x23130000.
+ *
  */
 /dts-v1/;
 
@@ -31,6 +35,7 @@
 			};
 		};
 
+		/* Base Device Tree */
 		base_fdt {
 			description = "Flattened Device Tree blob";
 			data = /incbin/("./at91-sama5d3_eds.dtb");
@@ -67,7 +72,7 @@
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
-			load = <0x23130000>;
+			load = <0x23120000>;
 			hash-1 {
 				algo = "crc32";
 			};
@@ -82,7 +87,7 @@
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
-			load = <0x23140000>;
+			load = <0x23120000>;
 			hash-1 {
 				algo = "crc32";
 			};
@@ -97,7 +102,7 @@
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
-			load = <0x23150000>;
+			load = <0x23130000>;
 			hash-1 {
 				algo = "crc32";
 			};
@@ -112,7 +117,7 @@
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
-			load = <0x23160000>;
+			load = <0x23130000>;
 			hash-1 {
 				algo = "crc32";
 			};
