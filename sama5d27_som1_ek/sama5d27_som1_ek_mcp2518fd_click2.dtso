@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_som1_ek_mcp251xfd.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * overlay blob for Mikroe MCP2517FD/18FD/MCP251863 board on Click 2.
+ * The blob uses SPI on flx4.
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ * Author: Thomas Kopp <thomas.kopp@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&flx4 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+	status = "okay";
+
+	spi6: spi@400{
+		compatible = "atmel,at91rm9200-spi";
+		reg = <0x400 0x200>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clock-names = "spi_clk";
+		atmel,fifo-size = <16>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikrobus_spi>;
+		status = "okay";
+
+		mcp2518fd: can@0{
+			compatible = "microchip,mcp2518fd";
+			spi-max-frequency = <20000000>;
+			reg = <0>;
+
+			interrupt-parent = <&pioA>;
+			interrupts = <PIN_PA25 8>;
+
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_mikrobus2_int &pinctrl_mikrobus2_spi_cs>;
+
+			clocks = <&mikrobus2_osc>;
+		};
+	};
+};
+
+&{/} {
+	mikrobus2_osc: oscillator_2 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <40000000>;
+	};
+};
