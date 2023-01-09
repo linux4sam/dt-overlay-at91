@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan9374.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for a generic RGMII phy add-on board.
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Single-port Gigabit Ethernet PHY
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii-id";
+	phy-handle = <&gbitphy>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		gbitphy: ethernet-phy@3 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <0x3>;
+			max-speed = <1000>;
+			pinctrl-0 = <&pinctrl_rgmii_rstn>;
+			resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
+			status = "okay";
+		};
+	};
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: RGMII";
+};

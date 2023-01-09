@@ -185,6 +185,66 @@
 				algo = "sha1";
 			};
 		};
+
+		fdt_rgmii {
+			description = "Device Tree blob generic RGMII PHY overlay";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_rgmii.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_rmii {
+			description = "Device Tree blob generic rmii PHY overlay";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_rmii.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_rgmii_irq {
+			description = "Device Tree blob generic RGMII PHY overlay w/ IRQ";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_rgmii_irq.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_rmii_irq {
+			description = "Device Tree blob generic rmii PHY overlay w/ IRQ";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_rmii_irq.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
 	};
 
 	configurations {
@@ -244,6 +304,26 @@
 		vsc8541 {
 			description = "FDT overlay blob for vsc8541 PHY RGMII add-on board";
 			fdt = "fdt_vsc8541";
+		};
+
+		rgmii {
+			description = "FDT overlay blob for generic RGMII PHY add-on board";
+			fdt = "fdt_rgmii";
+		};
+
+		rmii {
+			description = "FDT overlay blob for generic RMII PHY add-on board";
+			fdt = "fdt_rmii";
+		};
+
+		rgmii_irq {
+			description = "FDT overlay blob for generic RGMII PHY add-on board";
+			fdt = "fdt_rgmii_irq";
+		};
+
+		rmii_irq {
+			description = "FDT overlay blob for generic RMII PHY add-on board";
+			fdt = "fdt_rmii_irq";
 		};
 	};
 };

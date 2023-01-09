@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan9303.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for a generic RMII phy add-on board.
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb1 {
+	phy-mode = "rmii";
+	phy-handle = <&mbitphy>;
+	max-speed = <100>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		mbitphy: ethernet-phy@0 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <0x3>;
+			max-speed = <100>;
+			interrupt-parent = <&pioB>;
+			interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+			pinctrl-0 = <&pinctrl_spi_irqn>;
+			status = "okay";
+		};
+	};
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: Generic RMII PHY w/ IRQ";
+};
