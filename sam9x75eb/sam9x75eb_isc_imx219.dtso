@@ -91,6 +91,10 @@
 	};
 };
 
+&dsi {
+	status = "disabled";
+};
+
 &i2c10 {
 	/*
 	 * Camera sensor add-on board Raspberry Pi v2.1 Camera extension
