@@ -66,6 +66,10 @@
 	};
 };
 
+&vdec0 {
+	status = "okay";
+};
+
 &{/} {
 	model = "Atmel SAMA5D4 Xplained SiI9022";
 	compatible = "atmel,sama5d4-xplained", "atmel,sama5d4", "atmel,sama5";

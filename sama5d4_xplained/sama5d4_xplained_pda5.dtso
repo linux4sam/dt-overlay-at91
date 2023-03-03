@@ -67,6 +67,10 @@
 	};
 };
 
+&vdec0 {
+	status = "okay";
+};
+
 &{/} {
 	model = "Atmel SAMA5D4 Xplained TM5000";
 
