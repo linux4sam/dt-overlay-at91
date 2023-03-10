@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d27_som1_ek_wilc_spi.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * overlay blob for wilc spi module to connect on mikrobus 1.
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
+ * Author: Ajay Singh <ajay.kathat@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&{/} {
+       leds {
+               status = "disabled"; /* Conflict with wilc spi chip_en */
+       };
+};
+
+&spi6 {
+       #address-cells = <1>;
+       #size-cells = <0>;
+       status = "okay";
+
+       wilc_spi@1 {
+               compatible = "microchip,wilc1000", "microchip,wilc3000";
+               spi-max-frequency = <48000000>;
+               reg = <1>;
+               interrupt-parent = <&pioA>;
+               interrupts = <PIN_PB0 0>;
+               reset-gpios = <&pioA PIN_PB2 0>;
+               chip_en-gpios = <&pioA PIN_PB1 0>;
+               status = "okay";
+       };
+};
