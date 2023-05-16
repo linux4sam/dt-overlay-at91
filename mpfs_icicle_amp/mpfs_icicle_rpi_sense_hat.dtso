@@ -11,39 +11,51 @@
 /plugin/;
 
 / {
-	compatible = "microchip,mpfs-icicle-reference-rtlv2209", "microchip,mpfs-icicle-kit","microchip,mpfs";
+	compatible = "microchip,mpfs-icicle-reference-rtlv2302", "microchip,mpfs-icicle-kit","microchip,mpfs";
 };
 
 &i2c2 {
-	#address-cells = <0x01>;
-	#size-cells = <0x00>;
+	#address-cells = <0x1>;
+	#size-cells = <0x0>;
+	status = "okay";
 
 	sensehat@46 {
-		compatible = "rpi,rpi-sense";
+		compatible = "raspberrypi,sensehat";
 		reg = <0x46>;
-		keys-int-gpios = <&gpio2 11 1>;
+		interrupt-parent = <&gpio2>;
 		status = "okay";
+
+		display {
+			compatible = "raspberrypi,sensehat-display";
+			status = "okay";
+		};
+
+		joystick {
+			compatible = "raspberrypi,sensehat-joystick";
+			interrupts = <11 1>;
+			status = "disabled";
+		};
 	};
 
-	lsm9ds1-magn@1c {
+	magnetometer@1c {
 		compatible = "st,lsm9ds1-magn";
 		reg = <0x1c>;
 		status = "okay";
 	};
 
-	st,lsm9ds1-imu@6a {
-		compatible = "st,lsm9ds1-imu";
+	accelerometer@6a {
+		compatible = "st,lsm9ds1-accel";
 		reg = <0x6a>;
 		status = "okay";
 	};
 
-	lps25h-press@5c {
+	pressure@5c {
 		compatible = "st,lps25h-press";
 		reg = <0x5c>;
 		status = "okay";
 	};
 
-	hts221-humid@5f {
+	humidity@5f {
 		compatible = "st,hts221";
 		reg = <0x5f>;
 		status = "okay";
