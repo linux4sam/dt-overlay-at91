@@ -1,0 +1,173 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA5D29 Curiosity board
+ * overlay blob for TM7000B LCD.
+ *
+ * Copyright (C) 2023 Microchip Technology, Inc. and its subsidiaries
+ * Author: Ciprian Abramov <ciprian.abramov@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&{/} {
+	model = "Microchip SAMA5D29 CURIOSITY TM7000B";
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&hlcdc_pwm 0 50000 0>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&bl_reg>;
+		status = "okay";
+	};
+
+	bl_reg: backlight-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight-power-supply";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		status = "okay";
+	};
+
+	panel: panel {
+		compatible = "shelly,sca07010-bfn-lnn", "simple-panel";
+		backlight = <&backlight>;
+		power-supply = <&panel_reg>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		port@0 {
+			reg = <0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			panel_input: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+	};
+
+	panel_reg: panel-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "panel-power-supply";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		status = "okay";
+	};
+};
+
+/*
+ * in order to use the LCD : the status field  for can0 and can1
+ * need to be on disable because pins PC10, PC11 and PC26, PC27
+ * can't be used at the same time for both peripherals.
+ *
+ */
+&can0 {
+	status = "disable";
+};
+
+&can1 {
+	status = "disable";
+};
+
+&hlcdc {
+	status = "okay";
+
+	hlcdc-display-controller {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_base &pinctrl_lcd_rgb_666>;
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&panel_input>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd_pwm>;
+	};
+};
+
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	qt1070: keyboard@1b {
+		compatible = "qt1070";
+		reg = <0x1b>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PB29 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_qt1070_irq>;
+		wakeup-source;
+	};
+
+	atmel_mxt_ts@4a {
+		compatible = "atmel,atmel_mxt_ts";
+		reg = <0x4a>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PB25 0x0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mxt_irq>;
+	};
+};
+
+&pioA {
+	pinctrl_qt1070_irq: pinctrl-qt1070-irq {
+		pinmux = <PIN_PB29__GPIO>;
+		bias-pull-up;
+		input-debounce = <1>;
+	};
+
+	pinctrl_mxt_irq: pinctrl-mxt-irq {
+		pinmux = <PIN_PB25__GPIO>;
+		bias-pull-up;
+		input-debounce = <1>;
+	};
+
+	pinctrl_lcd_base: pinctrl-lcd-base {
+		pinmux = <PIN_PC30__LCDVSYNC>,
+			 <PIN_PC31__LCDHSYNC>,
+			 <PIN_PD1__LCDDEN>,
+			 <PIN_PD0__LCDPCK>;
+		bias-disable;
+		atmel,drive-strength = <ATMEL_PIO_DRVSTR_HI>;
+	};
+
+	pinctrl_lcd_rgb_666: pinctrl-lcd-rgb {
+		pinmux = <PIN_PC10__LCDDAT2>,
+			<PIN_PC11__LCDDAT3>,
+			<PIN_PC12__LCDDAT4>,
+			<PIN_PC13__LCDDAT5>,
+			<PIN_PC14__LCDDAT6>,
+			<PIN_PC15__LCDDAT7>,
+			<PIN_PC16__LCDDAT10>,
+			<PIN_PC17__LCDDAT11>,
+			<PIN_PC18__LCDDAT12>,
+			<PIN_PC19__LCDDAT13>,
+			<PIN_PC20__LCDDAT14>,
+			<PIN_PC21__LCDDAT15>,
+			<PIN_PC22__LCDDAT18>,
+			<PIN_PC23__LCDDAT19>,
+			<PIN_PC24__LCDDAT20>,
+			<PIN_PC25__LCDDAT21>,
+			<PIN_PC26__LCDDAT22>,
+			<PIN_PC27__LCDDAT23>;
+		bias-disable;
+		atmel,drive-strength = <ATMEL_PIO_DRVSTR_HI>;
+	};
+
+	pinctrl_lcd_pwm: pinctrl-lcd-pwm {
+		pinmux = <PIN_PC28__LCDPWM>;
+		bias-disable;
+	};
+};

@@ -1,0 +1,183 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Flattened Image Tree file for SAMA5D29 Curiosity board
+ *
+ * Copyright (C) 2023 Microchip Technology, Inc. and its subsidiaries
+ * Author: Ciprian Abramov <ciprian.abramov@microchip.com>
+ *
+ */
+/dts-v1/;
+
+/ {
+	description = "Microchip SAMA5D29-Curiosity FIT Image";
+	#address-cells = <1>;
+
+	images {
+		kernel {
+			description = "Linux4SAM Linux kernel";
+			data = /incbin/("./zImage");
+			type = "kernel";
+			arch = "arm";
+			os = "linux";
+			compression = "none";
+			load = <0x22000000>;
+			entry = <0x22000000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		base_fdt {
+			description = "Flattened Device Tree blob";
+			data = /incbin/("./at91-sama5d29_curiosity.dtb");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23000000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda4 {
+			description = "Device Tree blob TM4000 overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_pda4.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23100000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda5 {
+			description = "Device Tree blob TM5000 overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_pda5.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23110000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7 {
+			description = "Device Tree blob TM7000 overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_pda7.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_pda7b {
+			description = "Device Tree blob TM7000B overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_pda7b.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_lan8720a {
+			description = "Device Tree blob LAN8720A overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_lan8720a.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23140000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_i2s0_proto {
+			description = "Device Tree blob mikroe Audio Proto board overlay";
+			data = /incbin/("./sama5d29_curiosity/sama5d29_curiosity_i2s0_proto.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23150000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+	};
+
+	configurations {
+		default = "kernel_dtb";
+
+		kernel_dtb {
+			description = "Linux kernel and base FDT blob for SAMA5D29-Curiosity board";
+			kernel = "kernel";
+			fdt = "base_fdt";
+		};
+
+		base_dtb {
+			description = "Base FDT blob for SAMA5D29-Curiosity board";
+			fdt = "base_fdt";
+		};
+
+		pda4 {
+			description = "FDT overlay blob for PDA TM4000 screen";
+			fdt = "fdt_pda4";
+		};
+
+		pda5 {
+			description = "FDT overlay blob for PDA TM5000 screen";
+			fdt = "fdt_pda5";
+		};
+
+		pda7 {
+			description = "FDT overlay blob for PDA TM7000 screen";
+			fdt = "fdt_pda7";
+		};
+
+		pda7b {
+			description = "FDT overlay blob for PDA TM7000B screen";
+			fdt = "fdt_pda7b";
+		};
+
+		lan8720a {
+			description = "FDT overlay blob for LAN8720A RMII adapter AC320004-3";
+			fdt = "fdt_lan8720a";
+		};
+
+		i2s0_proto {
+			description = "FDT overlay blob for mikroe Audio Proto board";
+			fdt = "fdt_i2s0_proto";
+		};
+	};
+};

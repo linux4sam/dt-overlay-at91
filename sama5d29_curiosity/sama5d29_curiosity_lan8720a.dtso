@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA5D29 Curiosity board
+ * overlay blob for LAN8720A PHY.
+ *
+ * Copyright (C) 2023 Microchip Technology, Inc. and its subsidiaries
+ * Author: Ciprian Abramov <ciprian.abramov@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&macb0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_macb0_default &pinctrl_macb0_phy_irq>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+	phy-mode = "rmii";
+	status = "okay";
+
+	ethernet-phy@0 {
+		reg = <0x0>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PB24 0x0>;
+	};
+};
+
+&pioA {
+       pinctrl_macb0_default: macb0-default {
+		pinmux = <PIN_PB14__GTXCK>,
+			 <PIN_PB15__GTXEN>,
+			 <PIN_PB16__GRXDV>,
+			 <PIN_PB17__GRXER>,
+			 <PIN_PB18__GRX0>,
+			 <PIN_PB19__GRX1>,
+			 <PIN_PB20__GTX0>,
+			 <PIN_PB21__GTX1>,
+			 <PIN_PB22__GMDC>,
+			 <PIN_PB23__GMDIO>;
+		bias-disable;
+	};
+
+	pinctrl_macb0_phy_irq: macb0-phy-irq {
+		pinmux = <PIN_PB24__GPIO>;
+		bias-disable;
+	};
+};
