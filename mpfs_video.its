@@ -1,0 +1,89 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Flattened Image Tree file for Mpfs Video Kit
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Author: shravan chippa <shravan.chippa@microchip.com>
+ *
+ */
+
+/dts-v1/;
+
+/ {
+	description = "U-Boot fitImage for the MPFS";
+	#address-cells = <2>;
+
+		images {
+			kernel {
+				description = "Linux kernel";
+				data = /incbin/("./Image.gz");
+				type = "kernel";
+				arch = "riscv";
+				os = "linux";
+				compression = "gzip";
+				load = <0x80200000>;
+				entry = <0x80200000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			base_fdt {
+				description = "Flattened Device Tree blob";
+				data = /incbin/("./dts/microchip/mpfs-video-kit.dtb");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt_h_264 {
+				description = "Device Tree mpfs_h264 dtbo";
+				data = /incbin/("./mpfs_video/mpfs_h264.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a080000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt_mpfs_video_bayer {
+				description = "Device Tree mpfs video bayer dtbo";
+				data = /incbin/("./mpfs_video/mpfs_video_bayer.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a090000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+		};
+
+		configurations {
+			default = "kernel_dtb";
+			kernel_dtb {
+				description = "1 Linux kernel, FDT blob";
+				kernel = "kernel";
+				fdt = "base_fdt";
+			};
+
+			base_dtb {
+				description = "Base FDT blob for MPFS Video board";
+				fdt = "base_fdt";
+			};
+
+			h_264 {
+				description = "FDT overlay blob for H.264";
+				fdt = "fdt_h_264";
+			};
+
+			mpfs_video_bayer {
+				description = "FDT overlay blob for video bayer";
+				fdt = "fdt_mpfs_video_bayer";
+			};
+		};
+};
+
