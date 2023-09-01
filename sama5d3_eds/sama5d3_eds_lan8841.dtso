@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sama5d3_eds_lan8841.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the LAN8841 RGMII PHY add-on board.
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Single-port 1000BASE-Tx Gigabit Ethernet PHY
+ * EVB-LAN8841 - https://www.microchip.com/en-us/development-tool/EV19G28A
+ *
+ * Note: Depopulate R43 (remove RXER signal) to allow this board to
+ *       function properly with the SAMA5D3-EDS.
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/pinctrl/at91.h"
+
+&macb0 {
+	phy-mode = "rgmii-id";
+	phy-handle = <&lan8841>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		lan8841: ethernet-phy@3 {
+			reg = <0x3>;
+			eee-broken-100tx;
+			eee-broken-1000t;
+			pinctrl-0 = <&pinctrl_rgmii_rstn>;
+			pinctrl-1 = <&pinctrl_spi_irqn>;
+			/* psec == ksz9131 */
+			txen-skew-psec = <0>;
+			txd0-skew-psec = <0>;
+			txd1-skew-psec = <0>;
+			txd2-skew-psec = <0>;
+			txd3-skew-psec = <0>;
+			txc-skew-psec = <1000>;
+			/* LAN8841  */
+			rxc-skew-psec = <800>;
+			resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
+			interrupt-parent = <&pioB>;
+			interrupts = <28 IRQ_TYPE_EDGE_FALLING>;
+			status = "okay";
+		};
+	};
+};
+
+&usart0 {
+	status = "disabled";    /* Conflicts with using pioD 18 as GPIO */
+};
+
+&{/} {
+	model = "SAMA5D3-EDS: LAN8841";
+};

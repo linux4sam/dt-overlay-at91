@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d3_eds_rgmii_irq.dtso - Device Tree file for SAMA5D3 EDS board
- * overlay blob for a generic RGMII phy add-on board.
+ * sama5d3_eds_lan8830.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the LAN8830 RGMII PHY add-on board.
  *
  * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
  *
  * Author: Jerry Ray <jerry.ray@microchip.com>
  *
- * Single-port Gigabit Ethernet PHY
+ * Single-port 1000BASE-Tx Gigabit Ethernet PHY
+ * EVB-LAN8830 - https://www.microchip.com/en-us/development-tool/EV03V90A
  *
  */
 /dts-v1/;
@@ -19,24 +20,31 @@
 
 &macb0 {
 	phy-mode = "rgmii-id";
-	phy-handle = <&gbitphy>;
+	phy-handle = <&lan8830>;
 	status = "okay";
 
 	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		gbitphy: ethernet-phy@3 {
-			compatible = "ethernet-phy-ieee802.3-c22";
+		lan8830: ethernet-phy@3 {
 			reg = <0x3>;
-			max-speed = <1000>;
-			eee-broken-100tx; /* EEE not supported by EDS */
-			eee-broken-1000t; /* EEE not supported by EDS */
+			eee-broken-100tx;
+			eee-broken-1000t;
 			pinctrl-0 = <&pinctrl_rgmii_rstn>;
 			pinctrl-1 = <&pinctrl_spi_irqn>;
+			/* psec == ksz9131 */
+			txen-skew-psec = <0>;
+			txd0-skew-psec = <0>;
+			txd1-skew-psec = <0>;
+			txd2-skew-psec = <0>;
+			txd3-skew-psec = <0>;
+			txc-skew-psec = <1000>;
+			/* LAN8830  */
+			rxc-skew-psec = <800>;
+			resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
 			interrupt-parent = <&pioB>;
 			interrupts = <28 IRQ_TYPE_EDGE_FALLING>;
-			resetb-gpios = <&pioD 18 GPIO_ACTIVE_LOW>;
 			status = "okay";
 		};
 	};
@@ -47,5 +55,5 @@
 };
 
 &{/} {
-	model = "SAMA5D3-EDS: RGMII w/ IRQ";
+	model = "SAMA5D3-EDS: LAN8830";
 };

@@ -186,6 +186,36 @@
 			};
 		};
 
+		fdt_lan8830 {
+			description = "Device Tree blob lan8830 PHY overlay";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_lan8830.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_lan8841 {
+			description = "Device Tree blob lan8841 PHY overlay";
+			data = /incbin/("./sama5d3_eds/sama5d3_eds_lan8841.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23130000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_rgmii {
 			description = "Device Tree blob generic RGMII PHY overlay";
 			data = /incbin/("./sama5d3_eds/sama5d3_eds_rgmii.dtbo");
@@ -304,6 +334,16 @@
 		vsc8541 {
 			description = "FDT overlay blob for vsc8541 PHY RGMII add-on board";
 			fdt = "fdt_vsc8541";
+		};
+
+		lan8830 {
+			description = "FDT overlay blob for lan8830 PHY RGMII add-on board";
+			fdt = "fdt_lan8830";
+		};
+
+		lan8841 {
+			description = "FDT overlay blob for lan8841 PHY RGMII add-on board";
+			fdt = "fdt_lan8841";
 		};
 
 		rgmii {
