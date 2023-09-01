@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d3_eds_lan9374.dtso - Device Tree file for SAMA5D3 EDS board
+ * sama5d3_eds_vsc8541.dtso - Device Tree file for SAMA5D3 EDS board
  * overlay blob for the VSC8541 RGMII PHY add-on board.
  *
  * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
@@ -29,7 +29,7 @@
 
 		vsc8541: ethernet-phy@3 {
 			reg = <0x3>;
-			compatible = "ethernet-phy-id0007.0771";
+		/*	compatible = "ethernet-phy-id0007.0771"; */
 			pinctrl-0 = <&pinctrl_rgmii_rstn>;
 			pinctrl-1 = <&pinctrl_spi_irqn>;
 			interrupt-parent = <&pioB>;
@@ -38,10 +38,6 @@
 			status = "okay";
 		};
 	};
-};
-
-&macb1 {
-	status = "disabled";
 };
 
 &usart0 {
