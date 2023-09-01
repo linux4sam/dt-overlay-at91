@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d3_eds_ksz9893.dtso - Device Tree file for SAMA5D3 EDS board
- * overlay blob for the KSZ9893 RGMII addon board.
+ * sama5d3_eds_ksz9477.dtso - Device Tree file for SAMA5D3 EDS board
+ * overlay blob for the EVB-KSZ9477 standalone board.
  *
- * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
+ * Note the KSZ9477 device supports an SGMII port on port 7 but the
+ * driver does not yet support SGMII.
+ *
+ * https://www.microchip.com/en-us/development-tool/EVB-KSZ9477-1
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
  *
  * Author: Rakesh S <rakesh.sankaranarayanan@microchip.com>
  *
@@ -16,7 +21,7 @@
 #include "dt-bindings/pinctrl/at91.h"
 
 &macb0 {
-	phy-mode = "rgmii";
+	phy-mode = "rgmii-txid";
 	status = "okay";
 
 	fixed-link {
@@ -33,7 +38,7 @@
 	ksz9477@0 {
 		compatible = "microchip,ksz9477";
 		reg = <0>;
-		spi-max-frequency = <1000000>;
+		spi-max-frequency = <20000000>;
 		spi-cpha;
 		spi-cpol;
 		pinctrl-0 = <&pinctrl_spi_irqn>;
@@ -86,9 +91,9 @@
 				reg = <5>;
 				label = "cpu";
 				ethernet = <&macb0>;
-				phy-mode = "rgmii";
+				phy-mode = "rgmii-txid";
 				tx-internal-delay-ps = <2000>;
-				rx-internal-delay-ps = <2000>;
+				rx-internal-delay-ps = <0>;
 
 				fixed-link {
 					speed = <1000>;
