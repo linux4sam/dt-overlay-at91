@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  sama9x60_curiosity_at25ff321a_click1.dtso - Device Tree overlay for SAM9X60_CURIOSITY board in order to use SPI on click board 1 slot
+ *
+ *  Copyright (c) 2023 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Romain Sioen <romain.sioen@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&flx4 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+
+	spi4: spi@400 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikrobus_spi &pinctrl_mikrobus_spi_cs>;
+		status = "okay";
+
+		flash@0 {
+			compatible = "atmel,at25ff321a", "jedec,spi-nor";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0>;
+			spi-max-frequency = <20000000>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+			m25p,fast-read;
+		};
+	};
+};
+
+&pinctrl {
+	spi4 {
+		pinctrl_mikrobus_spi: mikrobus_spi {
+			atmel,pins = <AT91_PIOA 13 AT91_PERIPH_A AT91_PINCTRL_NONE
+					AT91_PIOA 11 AT91_PERIPH_A AT91_PINCTRL_NONE
+					AT91_PIOA 12 AT91_PERIPH_A AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_mikrobus_spi_cs: mikrobus_spi_cs {
+			atmel,pins = <AT91_PIOA 14 AT91_PERIPH_A AT91_PINCTRL_NONE>;
+		};
+	};
+};
