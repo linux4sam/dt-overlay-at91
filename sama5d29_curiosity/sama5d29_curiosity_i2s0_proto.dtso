@@ -15,7 +15,7 @@
 
 &{/} {
 	sound {
-                compatible = "mikroe,mikroe-proto";
+		compatible = "mikroe,mikroe-proto";
 		model = "wm8731 @ sama5d29-curiosity";
 		i2s-controller = <&i2s0>;
 		audio-codec = <&wm8731>;
@@ -30,5 +30,22 @@
 		#sound-dai-cells = <0>;
 		compatible = "wlf,wm8731";
 		reg = <0x1a>;
+	};
+};
+
+&i2s0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2s0_default>;
+	status = "okay";
+};
+
+&pioA {
+	pinctrl_i2s0_default: i2s0-default {
+		pinmux = <PIN_PD19__I2SC0_CK>,
+			 <PIN_PD20__I2SC0_MCK>,
+			 <PIN_PD21__I2SC0_WS>,
+			 <PIN_PD22__I2SC0_DI0>,
+			 <PIN_PD23__I2SC0_DO0>;
+		bias-disable;
 	};
 };
