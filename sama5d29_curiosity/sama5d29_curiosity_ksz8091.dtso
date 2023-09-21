@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
  * Device Tree file for SAMA5D29 Curiosity board
- * overlay blob for LAN8720A PHY.
+ * overlay blob for KSZ8091 RMII adapter EV90J04A.
  *
  * Copyright (C) 2023 Microchip Technology, Inc. and its subsidiaries
  * Author: Ciprian Abramov <ciprian.abramov@microchip.com>
@@ -27,10 +27,11 @@
 		interrupt-parent = <&pioA>;
 		interrupts = <PIN_PB24 0x0>;
 	};
+
 };
 
 &pioA {
-       pinctrl_macb0_default: macb0-default {
+	pinctrl_macb0_default: macb0-default {
 		pinmux = <PIN_PB14__GTXCK>,
 			 <PIN_PB15__GTXEN>,
 			 <PIN_PB16__GRXDV>,
