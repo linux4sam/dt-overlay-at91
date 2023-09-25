@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  sama5d27_som1_ek_at25ff321a_click1.dtso - Device Tree overlay for SAMA5D27-SOM1-EK board in order to use SPI on click board 1 slot
+ *
+ *  Copyright (c) 2023 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Romain Sioen <romain.sioen@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama5d2-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&spi6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_mikrobus_spi &pinctrl_mikrobus1_spi_cs>;
+	status = "okay";
+
+	flash@1 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "atmel,at25ff321a", "jedec,spi-nor";
+		reg = <1>;
+		spi-max-frequency = <20000000>;
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <1>;
+		m25p,fast-read;
+	};
+};
