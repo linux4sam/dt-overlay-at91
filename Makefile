@@ -17,6 +17,7 @@ MPFS_VIDEO_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs_video/*.dtso)
 SAM9X60EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60ek/*.dtso))
 SAM9X60_CURIOSITY_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60_curiosity/*.dtso))
 SAM9X75EB_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x75eb/*.dtso))
+SAM9X75_CURIOSITY_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x75_curiosity/*.dtso))
 SAMA5D2_ICP_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_icp/*.dtso))
 SAMA5D2_PTC_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_ptc_ek/*.dtso))
 SAMA5D2_XPLAINED_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sama5d2_xplained/*.dtso))
@@ -51,6 +52,8 @@ sam9x60ek_dtbos: $(SAM9X60EK_DTBO_OBJECTS)
 sam9x60_curiosity_dtbos: $(SAM9X60_CURIOSITY_DTBO_OBJECTS)
 
 sam9x75eb_dtbos: $(SAM9X75EB_DTBO_OBJECTS)
+
+sam9x75_curiosity_dtbos: $(SAM9X75_CURIOSITY_DTBO_OBJECTS)
 
 sama5d2_icp_dtbos: $(SAMA5D2_ICP_DTBO_OBJECTS)
 
