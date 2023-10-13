@@ -1,0 +1,125 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * sam9x75_curiosity_lvds.dtso - Device Tree file for SAM9X75 Curiosity
+ * board overlay blob for AC69T88A LVDS Display Panel
+ *
+ * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
+ * Author: Dharma Balasubiramani <dharma.b@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+
+&{/} {
+        mic23150_reg: mic23150_regulator {
+               compatible = "regulator-fixed";
+               regulator-name = "panel-power-supply";
+               regulator-min-microvolt = <3300000>;
+               regulator-max-microvolt = <3300000>;
+               gpio = <&pioC 30 GPIO_ACTIVE_HIGH>; /* LCD_MODULE_ENABLE */
+               enable-active-high;
+               status = "okay";
+        };
+
+	lvds_panel_bl: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm0 0 1000000 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pwm>;
+		brightness-levels = <0 32 64 128 256 512 1024>;
+		default-brightness-level = <6>;
+		status="okay";
+	};
+
+	panel {
+		compatible = "sitronix,7262-lvds", "simple-panel";
+		backlight = <&lvds_panel_bl>;
+		power-supply = <&mic23150_reg>;
+		status="okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			panel_in: endpoint {
+				remote-endpoint = <&lvds_out_panel>;
+			};
+		};
+	};
+};
+
+&pwm0 {
+	status = "okay";
+};
+
+&i2c6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	atmel_mxt_ts@4a {
+		compatible = "atmel,atmel_mxt_ts";
+		reg = <0x4a>;
+		interrupt-parent = <&pioA>;
+		interrupts = <20 0x8>; /* MXT_IRQ_PA20 */
+		vdda-supply = <&mic23150_reg>;
+		status = "okay";
+	};
+};
+
+&hlcdc {
+	clocks = <&pmc PMC_TYPE_PERIPHERAL 25>, <&pmc PMC_TYPE_CORE PMC_LVDSPLL>, <&clk32k 1>;
+	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
+	microchip,use-lvds-pll; /* Use LVDS PLL instead of sys clk */
+	assigned-clocks = <&pmc PMC_TYPE_CORE PMC_LVDSPLL>;
+	assigned-clock-rates = <175000000>;
+	status="okay";
+
+	hlcdc-display-controller {
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&lvds_in_lcdc>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		status = "disabled";
+	};
+};
+
+&lvds_controller {
+	status = "okay";
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		port@0 {
+			reg = <0>;
+			lvds_in_lcdc: endpoint {
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+			lvds_out_panel: endpoint {
+				remote-endpoint = <&panel_in>;
+			};
+		};
+	};
+};
+
+&pinctrl {
+	pwm {
+		pinctrl_pwm: pwm_bl {
+			atmel,pins = <AT91_PIOC 18 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+		};
+	};
+};
