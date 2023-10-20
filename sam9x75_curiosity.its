@@ -45,6 +45,21 @@
 			};
 		};
 
+		fdt_isc_imx219 {
+			description = "Device Tree blob ISC IMX219 overlay";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_isc_imx219.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23100000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_lvds_panel {
 			description = "Device Tree blob for AC69T88A LVDS Display Panel";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_lvds_display.dtbo");
@@ -73,6 +88,11 @@
 		base_dtb {
 			description = "Base FDT blob for SAM9X75-Curiosity board";
 			fdt = "base_fdt";
+		};
+
+		imx219 {
+			description = "FDT overlay blob for ISC IMX219 sensor";
+			fdt = "fdt_isc_imx219";
 		};
 
 		lvds {
