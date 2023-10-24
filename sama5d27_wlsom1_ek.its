@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d27_wlsom1_ek.its - Flattened Image Tree file for SAMA5D27 WLSOM1 EK
+ * Flattened Image Tree file for SAMA5D27 WLSOM1 EK
  *
  * Copyright (C) 2019 Microchip Technology, Inc.
  * Author: Eugen Hristev <eugen.hristev@microchip.com>

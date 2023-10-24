@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d2_xplained_ov5640.dtso - Device Tree file for SAMA5D2 Xplained board
+ * Device Tree file for SAMA5D2 Xplained board
  * overlay blob for Image Sensor Controller Omnivision ov5640 sensor.
  *
  * Copyright (C) 2019 Microchip Technology, Inc.

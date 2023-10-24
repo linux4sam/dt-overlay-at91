@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x60_curiosity_pda5.dtso - Device Tree file for SAM9X60-CURIOSITY board
+ * Device Tree file for SAM9X60-CURIOSITY board
  * overlay blob for PDA5000 LCD.
  *
  * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x60_curiosity.its - Flattened Image Tree file for SAM9X60 Curiosity board
+ * Flattened Image Tree file for SAM9X60 Curiosity board
  *
  * Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries
  *

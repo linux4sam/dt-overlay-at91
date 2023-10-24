@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama7g5ek_i2s0_proto.dtso - Device Tree file for SAMA7G5-EK board
+ * Device Tree file for SAMA7G5-EK board
  * overlay blob for I2S with PROTO board. The blob uses i2s0 and i2c9.
  *
  * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries

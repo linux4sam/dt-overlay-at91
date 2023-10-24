@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d27_som1_ek_isc.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * Device Tree file for SAMA5D27 SOM1 EK board
  * overlay blob for Image Sensor Controller Omnivision ov5640 sensor.
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

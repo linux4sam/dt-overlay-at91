@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d27_som1_ek_pda4.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * Device Tree file for SAMA5D27 SOM1 EK board
  * overlay blob for PDA4300 LCD.
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

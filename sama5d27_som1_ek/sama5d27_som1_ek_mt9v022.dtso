@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d27_som1_ek_mt9v022.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * Device Tree file for SAMA5D27 SOM1 EK board
  * overlay blob for Image Sensor Controller Micron mt9v022 sensor.
  * This also includes support for board CAMx-MT9V022-EB_REVA with gpio expander
  * and programmable bit shift for ISC data lines alignment.

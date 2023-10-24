@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * at91-sama5d4_xplained_pda4.dtso - Device Tree file for SAMA5D4 Xplained board
+ * Device Tree file for SAMA5D4 Xplained board
  * overlay blob for PDA TM4300 LCD screen.
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

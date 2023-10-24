@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x75_curiosity.its - Flattened Image Tree file for SAM9X75-Curiosity board
+ * Flattened Image Tree file for SAM9X75-Curiosity board
  *
  * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
  *

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama7g5ek_i2s0_pcm5102a.dtso - Device Tree file for SAMA7G5-EK board
+ * Device Tree file for SAMA7G5-EK board
  * overlay blob for I2S with PCM5102A codec. The blob uses i2s0.
  *
  * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries

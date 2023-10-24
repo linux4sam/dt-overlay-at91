@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d2_xplained.its - Flattened Image Tree file for SAMA5D2 Xplained
+ * Flattened Image Tree file for SAMA5D2 Xplained
  * adapted board for Resistive touchscreen
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

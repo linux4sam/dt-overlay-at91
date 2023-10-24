@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x75eb.its - Flattened Image Tree file for SAM9X75-EB board
+ * Flattened Image Tree file for SAM9X75-EB board
  *
  * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
  *

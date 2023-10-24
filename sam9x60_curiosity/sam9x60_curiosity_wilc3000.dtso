@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x60_curiosity_wilc3000.dtso - Device Tree file for SAM9x60-CURIOSITY board
+ * Device Tree file for SAM9x60-CURIOSITY board
  * overlay blob for ATWILC3000 - Wireless Modules.
  *
  * Copyright (C) 2022 Microchip Technology, Inc. and its subsidiaries

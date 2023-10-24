@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d2_xplained_grts.dtso - Device Tree file for SAMA5D2 Xplained board
+ * Device Tree file for SAMA5D2 Xplained board
  * overlay blob for Resistive touchscreen display adapted board.
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * at91-sama5d27_wlsom1_ek_ov7740.dtso - Device Tree file for SAMA5D27 WLSOM1 EK
- * overlay blob for Image Sensor Controller Omnivision ov7740 sensor.
+ * Device Tree file for SAMA5D27 WLSOM1 EK overlay blob
+ * for Image Sensor Controller Omnivision ov7740 sensor.
  *
  * Copyright (C) 2019 Microchip Technology, Inc.
  * Author: Eugen Hristev <eugen.hristev@microchip.com>

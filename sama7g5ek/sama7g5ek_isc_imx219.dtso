@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama7g5ek_isc_imx219.dtso - Device Tree file for SAMA7G5-EK board
+ * Device Tree file for SAMA7G5-EK board
  * overlay blob for ISC with imx219 sensor. The blob uses isc and i2c8
  *
  * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x75eb_lvds.dtso - Device Tree file for SAM9X75EB board
- * overlay blob for AC69T88A LVDS Display Panel
+ * Device Tree file for SAM9X75EB board overlay blob
+ * for AC69T88A LVDS Display Panel
  *
  * Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries
  * Author:Balakrishnan Sambath <balakrishnan.s@microchip.com>

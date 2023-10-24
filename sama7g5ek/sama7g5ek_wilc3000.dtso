@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama7g5ek_wilc3000.dtso - Device Tree file for SAMA7G5-EK board
+ * Device Tree file for SAMA7G5-EK board
  * overlay blob for wilc3000 add-on.
  *
  * Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries

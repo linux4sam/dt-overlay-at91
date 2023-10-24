@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d2_xplained_i2s0_proto.dtso - Device Tree file for SAMA5D2 Xplained board
+ * Device Tree file for SAMA5D2 Xplained board
  * overlay blob for I2S with PROTO board. The blob uses i2s0 and i2c0.
  *
  * Copyright (C) 2018 Microchip Technology, Inc.

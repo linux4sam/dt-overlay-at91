@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x60-ek_i2s_proto.dtso - Device Tree file for SAM9x60-EK board
+ * Device Tree file for SAM9x60-EK board
  * overlay blob for I2S with PROTO board. The blob uses i2s0 and i2c2 on flx4.
  *
  * Copyright (C) 2019 Microchip Technology, Inc.

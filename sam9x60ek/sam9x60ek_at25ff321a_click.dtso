@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- *  sama9x60_curiosity_at25ff321a_click1.dtso - Device Tree overlay for SAM9X60_CURIOSITY board in order to use SPI on click board 1 slot
+ *  Device Tree overlay for SAM9X60_CURIOSITY board in order to use SPI on click board 1 slot
  *
  *  Copyright (c) 2023 Microchip Technology Inc. and its subsidiaries
  *

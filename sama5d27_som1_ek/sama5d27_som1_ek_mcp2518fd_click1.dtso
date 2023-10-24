@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sama5d27_som1_ek_mcp251xfd.dtso - Device Tree file for SAMA5D27 SOM1 EK board
+ * Device Tree file for SAMA5D27 SOM1 EK board
  * overlay blob for Mikroe MCP2517FD/18FD/MCP251863 board on Click 1.
  * The blob uses SPI on flx4.
  *

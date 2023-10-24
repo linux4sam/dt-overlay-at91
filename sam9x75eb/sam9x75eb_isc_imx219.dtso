@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * sam9x75eb_isc_imx219.dtso - Device Tree file for SAM9X75EB board
- * overlay blob for ISC with imx219 sensor. The blob uses isc and i2c10
+ * Device Tree file for SAM9X75EB board overlay blob
+ * for ISC with imx219 sensor. The blob uses isc and i2c10
  *
  * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries
  * Author: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>

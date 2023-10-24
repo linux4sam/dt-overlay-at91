@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- *  sama5d27_wlsom1_ek_at25ff321a_click1.dtso - Device Tree overlay for SAMA5D27-WLSOM1-EK board in order to use SPI on click board 1 slot
+ *  Device Tree overlay for SAMA5D27-WLSOM1-EK board
+ *  in order to use SPI on click board 1 slot
  *
  *  Copyright (c) 2023 Microchip Technology Inc. and its subsidiaries
  *
