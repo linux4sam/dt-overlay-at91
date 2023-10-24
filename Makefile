@@ -3,7 +3,7 @@ CC?=$(CROSS_COMPILE)gcc
 DTC_OPTIONS?=-@
 DTC_OPTIONS += -Wno-unit_address_vs_reg -Wno-graph_child_address -Wno-pwms_property
 KERNEL_DIR?=../linux
-KERNEL_BUILD_DIR?=$(KERNEL_DIR)
+KERNEL_BUILD_DIR?=$(shell realpath --relative-to=. $(KERNEL_DIR))
 DTC?=$(KERNEL_BUILD_DIR)/scripts/dtc/dtc
 BDIR?=sam9x60ek sama5d29_curiosity sama5d27_som1_ek sama5d27_wlsom1_ek sama5d2_icp sama5d2_ptc_ek sama5d2_xplained sama5d2_xplained_grts sama5d3_xplained sama5d3_eds sama5d4_xplained sama7g5ek sam9x60_curiosity sam9x75eb mpfs_icicle mpfs_icicle_amp mpfs_video
 
