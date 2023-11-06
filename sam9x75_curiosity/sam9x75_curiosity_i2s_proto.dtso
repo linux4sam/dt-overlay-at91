@@ -1,0 +1,58 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 Curiosity board overlay blob for
+ * I2S with PROTO board. The blob uses i2s0 and i2c on flx7.
+ *
+ * Copyright (C) 2023 Microchip Technology, Inc.
+ * Author: Varshini Rajendran <varshini.rajendran@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include "dt-bindings/pinctrl/at91.h"
+
+&flx7 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flx7_twi_default>;
+	dmas = <0>, <0>;
+	i2c-analog-filter;
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+	status = "okay";
+	wm8731: codec@1a {
+		compatible = "wlf,wm8731";
+		reg = <0x1a>;
+	};
+};
+
+&i2s {
+	status = "okay";
+};
+
+&{/} {
+	sound {
+		compatible = "mikroe,mikroe-proto";
+		model = "wm8731 @ sam9x75_curiosity";
+		i2s-controller = <&i2s>;
+		audio-codec = <&wm8731>;
+		dai-format = "i2s";
+	};
+};
+
+&pinctrl {
+	flexcom {
+		pinctrl_flx7_twi_default: flx7-twi-default {
+			atmel,pins =
+				<AT91_PIOC 0 AT91_PERIPH_C AT91_PINCTRL_PULL_UP
+				 AT91_PIOC 1 AT91_PERIPH_C AT91_PINCTRL_PULL_UP>;
+		};
+	};
+};
