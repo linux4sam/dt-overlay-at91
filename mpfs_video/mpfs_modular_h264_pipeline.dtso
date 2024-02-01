@@ -1,0 +1,296 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay For modular h264 Pipeline.
+ *
+ * Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Author: shrava chippa <shravan.chippa@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/media/microchip-common.h>
+
+/ {
+        compatible = "microchip,mpfs-video-kit","microchip,mpfs";
+};
+
+&{/} {
+	imx334_clk: imx334-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+	};
+
+	imx334_gate_clock0: imx334-gate-clock0 {
+		compatible = "gpio-gate-clock";
+		clocks = <&imx334_clk>;
+		#clock-cells = <0>;
+		enable-gpios = <&gpio2 9 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
+	mpfs_dma_proxy: mpfs-dma-proxy {
+		compatible = "microchip,mpfs-dma-proxy";
+		dmas = <&pdma 2>, <&pdma 3>;
+		dma-names = "dma-proxy0", "dma-proxy1";
+	};
+
+	axi_clk_0: axi-aclk0 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+
+	video_clk_0: video-aclk0 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+};
+
+&fabric_bus {
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	mchp_vdma_cam0: video-pipeline@60000000 {
+		compatible = "microchip,video-dma-rtl-v0";
+		reg = <0x0 0x60000000 0x0 0x1000>;
+		interrupt-parent = <&plic>;
+		interrupts = <118>;
+		reset-gpios = <&gpio2 4 GPIO_ACTIVE_HIGH>;
+		dma-noncoherent;
+		clock-names = "axi", "video";
+		clocks = <&axi_clk_0>, <&video_clk_0>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				/* Sink port */
+				reg = <0>;
+				mchp_vdma_ep_cam0: endpoint {
+					remote-endpoint = <&h264_0_out>;
+				};
+			};
+
+		};
+	};
+
+	h264_video_0: h264-video@6002000 {
+		compatible = "microchip,yuv2h264-rtl-v1";
+		reg = <0x00 0x60002000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				h264_0_in: endpoint {
+					remote-endpoint = <&rgbtoyuv422_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				h264_0_out: endpoint {
+					remote-endpoint = <&mchp_vdma_ep_cam0>;
+				};
+			};
+		};
+	};
+
+	rgbtoyuv422_0: gvpc-video-1@6007000 {
+		compatible = "microchip,generic-video-pipeline-connector";
+		reg = <0x00 0x60007000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				microchip,video-format = <MVCF_RGB>;
+				microchip,video-width = <8>;
+				rgbtoyuv422_0_in: endpoint {
+					remote-endpoint = <&osd_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				microchip,video-format = <MVCF_YUV_422>;
+				microchip,video-width = <8>;
+				rgbtoyuv422_0_out: endpoint {
+					remote-endpoint = <&h264_0_in>;
+				};
+			};
+		};
+	};
+
+	osd_0: osd-0@6006000 {
+		compatible = "microchip,osd-rtl-v1";
+		reg = <0x00 0x60006000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				osd_0_in: endpoint {
+					remote-endpoint = <&rgb_scaler_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				osd_0_out: endpoint {
+					remote-endpoint = <&rgbtoyuv422_0_in>;
+				};
+			};
+		};
+	};
+
+	rgb_scaler_0: rgb-scaler-0@6005000 {
+		compatible = "microchip,rgb-scaler-rtl-v1";
+		reg = <0x00 0x60005000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				rgb_scaler_0_in: endpoint {
+					remote-endpoint = <&image_enhancement_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				rgb_scaler_0_out: endpoint {
+					remote-endpoint = <&osd_0_in>;
+				};
+			};
+		};
+	};
+
+	image_enhancement_0: image-enhancement-0@6004000 {
+		compatible = "microchip,image-enhancement-rtl-v1";
+		reg = <0x00 0x60004000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				image_enhancement_0_in: endpoint {
+					remote-endpoint = <&monotorgb_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				image_enhancement_0_out: endpoint {
+					remote-endpoint = <&rgb_scaler_0_in>;
+				};
+			};
+		};
+	};
+
+	monotorgb_0: gvpc-video-0@6003000 {
+		compatible = "microchip,generic-video-pipeline-connector";
+		reg = <0x00 0x60003000 0x00 0x1000>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				microchip,video-format = <MVCF_MONO_SENSOR>;
+				microchip,cfa-pattern = "rggb";
+				microchip,video-width = <8>;
+				monotorgb_0_in: endpoint {
+					remote-endpoint = <&csi2_0_out>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				microchip,video-format = <MVCF_RGB>;
+				microchip,video-width = <8>;
+				monotorgb_0_out: endpoint {
+					remote-endpoint = <&image_enhancement_0_in>;
+				};
+			};
+		};
+	};
+
+	mcsi2rx_0: csi2rx@6001000 {
+		compatible = "microchip,mipi-csi2-rx-rtl-v0";
+		reg = <0x00 0x60001000 0x00 0x1000>;
+		interrupt-parent = <&plic>;
+		interrupts = <119>;
+		microchip,csi-pxl-format = <0x2b>;
+		microchip,csi-fixed-out-raw8;
+		clock-names = "axi", "video";
+		clocks = <&axi_clk_0>, <&video_clk_0>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				csi2_0_in: endpoint {
+					remote-endpoint = <&imx334_ep_cam0>;
+				};
+			};
+			port@1 {
+				reg = <1>;
+				csi2_0_out: endpoint {
+					remote-endpoint = <&monotorgb_0_in>;
+				};
+			};
+		};
+	};
+};
+
+&i2c0 {
+	#address-cells = <0x01>;
+	#size-cells = <0x00>;
+
+	imx334_cam0: camera@1a {
+		compatible = "sony,imx334";
+		reset-gpios = <&gpio2 8 GPIO_ACTIVE_HIGH>;
+		clocks = <&imx334_gate_clock0>;
+		assigned-clocks = <&imx334_gate_clock0>;
+		assigned-clock-rates = <24000000>;
+		reg = <0x1a>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				imx334_ep_cam0: endpoint {
+					remote-endpoint = <&csi2_0_in>;
+					data-lanes = <1 2 3 4>;
+					link-frequencies = /bits/ 64 <891000000 445500000>;
+				};
+			};
+		};
+	};
+};
+
