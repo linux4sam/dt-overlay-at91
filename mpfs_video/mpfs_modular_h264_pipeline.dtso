@@ -81,7 +81,7 @@
 		};
 	};
 
-	h264_video_0: h264-video@6002000 {
+	h264_video_0: yuv2h264@60002000 {
 		compatible = "microchip,yuv2h264-rtl-v1";
 		reg = <0x00 0x60002000 0x00 0x1000>;
 		status = "okay";
@@ -105,7 +105,7 @@
 		};
 	};
 
-	rgbtoyuv422_0: gvpc-video-1@6007000 {
+	rgbtoyuv422_0: generic-video-pipeline-connector@60007000 {
 		compatible = "microchip,generic-video-pipeline-connector";
 		reg = <0x00 0x60007000 0x00 0x1000>;
 		status = "okay";
@@ -133,7 +133,7 @@
 		};
 	};
 
-	osd_0: osd-0@6006000 {
+	osd_0: osd@60006000 {
 		compatible = "microchip,osd-rtl-v1";
 		reg = <0x00 0x60006000 0x00 0x1000>;
 		status = "okay";
@@ -157,7 +157,7 @@
 		};
 	};
 
-	rgb_scaler_0: rgb-scaler-0@6005000 {
+	rgb_scaler_0: rgb-scaler@60005000 {
 		compatible = "microchip,rgb-scaler-rtl-v1";
 		reg = <0x00 0x60005000 0x00 0x1000>;
 		status = "okay";
@@ -181,7 +181,7 @@
 		};
 	};
 
-	image_enhancement_0: image-enhancement-0@6004000 {
+	image_enhancement_0: image-enhancement@60004000 {
 		compatible = "microchip,image-enhancement-rtl-v1";
 		reg = <0x00 0x60004000 0x00 0x1000>;
 		status = "okay";
@@ -205,7 +205,7 @@
 		};
 	};
 
-	monotorgb_0: gvpc-video-0@6003000 {
+	monotorgb_0: generic-video-pipeline-connector@60003000 {
 		compatible = "microchip,generic-video-pipeline-connector";
 		reg = <0x00 0x60003000 0x00 0x1000>;
 		status = "okay";
