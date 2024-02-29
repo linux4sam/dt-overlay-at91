@@ -10,11 +10,16 @@
  * PWM0 Channel 2 is used by the PWM pin on mikroBUS 1. It's present
  * on SoC pin: PB13. Channels 0, 1 and 2 also go to the RGB LED.
  * It removes the use of Linux gpio-leds driver.
+ *
+ * Do not enable PWM Channel 3 (pin PB14) because collides with
+ * Mikrobus reset gpio.
+ *
  */
 /dts-v1/;
 /plugin/;
 
 &pwm0 {
+	pinctrl-0 = <&pinctrl_pwm0_0 &pinctrl_pwm0_1 &pinctrl_pwm0_2>;
 	status = "okay";
 };
 
