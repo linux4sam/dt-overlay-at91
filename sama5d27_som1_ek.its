@@ -201,7 +201,7 @@
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
-			load = <0x231A0000>;
+			load = <0x231D0000>;
 			hash-1 {
 				algo = "crc32";
 			};
