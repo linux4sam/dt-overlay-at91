@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY board
+ *  in order to use SPI on click board 1 slot
+ *
+ *  Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Romain Sioen <romain.sioen@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&flx4 {
+        atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+        status = "okay";
+};
+
+&spi4 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi4_default &pinctrl_spi4_cs>;
+	status = "okay";
+
+	flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "atmel,at25ff321a", "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <50000000>;
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <1>;
+		m25p,fast-read;
+	};
+};
+
+&pioA {
+	pinctrl_spi4_cs: spi4-cs {
+                pinmux = <PIN_PA15__FLEXCOM4_IO3>;
+                bias-disable;
+        };
+
+        pinctrl_spi4_default: spi4-default {
+                pinmux = <PIN_PA18__FLEXCOM4_IO0>,
+                         <PIN_PA17__FLEXCOM4_IO1>,
+                         <PIN_PA16__FLEXCOM4_IO2>;
+                bias-disable;
+        };
+};
