@@ -1,0 +1,144 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 Curiosity board overlay blob
+ * for AC40T08A MPU32 MIPI Display panel
+ *
+ * Copyright (C) 2024 Microchip Technology Inc. and its subsidiaries
+ * Author: Manikandan Muralidharan <manikandan.m@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+
+&{/} {
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm0 1 1000000 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pwm_bl>;
+		brightness-levels = <0 32 64 128 256 512 1024>;
+		default-brightness-level = <6>;
+		power-supply = <&vdd_5v>;
+	};
+
+	vdd_5v: fixed-regulator-vdd-5v {
+		compatible = "regulator-fixed";
+		regulator-name = "VDD_5V";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-always-on;
+	};
+
+	mic23150_reg: mic23150_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "panel-power-supply";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		enable-active-high;
+	};
+};
+
+&dsi {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		port@0 {
+			reg = <0>;
+			dsi_in: endpoint {
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+			dsi_out: endpoint {
+				remote-endpoint = <&mipi_in_panel>;
+			};
+		};
+	};
+
+	panel@0 {
+		reg = <0>;
+		compatible = "microchip,ac40t08a-mipi-panel", "himax,hx8394";
+		backlight = <&backlight>;
+		vcc-supply = <&mic23150_reg>;
+		iovcc-supply = <&mic23150_reg>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			mipi_in_panel: endpoint {
+				remote-endpoint = <&dsi_out>;
+			};
+		};
+	};
+};
+
+&hlcdc {
+	clocks = <&pmc PMC_TYPE_PERIPHERAL 25>, <&pmc PMC_TYPE_GCK 25>, <&clk32k 1>;
+	clock-names = "periph_clk", "sys_clk", "slow_clk";
+	assigned-clocks = <&pmc PMC_TYPE_GCK 25>;
+	assigned-clock-rates = <66000000>;
+	status = "okay";
+
+	hlcdc-display-controller {
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&dsi_in>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		status = "disabled";
+	};
+};
+
+&i2c6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	mxt: atmel_mxt_ts@4a {
+		compatible = "atmel,maxtouch";
+		reg = <0x4a>;
+		interrupt-parent = <&pioC>;
+		interrupts = <15 0x8>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mxt_irq>;
+		vdda-supply = <&mic23150_reg>;
+		vdd-supply = <&mic23150_reg>;
+	};
+};
+
+&pinctrl {
+
+	backlight {
+                pinctrl_pwm_bl: pwm-bl {
+                        atmel,pins = <AT91_PIOC 19 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+                };
+        };
+
+	mxt {
+		pinctrl_mxt_irq: mxt-irq {
+			atmel,pins =
+				<AT91_PIOC 15 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+		};
+	};
+};
+
+&pwm0 {
+	status = "okay";
+};

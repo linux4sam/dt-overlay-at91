@@ -104,6 +104,21 @@
 				algo = "sha1";
 			};
 		};
+
+		fdt_mipi_panel {
+			description = "Device Tree blob for AC40T08A MPU32 MIPI Display Panel";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_mipi_display.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23140000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
 	};
 
 	configurations {
@@ -138,6 +153,11 @@
 		i2s_proto {
 			description = "FDT overlay blob for I2S PROTO audio board";
 			fdt = "fdt_i2s_proto";
+		};
+
+		mipi {
+			description = "FDT overlay blob for AC40T08A MPU32 MIPI Display Panel";
+			fdt = "fdt_mipi_panel";
 		};
 	};
 };
