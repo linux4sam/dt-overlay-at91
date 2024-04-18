@@ -116,7 +116,7 @@
 		VANA-supply = <&vana_imx219>; /* 2.8v */
 		VDIG-supply = <&vdig_imx219>; /* 1.8v */
 		VDDL-supply = <&vddl_imx219>; /* 1.2v */
-		reset-gpios = <&pioC 14 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&pioC 19 GPIO_ACTIVE_HIGH>;
 		status = "okay";
 
 		imx219_clk: camera-clk {
@@ -140,7 +140,7 @@
 &pinctrl {
 	csi {
 		pinctrl_sensor_reset: sensor_reset {
-			atmel,pins = <AT91_PIOC 14 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+			atmel,pins = <AT91_PIOC 19 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
 	};
 };
