@@ -90,6 +90,21 @@
 			};
 		};
 
+		fdt_gmac_ksz9563 {
+			description = "Device Tree blob for KSZ9563 RGMII switch overlay";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_ksz9563.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_i2s_proto {
 			description = "Device Tree blob PROTO Audio board overlay";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_i2s_proto.dtbo");
@@ -153,6 +168,11 @@
 		lan8840 {
 			description = "FDT overlay blob for LAN8840 RGMII PHY Daughter Card";
 			fdt = "fdt_gmac_lan8840";
+		};
+
+		ksz9563 {
+			description = "FDT overlay blob for KSZ9563 RGMII switch Daughter Card";
+			fdt = "fdt_gmac_ksz9563";
 		};
 
 		i2s_proto {
