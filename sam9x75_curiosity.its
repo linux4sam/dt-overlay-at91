@@ -145,6 +145,11 @@
 			fdt = "fdt_lvds_panel";
 		};
 
+		ksz9131 {
+			description = "FDT overlay blob for KSZ9131 RGMII PHY Daughter Card";
+			fdt = "fdt_gmac_lan8840";
+		};
+
 		lan8840 {
 			description = "FDT overlay blob for LAN8840 RGMII PHY Daughter Card";
 			fdt = "fdt_gmac_lan8840";
