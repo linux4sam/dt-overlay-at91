@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 Curiosity board overlay blob for PWM signals.
+ *
+ * Copyright (C) 2024 Microchip Technology, Inc.
+ * Author: Dharma Balasubiramani <dharma.b@microchip.com>
+ *
+ * In the schematic, only PWM0 channel 3 (PC21) is physically connected, while
+ * PWM0 channel 2 (PC20) lacks a mounted resistor. Therefore, it suffices to
+ * enable only the PWM associated with PC21.
+ */
+
+/dts-v1/;
+/plugin/;
+#include "dt-bindings/pinctrl/at91.h"
+
+&led_green {
+	status = "disabled"; /* Conflict between Mikrobus PWM and Green LED */
+};
+
+&pwm0 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pwm0_3>;
+        status = "okay";
+};
+
+&pinctrl {
+	pwm0 {
+		pinctrl_pwm0_3: pwm0-3 {
+			atmel,pins = <AT91_PIOC 21 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+		};
+	};
+};
