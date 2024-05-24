@@ -98,8 +98,11 @@
 &i2c0 {
 	#address-cells = <1>;
 	#size-cells = <0>;
-	pinctrl-names = "default";
+	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c0_default>;
+	pinctrl-1 = <&pinctrl_i2c0_gpio>;
+	sda-gpios = <&pioA PIN_PC6 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&pioA PIN_PC7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 	i2c-analog-filter;
 	i2c-digital-filter;
 	i2c-digital-filter-width-ns = <35>;
@@ -122,6 +125,12 @@
 		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
 			<PIN_PC6__FLEXCOM0_IO1>;
 		bias-pull-up;
+	};
+
+	pinctrl_i2c0_gpio: i2c0-gpio{
+		pinmux = <PIN_PC7__GPIO>,
+			 <PIN_PC6__GPIO>;
+		bias-disable;
 	};
 
 	pinctrl_lcd_pwm: lcd-pwm {
