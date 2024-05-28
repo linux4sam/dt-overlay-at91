@@ -72,7 +72,7 @@
 
 	panel@0 {
 		reg = <0>;
-		compatible = "hannstar,hsd060bhw4";
+		compatible = "microchip,ac40t08a-mipi-panel";
 		backlight = <&backlight>;
 		vcc-supply = <&mic23150_reg>;
 		iovcc-supply = <&vldo1>;
