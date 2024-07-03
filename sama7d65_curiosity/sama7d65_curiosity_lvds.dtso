@@ -149,6 +149,8 @@
 &xlcdc {
 	clocks = <&pmc PMC_TYPE_PERIPHERAL 56>, <&pmc PMC_TYPE_CORE PMC_LVDSPLL>, <&clk32k 1>;
 	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
+	assigned-clocks = <&pmc PMC_TYPE_CORE PMC_MCK3>;
+	assigned-clock-rates = <266500000>;
 	status = "okay";
 
 	hlcdc-display-controller {
