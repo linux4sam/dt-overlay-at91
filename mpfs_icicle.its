@@ -71,6 +71,17 @@
 					algo = "sha256";
 				};
 			};
+			fdt_amp {
+				description = "Device Tree blob for AMP";
+				data = /incbin/("./mpfs_icicle/mpfs_icicle_amp.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a0b0000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
 		};
 
 		configurations {
@@ -99,6 +110,11 @@
 			pmod3 {
 				description = "FDT overlay blob for Pmod SF3";
 				fdt = "fdt_pmod3";
+			};
+
+			amp {
+				description = "FDT overlay blob for AMP";
+				fdt = "fdt_amp";
 			};
 		};
 };
