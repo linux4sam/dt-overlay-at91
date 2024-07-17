@@ -44,6 +44,7 @@
 	i2c-analog-filter;
 	i2c-digital-filter;
 	i2c-digital-filter-width-ns = <35>;
+	dmas = <0>, <0>;
 	status = "okay";
 
 	eeprom@54 {

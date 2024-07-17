@@ -52,6 +52,13 @@
 	dmas = <0>, <0>;
 	status = "okay";
 
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+
 	ksz9563: ksz9563-switch@5f {
 		compatible = "microchip,ksz9563";
 		reg = <95>;
