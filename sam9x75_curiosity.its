@@ -90,6 +90,36 @@
 			};
 		};
 
+		fdt_gmac_lan9646 {
+			description = "Device Tree blob for LAN9646 RGMII switch overlay";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_lan9646.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_ksz9477 {
+			description = "Device Tree blob for KSZ9477 RGMII switch overlay";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_ksz9477.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_gmac_ksz9563 {
 			description = "Device Tree blob for KSZ9563 RGMII switch overlay";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_ksz9563.dtbo");
@@ -183,6 +213,16 @@
 		lan8840 {
 			description = "FDT overlay blob for LAN8840 RGMII PHY Daughter Card";
 			fdt = "fdt_gmac_lan8840";
+		};
+
+		lan9646 {
+			description = "FDT overlay blob for LAN9646 RGMII switch Daughter Card";
+			fdt = "fdt_gmac_lan9646";
+		};
+
+		ksz9477 {
+			description = "FDT overlay blob for KSZ9477 RGMII switch Daughter Card";
+			fdt = "fdt_gmac_ksz9477";
 		};
 
 		ksz9563 {

@@ -1,0 +1,280 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 CURIOSITY board overlay blob supporting the
+ * LAN9646 6-port Gigabit switch Daughter Card using I2C or SPI and RGMII.
+ *
+ * Copyright (C) 2024 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Refer to the EV94T99A (LAN9646-EDS2 daughter card)
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&flx3 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+&flx7 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&gmac {
+	phy-mode = "rgmii-id";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gmac_rgmii_default>;
+	magic-packet;
+	status = "okay";
+
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+	};
+};
+
+&i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flx7_twi_default>;
+	i2c-analog-filter;
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+
+	lan9646i2c: lan9646i-switch@5f {
+		compatible = "microchip,lan9646";
+		reg = <0x5f>;
+		interrupt-parent = <&pioD>;
+		interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				phy-handle = <&swphy_0>;
+			};
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				phy-handle = <&swphy_1>;
+			};
+			port@2 {
+				reg = <2>;
+				label = "lan3";
+				phy-handle = <&swphy_2>;
+			};
+			port@3 {
+				reg = <3>;
+				label = "lan4";
+				phy-handle = <&swphy_3>;
+			};
+			port@4 {
+				reg = <5>;
+				phy-mode = "rgmii-id";
+				rx-internal-delay-ps = <2000>;
+				tx-internal-delay-ps = <2000>;
+				ethernet = <&gmac>;
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+					pause;
+				};
+			};
+			port@5 {
+				reg = <6>;
+				label = "lan5";
+				phy-handle = <&swphy_6>;
+			};
+		};
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			swphy_0: ethernet-phy@0 {
+				reg = <0>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy_1: ethernet-phy@1 {
+				reg = <1>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy_2: ethernet-phy@2 {
+				reg = <2>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy_3: ethernet-phy@3 {
+				reg = <3>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy_6: ethernet-phy@6 {
+				reg = <6>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+		};
+	};
+};
+
+&pinctrl {
+
+	flexcom {
+		pinctrl_flx3_default: flx3-spi-default {
+			atmel,pins =
+				<AT91_PIOC 22 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 23 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 25 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 26 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_flx7_twi_default: flx7-twi-default {
+			atmel,pins =
+				<AT91_PIOC 0 AT91_PERIPH_C AT91_PINCTRL_NONE
+				 AT91_PIOC 1 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+		};
+	};
+
+	gmac {
+		pinctrl_gmac_rgmii_default: gmac-rgmii-default {
+			atmel,pins =
+				<AT91_PIOB 13 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX0   */
+				 AT91_PIOB 14 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX1   */
+				 AT91_PIOB 4  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX2   */
+				 AT91_PIOB 5  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX3   */
+				 AT91_PIOB 7  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TXCTL  */
+				 AT91_PIOB 6  AT91_PERIPH_A (AT91_PINCTRL_PULL_UP | AT91_PINCTRL_SLEWRATE_DIS)	/* ETH_TXCK  */
+
+				 AT91_PIOB 11 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX0   */
+				 AT91_PIOB 12 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX1   */
+				 AT91_PIOB 0  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX2   */
+				 AT91_PIOB 1  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX3   */
+				 AT91_PIOB 8  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RXCK   */
+				 AT91_PIOB 3  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RXCTL */
+
+				 AT91_PIOB 10 AT91_PERIPH_A  AT91_PINCTRL_NONE					/* ETH_MDC   */
+				 AT91_PIOB 9  AT91_PERIPH_A  AT91_PINCTRL_NONE					/* ETH_MDIO  */
+
+				 AT91_PIOB 2  AT91_PERIPH_A  AT91_PINCTRL_DIS_SCHMIT			 	/* ETH_125CK */
+				 AT91_PIOD 5  AT91_PERIPH_GPIO  AT91_PINCTRL_NONE>;				/* ETH_INT   */
+		};
+	};
+};
+
+&spi3 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	lan9646spi: lan9646s-switch@0 {
+		compatible = "microchip,lan9646";
+		reg = <0>;
+		interrupt-parent = <&pioD>;
+		interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+		spi-max-frequency = <11000000>;
+//		spi-cs-setup-delay-ns = <100>;
+//		spi-cs-hold-delay-ns = <100>;
+//		spi-cs-inactive-delay-ns = <0>;
+		spi-cpha;
+		spi-cpol;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				phy-handle = <&swphy0>;
+			};
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				phy-handle = <&swphy1>;
+			};
+			port@2 {
+				reg = <2>;
+				label = "lan3";
+				phy-handle = <&swphy2>;
+			};
+			port@3 {
+				reg = <3>;
+				label = "lan4";
+				phy-handle = <&swphy3>;
+			};
+			port@4 {
+				reg = <5>;
+				phy-mode = "rgmii-id";
+				rx-internal-delay-ps = <2000>;
+				tx-internal-delay-ps = <2000>;
+				ethernet = <&gmac>;
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+					pause;
+				};
+			};
+			port@5 {
+				reg = <6>;
+				label = "lan5";
+				phy-handle = <&swphy6>;
+			};
+		};
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			swphy0: ethernet-phy@0 {
+				reg = <0>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy1: ethernet-phy@1 {
+				reg = <1>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy2: ethernet-phy@2 {
+				reg = <2>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy3: ethernet-phy@3 {
+				reg = <3>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+			swphy6: ethernet-phy@6 {
+				reg = <6>;
+				eee-broken-100tx;
+				eee-broken-1000t;
+			};
+		};
+	};
+};
+
+&{/} {
+	model = "SAM9X75-Curiosity: LAN9646 RGMII PHY Daughter Card";
+};
