@@ -16,11 +16,11 @@
 
 &{/} {
 	rproc_contextb: remote-context {
-		compatible = "microchip,ipc-remoteproc";
+		compatible = "microchip,miv-remoteproc";
 		memory-region = <&vdev0buffer>, <&rsctable>,
 				<&contextb_reserved>, <&vdev0vring0>,
 				<&vdev0vring1>;
-		mboxes= <&ihc 8>;
+		mboxes= <&ihc 0>;
 		status = "okay";
 	};
 
