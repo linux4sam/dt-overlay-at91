@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAM9X75 Curiosity board in order to use SPI on click board 1 slot
+ *
+ *  Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Santiago Esteban <santiago.esteban@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&flx3 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+
+	spi3: spi@400 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mikrobus_spi &pinctrl_mikrobus_spi_cs>;
+		status = "okay";
+
+		flash@1 {
+			compatible = "atmel,at25ff321a", "jedec,spi-nor";
+			reg = <1>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			spi-max-frequency = <2000000>;
+			spi-tx-bus-width = <1>;
+			spi-rx-bus-width = <1>;
+			m25p,fast-read;
+		};
+	};
+};
+
+&pinctrl {
+	spi3 {
+		pinctrl_mikrobus_spi: mikrobus-spi {
+			atmel,pins = <AT91_PIOC 26 AT91_PERIPH_B AT91_PINCTRL_NONE
+					AT91_PIOC 23 AT91_PERIPH_B AT91_PINCTRL_NONE
+					AT91_PIOC 22 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_mikrobus_spi_cs: mikrobus-spi-cs {
+			atmel,pins = <AT91_PIOC 24 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+	};
+};
