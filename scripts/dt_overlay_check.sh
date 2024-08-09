@@ -35,6 +35,7 @@ declare -A DTSO_DIR_TO_CFG=(							\
 	["sama5d3_xplained"]="sama5_defconfig"					\
 	["sama5d4_xplained"]="sama5_defconfig"					\
 	["sama7g5ek"]="sama7_defconfig"						\
+	["sama7g54_curiosity"]="sama7_defconfig"				\
 			);
 
 # Variable to hold the link between DTSO directory and its related devicetree
@@ -55,6 +56,7 @@ declare -A DTSO_DIR_TO_DT=(							\
 	["sama5d3_xplained"]="at91-sama5d3_xplained.dt"				\
 	["sama5d4_xplained"]="at91-sama5d4_xplained.dt"				\
 	["sama7g5ek"]="at91-sama7g5ek.dt"					\
+	["sama7g54_curiosity"]="at91-sama7g54_curiosity.dt"			\
 			);
 
 print_options() {
