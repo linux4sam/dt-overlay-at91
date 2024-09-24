@@ -109,7 +109,11 @@
 			port@6 {
 				reg = <6>;
 				label = "lan6";
-				phy-handle = <&swphy_6>;
+				phy-mode = "sgmii";
+				fixed-link {
+					speed = <1000>;
+					full-dulpex;
+				};
 			};
 		};
 		mdio {
@@ -136,12 +140,7 @@
 				eee-broken-1000t;
 			};
 			swphy_4: ethernet-phy@4 {
-				reg = <3>;
-				eee-broken-100tx;
-				eee-broken-1000t;
-			};
-			swphy_6: ethernet-phy@6 {
-				reg = <6>;
+				reg = <4>;
 				eee-broken-100tx;
 				eee-broken-1000t;
 			};
@@ -197,6 +196,8 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 	dmas = <0>, <0>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_flx3_default>;
 	status = "okay";
 
 	ksz9477spi: ksz9477s-switch@0 {
@@ -204,7 +205,7 @@
 		reg = <0>;
 		interrupt-parent = <&pioD>;
 		interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
-		spi-max-frequency = <11000000>;
+		spi-max-frequency = <10000000>;
 //		spi-cs-setup-delay-ns = <100>;
 //		spi-cs-hold-delay-ns = <100>;
 //		spi-cs-inactive-delay-ns = <0>;
@@ -255,7 +256,11 @@
 			port@6 {
 				reg = <6>;
 				label = "lan6";
-				phy-handle = <&swphy6>;
+				phy-mode = "sgmii";
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
 			};
 		};
 		mdio {
@@ -282,12 +287,7 @@
 				eee-broken-1000t;
 			};
 			swphy4: ethernet-phy@4 {
-				reg = <3>;
-				eee-broken-100tx;
-				eee-broken-1000t;
-			};
-			swphy6: ethernet-phy@6 {
-				reg = <6>;
+				reg = <4>;
 				eee-broken-100tx;
 				eee-broken-1000t;
 			};
