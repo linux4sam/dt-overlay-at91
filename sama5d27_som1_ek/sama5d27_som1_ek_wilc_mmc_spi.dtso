@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA5D27 SOM1 EK board
+ * overlay blob for wilcs02 module to connect on mikroBUS1.
+ *
+ * Copyright (C) 2024 Microchip Technology Inc. and its subsidiaries
+ * Author: Ajay Singh <ajay.kathat@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "sama5d2-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&spi6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	cs-gpios = <&pioA PIN_PD0 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	wifi@0 {
+		compatible = "mmc-spi-slot";
+		reg = <0>;
+		spi-max-frequency = <50000000>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PA25 0>;
+		intr-gpios = <&pioA PIN_PB0 0>;
+		cap-mmc-highspeed;
+		cap-sd-highspeed;
+	};
+};
