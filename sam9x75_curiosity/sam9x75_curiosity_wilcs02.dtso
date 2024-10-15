@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75-CURIOSITY board
+ * overlay blob for WILCS02 Wireless Module over M.2 connector
+ *
+ * Copyright (C) 2024 Microchip Technology, Inc. and its subsidiaries
+ * Author: Ben Poon <ben.poon@microchip.com>
+ * Author: Durai Manickam KR <durai.manickamkr@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+#include <dt-bindings/gpio/gpio.h>
+
+&sdmmc1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	wifi@0 {
+		compatible = "microchip,wilc1000", "microchip,wilc3000";
+		reg = <0>;
+		bus-width = <4>;
+		interrupt-parent = <&pioC>;
+		interrupts = <17 0>;
+		reset-gpios = <&pioA 21 GPIO_ACTIVE_HIGH>;
+		chip_en-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+	};
+};
