@@ -75,6 +75,21 @@
 			};
 		};
 
+		fdt_lvds_panel_newvision {
+			description = "Device Tree blob for New Vision Display Panel";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_lvds_newvision_display.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23110000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_gmac_lan8840 {
 			description = "Device Tree blob for LAN8840 RGMII PHY overlay";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_lan8840.dtbo");
@@ -233,6 +248,11 @@
 		lvds {
 			description = "FDT overlay blob for AC69T88A LVDS Display Panel";
 			fdt = "fdt_lvds_panel";
+		};
+
+		lvds_newvision {
+			description = "FDT overlay blob for New Vision LVDS Display Panel";
+			fdt = "fdt_lvds_panel_newvision";
 		};
 
 		ksz9131 {

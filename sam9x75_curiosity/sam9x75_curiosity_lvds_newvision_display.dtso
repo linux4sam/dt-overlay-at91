@@ -1,0 +1,138 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 Curiosity board overlay blob
+ * for Promate 10.1 LVDS Display Panel
+ *
+ * Copyright (C) 2024 Microchip Technology Inc. and its subsidiaries
+ * Author: Sandeep Sheriker M <sandeep.sheriker@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+
+&{/} {
+        mic23150_reg: mic23150_regulator {
+               compatible = "regulator-fixed";
+               regulator-name = "panel-power-supply";
+               regulator-min-microvolt = <3300000>;
+               regulator-max-microvolt = <3300000>;
+               gpio = <&pioC 30 GPIO_ACTIVE_HIGH>; /* LCD_MODULE_ENABLE */
+               enable-active-high;
+               status = "okay";
+        };
+
+	lvds_panel_bl: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm0 0 1000000 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pwm>;
+		brightness-levels = <0 32 64 128 256 512 1024>;
+		default-brightness-level = <6>;
+		status="okay";
+	};
+
+	panel {
+		/* LVDS Display panel Promate 10.1 */
+		compatible = "panel-lvds";
+		backlight = <&lvds_panel_bl>;
+		power-supply = <&mic23150_reg>;
+		width-mm = <216>;
+		height-mm = <135>;
+		data-mapping = "vesa-24";
+		status="okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		panel-timing {
+			clock-frequency = <65000000>;
+			hactive = <1280>;
+			vactive = <800>;
+			hfront-porch = <48>;
+			hback-porch = <80>;
+			hsync-len = <32>;
+			vfront-porch = <8>;
+			vback-porch = <16>;
+			vsync-len = <8>;
+		};
+
+		port@0 {
+			reg = <0>;
+			panel_in: endpoint {
+				remote-endpoint = <&lvds_out_panel>;
+			};
+		};
+	};
+};
+
+&pwm0 {
+	status = "okay";
+};
+
+&i2c6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	atmel_mxt_ts@4a {
+		compatible = "atmel,atmel_mxt_ts";
+		reg = <0x4a>;
+		interrupt-parent = <&pioA>;
+		interrupts = <20 0x8>; /* MXT_IRQ_PA20 */
+		vdda-supply = <&mic23150_reg>;
+		status = "okay";
+	};
+};
+
+&hlcdc {
+	clocks = <&pmc PMC_TYPE_PERIPHERAL 25>, <&pmc PMC_TYPE_CORE PMC_LVDSPLL>, <&clk32k 1>;
+	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
+	status="okay";
+
+	hlcdc-display-controller {
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			hlcdc_panel_output: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&lvds_in_lcdc>;
+			};
+		};
+	};
+
+	hlcdc_pwm: hlcdc-pwm {
+		status = "disabled";
+	};
+};
+
+&lvds_controller {
+	status = "okay";
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		port@0 {
+			reg = <0>;
+			lvds_in_lcdc: endpoint {
+				remote-endpoint = <&hlcdc_panel_output>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+			lvds_out_panel: endpoint {
+				remote-endpoint = <&panel_in>;
+			};
+		};
+	};
+};
+
+&pinctrl {
+	pwm {
+		pinctrl_pwm: pwm_bl {
+			atmel,pins = <AT91_PIOC 18 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+		};
+	};
+};
