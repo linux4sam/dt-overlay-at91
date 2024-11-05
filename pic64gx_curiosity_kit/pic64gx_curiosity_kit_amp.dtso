@@ -1,0 +1,76 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay Example for Asymmetric Multiprocessing (AMP)
+ *
+ * Copyright (C) 2024 Microchip Technology Inc. and its subsidiaries.
+ * Author: Pierre-Henry Moussay <pierre-henry.moussay@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "microchip,pic64gx-curiosity-kit", "microchip,pic64gx";
+};
+
+&{/} {
+	reserved-memory {
+
+		#address-cells = <2>;
+		#size-cells = <2>;
+
+		contextb_reserved: contextb_reserved@91c00000 {
+			reg = <0x0 0x91c00000 0x0 0x100000>;
+			no-map;
+		};
+
+		vdev0vring0: vdev0vring0@91d00000 {
+			reg = <0x0 0x91d00000 0x0 0x8000>;
+			no-map;
+		};
+
+		vdev0vring1: vdev0vring1@91d08000 {
+			reg = <0x0 0x91d08000 0x0 0x8000>;
+			no-map;
+		};
+
+		vdev0buffer: vdev0buff@91d10000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0x91d10000 0x0 0x40000>;
+			no-map;
+		};
+
+		rsctable: rsc-table@91d50000 {
+			reg = <0x0 0x91d50000 0x0 0x1000>;
+			no-map;
+		};
+	};
+
+	ihc: mailbox {
+		compatible = "microchip,sbi-ipc";
+		interrupt-parent = <&plic>;
+		interrupts = <180>, <179>, <178>;
+		interrupt-names = "hart-1", "hart-2", "hart-3";
+		#mbox-cells = <1>;
+		status = "okay";
+	};
+
+	rproc_contextb: remote-context {
+		compatible = "microchip,ipc-remoteproc";
+		memory-region = <&vdev0buffer>, <&rsctable>,
+				<&contextb_reserved>, <&vdev0vring0>,
+				<&vdev0vring1>;
+		mboxes= <&ihc 8>;
+		status = "okay";
+	};
+};
+
+&cpu4 {
+	status = "disabled"; // in use by context b
+};
+
+&mmuart2 {
+	status = "disabled"; // in use by context b
+};
+
