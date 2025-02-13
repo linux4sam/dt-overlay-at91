@@ -36,7 +36,7 @@
 	};
 
 	panel {
-		compatible = "sitronix,st7262", "simple-panel";
+		compatible = "microchip,ac69t88a", "simple-panel";
 		backlight = <&lvds_panel_bl>;
 		power-supply = <&mic23150_reg>;
 		status="okay";
