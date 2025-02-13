@@ -30,7 +30,7 @@
 
 	display {
 		/* LVDS WVGA Display panel Microchip AC69T88A */
-		compatible = "sitronix,st7262", "simple-panel";
+		compatible = "microchip,ac69t88a", "simple-panel";
 		power-supply = <&mic23150_reg>;
 		backlight = <&backlight>;
 		width-mm = <108>;
