@@ -182,10 +182,6 @@ setup() {
 		O=${KERNEL_DIR};
 	fi;
 
-	# Update the defconfig MAKE element, now that we know the requested board
-	CFG=${DTSO_DIR_TO_CFG[$(basename ${DTSO_DIR})]};
-	MAKE["defconfig"]="make ${CFG}";
-
 	# Based on the location of the defconfig find out the architecture
 	ARCH=$(
 		find ${KERNEL_DIR} -type f -name $(basename ${DTSO_DIR_TO_DT[$(basename ${DTSO_DIR})]})s | # Find defconfig location
@@ -254,6 +250,9 @@ do
 	case "${OPTION}" in
 	b)
 		DTSO_DIR=$(realpath -s ${OPTARG});
+		# Update the defconfig MAKE element, now that we know the requested board
+		CFG=${DTSO_DIR_TO_CFG[$(basename ${DTSO_DIR})]};
+		MAKE["defconfig"]="make ${CFG}";
 		;;
 	d)
 		ELOG=$(realpath -s ${OPTARG});
