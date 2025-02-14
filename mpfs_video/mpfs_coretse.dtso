@@ -13,9 +13,25 @@
         compatible = "microchip,mpfs-video-kit","microchip,mpfs";
 };
 
+&{/} {
+	ptpclk: ptp-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+};
+
 &fabric_bus {
 	#address-cells = <2>;
 	#size-cells = <2>;
+
+	core1588: ptp@40002000 {
+		compatible = "microchip,core1588-rtl-v3";
+		reg = <0x0 0x40002000 0x0 0x1000>;
+		clocks = <&ptpclk>;
+		clock-names = "tsu";
+		status = "okay";
+	};
 
 	tse: ethernet@40001000 {
 		compatible = "microchip,coretse-rtl-v3";
@@ -29,6 +45,7 @@
 		interrupt-parent = <&plic>;
 		interrupts = <128>, <130>;
 		interrupt-names = "mm2s_pcdma", "s2mm_pcdma";
+		microchip,core1588-ptp-handle = <&core1588>;
 		status = "okay";
 
 		phy-mode = "sgmii";
