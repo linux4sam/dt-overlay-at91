@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay For CoreTSE(Triple Speed Ethernet) MAC.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries.
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+        compatible = "microchip,mpfs-video-kit","microchip,mpfs";
+};
+
+&fabric_bus {
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	tse: ethernet@40001000 {
+		compatible = "microchip,coretse-rtl-v3";
+		reg = <0x0 0x40001000 0x0 0x1000>;
+		pcdma-connected = <&pcdma>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		local-mac-address = [00 04 a3 7a 0c 04];
+		clocks = <&clkcfg 30>, <&clkcfg 27>;
+		clock-names = "pclk", "pcdma";
+		interrupt-parent = <&plic>;
+		interrupts = <128>, <130>;
+		interrupt-names = "mm2s_pcdma", "s2mm_pcdma";
+		status = "okay";
+
+		phy-mode = "sgmii";
+		pcs-handle = <&phy2>;
+
+		phy2: ethernet-phy@8 {
+				reg = <8>;
+		};
+	};
+
+	pcdma: pcdma@60020000 {
+		reg = <0x00 0x60020000 0x00 0x1000>;
+	};
+};
