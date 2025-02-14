@@ -21,6 +21,8 @@ declare -A MAKE=( 								\
 declare -A DTSO_DIR_TO_CFG=(							\
 	["mpfs_icicle"]="defconfig"						\
 	["mpfs_icicle_amp"]="defconfig"
+	["mpfs_video"]="defconfig"						\
+	["pic64gx_curiosity_kit"]="defconfig"					\
 	["sam9x60ek"]="at91_dt_defconfig"					\
 	["sam9x75eb"]="at91_dt_defconfig"					\
 	["sam9x75_curiosity"]="at91_dt_defconfig"				\
@@ -42,6 +44,8 @@ declare -A DTSO_DIR_TO_CFG=(							\
 declare -A DTSO_DIR_TO_DT=(							\
 	["mpfs_icicle"]="microchip/mpfs-icicle-kit.dt"				\
 	["mpfs_icicle_amp"]="microchip/mpfs-icicle-kit-context-a.dt"		\
+	["mpfs_video"]="microchip/mpfs-video-kit.dt"				\
+	["pic64gx_curiosity_kit"]="microchip/pic64gx-curiosity-kit.dt"		\
 	["sam9x60ek"]="at91-sam9x60ek.dt"					\
 	["sam9x75eb"]="at91-sam9x75eb.dt"					\
 	["sam9x75_curiosity"]="at91-sam9x75_curiosity.dt"			\
@@ -182,11 +186,14 @@ setup() {
 		O=${KERNEL_DIR};
 	fi;
 
-	# Based on the location of the defconfig find out the architecture
-	ARCH=$(
-		find ${KERNEL_DIR} -type f -name $(basename ${DTSO_DIR_TO_DT[$(basename ${DTSO_DIR})]})s | # Find defconfig location
-		grep -oP '(?<=arch/).*?(?=/)' # Extract the string between "arch/" and "/"
-	      );
+	if [[ -z "${ARCH}" ]];
+	then
+		# Based on the location of the defconfig find out the architecture
+		ARCH=$(
+			find ${KERNEL_DIR} -type f -name $(basename ${DTSO_DIR_TO_DT[$(basename ${DTSO_DIR})]})s | # Find defconfig location
+			grep -oP '(?<=arch/).*?(?=/)' # Extract the string between "arch/" and "/"
+		      );
+	fi;
 
 	# Append the ARCH and KLOG_BLACKLIST filters to the `make` commands
 	update_recipes "ARCH=${ARCH} | egrep -v \"\${KLOG_BLACKLIST}\"";
