@@ -14,10 +14,20 @@
 };
 
 &{/} {
+	#address-cells = <2>;
+	#size-cells = <2>;
+
 	ptpclk: ptp-clk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
 		clock-frequency = <125000000>;
+	};
+
+	fpgaptp: uio@34020000 {
+		compatible = "generic-uio";
+		reg = <0x0 0x34020000 0x0 0x1000>;
+		linux,uio-name = "mchp_pi";
+		status = "okay";
 	};
 };
 
