@@ -18,15 +18,7 @@
 &{/}
 {
     leds {
-        compatible = "gpio-leds";
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_led_gpio_default>;
-
-        led-blue {
-            label = "blue";
-            gpios = <&pioA PIN_PA21 GPIO_ACTIVE_HIGH>;
-            linux,default-trigger = "heartbeat";
-        };
+	status = "disabled";
     };
 };
 
@@ -35,11 +27,6 @@
 		pinmux = <PIN_PB14__PWMH3>;
 		bias-disable;
 	};
-
-    pinctrl_led_gpio_default: led-gpio-default {
-            pinmux = <PIN_PA21__GPIO>;
-            bias-pull-up;
-    };
 
     pinctrl_mikrobus1_pwm0_default: mikrobus1-pwm0-default {
         pinmux = <PIN_PB15__PWML0>;
