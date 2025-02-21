@@ -270,14 +270,12 @@ do
 		;;
 	j)
 		THREADS_COUNT=${OPTARG};
-		update_recipes "-j${THREADS_COUNT}";
 		;;
 	k)
 		KERNEL_DIR=$(realpath -s ${OPTARG});
 		;;
 	o)
 		O=$(realpath -s ${OPTARG});
-		update_recipes "O=${O}";
 		;;
 	s)
 		BACKUP_PATH=$(realpath -s ${OPTARG});
@@ -286,6 +284,9 @@ do
 		VERBOSE=true;
 		;;
 	esac
+
+	update_recipes "-j${THREADS_COUNT}";
+	update_recipes "O=${O}";
 done;
 
 setup;
