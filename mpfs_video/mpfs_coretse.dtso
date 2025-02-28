@@ -10,7 +10,7 @@
 /plugin/;
 
 / {
-        compatible = "microchip,mpfs-video-kit","microchip,mpfs";
+	compatible = "microchip,mpfs-video-kit","microchip,mpfs-sev-kit","microchip,mpfs";
 };
 
 &{/} {
