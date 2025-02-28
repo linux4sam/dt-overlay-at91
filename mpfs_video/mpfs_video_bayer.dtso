@@ -124,17 +124,11 @@
 		reg = <0x1a>;
 		status = "okay";
 
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-				imx334_ep_cam0: endpoint {
-					remote-endpoint = <&csi2_0_in>;
-					data-lanes = <1 2 3 4>;
-					link-frequencies = /bits/ 64 <891000000 445500000>;
-				};
+		port {
+			imx334_ep_cam0: endpoint {
+				remote-endpoint = <&csi2_0_in>;
+				data-lanes = <1 2 3 4>;
+				link-frequencies = /bits/ 64 <891000000 445500000>;
 			};
 		};
 	};
