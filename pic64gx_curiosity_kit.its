@@ -49,6 +49,18 @@
 					algo = "sha256";
 				};
 			};
+
+			fdt_ov5647 {
+				description = "Device Tree blob for ov5647";
+				data = /incbin/("./pic64gx_curiosity_kit/pic64gx_curiosity_kit_capture_pipeline_with_ov5647.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a0d0000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
 		};
 
 		configurations {
@@ -67,6 +79,11 @@
 			amp {
 				description = "FDT overlay blob for AMP";
 				fdt = "fdt_amp";
+			};
+
+			ov5647 {
+				description = "FDT overlay blob for ov5647";
+				fdt = "fdt_ov5647";
 			};
 		};
 };
