@@ -252,6 +252,7 @@
 			port@0 {
 				reg = <0>;
 				csi2_0_in: endpoint {
+					data-lanes = <1 2 3 4>;
 					remote-endpoint = <&imx334_ep_cam0>;
 				};
 			};
