@@ -1,0 +1,152 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7D65 CURIOSITY board overlay blob supporting the
+ * KSZ8795 5-port 10/100 switch Daughter Card using SPI and RGMII.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Refer to the EV40P40A (KSZ8795-EDS2 daughter card)
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+&{/}
+{
+	model = "Microchip SAMA7D65 Curiosity KSZ8795 5-port Switch";
+};
+
+&flx4 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+&gmac1 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+
+	fixed-link {
+		speed = <1000>;
+		full-duplex;
+		pause;
+	};
+
+	ethernet-phy@1 {
+		status = "disabled";
+	};
+};
+
+&i2c10 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+};
+
+&pioA {
+	pinctrl_spi4_default: spi4-default{
+		pinmux = <PIN_PA18__FLEXCOM4_IO0>,	/* MOSI */
+			 <PIN_PA17__FLEXCOM4_IO1>,	/* MISO */
+			 <PIN_PA16__FLEXCOM4_IO2>,	/* SPCK */
+			 <PIN_PA15__FLEXCOM4_IO3>,	/* CS0 */
+			 <PIN_PA14__FLEXCOM4_IO4>,	/* CS1 */
+			 <PIN_PA19__FLEXCOM4_IO5>,	/* CS2 */
+			 <PIN_PA20__FLEXCOM4_IO6>;	/* CS3 */
+		bias-disable;
+	};
+};
+
+&spi4 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi4_default>;
+	status = "okay";
+
+	ksz8795spi: ksz8795-switch@3 {
+		compatible = "microchip,ksz8795";
+		reg = <3>;
+	//	interrupt-parent = <&pioA>;
+	//	interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
+		spi-max-frequency = <10000000>;		/* 10MHz until proven */
+		spi-cpha;
+		spi-cpol;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				phy-handle = <&swphy0>;
+			};
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				phy-handle = <&swphy1>;
+			};
+			port@2 {
+				reg = <2>;
+				label = "lan3";
+				phy-handle = <&swphy2>;
+			};
+			port@3 {
+				reg = <3>;
+				label = "lan4";
+				phy-handle = <&swphy3>;
+			};
+			port@4 {
+				reg = <4>;
+				phy-mode = "rgmii-id";
+				rx-internal-delay-ps = <2000>;
+				tx-internal-delay-ps = <2000>;
+				ethernet = <&gmac1>;
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+					pause;
+				};
+			};
+		};
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			swphy0: ethernet-phy@0 {
+				reg = <0>;
+				eee-broken-100tx;
+				max-speed = <100>;
+			};
+			swphy1: ethernet-phy@1 {
+				reg = <1>;
+				eee-broken-100tx;
+				max-speed = <100>;
+			};
+			swphy2: ethernet-phy@2 {
+				reg = <2>;
+				eee-broken-100tx;
+				max-speed = <100>;
+			};
+			swphy3: ethernet-phy@3 {
+				reg = <3>;
+				eee-broken-100tx;
+				max-speed = <100>;
+			};
+		};
+	};
+};

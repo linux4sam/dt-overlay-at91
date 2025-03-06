@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY board
+ *  in order to use single-port Gigabit PHY EDS2 daughter card.
+ *
+ *  This is an SPE (Single-Pair Ethernet) PHY.
+ *  This PHY currently responds to PHY Address 1
+ *
+ *  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+&{/}
+{
+	model = "Microchip SAMA7D65 Curiosity LAN8870";
+};
+
+&flx10 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&gmac1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	phy-mode = "rgmii-id";
+	asym-pause;
+	status = "okay";
+
+	ethernet-phy@1 {
+		reg = <1>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
+		phy-mode = "rgmii-id";
+		status = "okay";
+	};
+};
+
+&i2c10 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+};

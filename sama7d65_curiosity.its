@@ -117,9 +117,128 @@
 			};
 			hash-2 {
 				algo = "sha1";
- 			};
+			};
 		};
 
+		fdt_gmac_lan8840 {
+			description = "Device Tree blob for a Gigabit PHY overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan8840.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_rmii-phy {
+			description = "Device Tree blob for an RMII PHY overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_rmii-phy.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_ksz9477 {
+			description = "Device Tree blob for KSZ9477 Gigabit switch overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_ksz9477.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_ksz9563 {
+			description = "Device Tree blob for KSZ9563 Gigabit switch overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_ksz9563.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_ksz8795 {
+			description = "Device Tree blob for KSZ8795 5-port switch overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_ksz8795.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_ksz8895 {
+			description = "Device Tree blob for KSZ8895 5-port switch overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_ksz8895.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_lan9646 {
+			description = "Device Tree blob for LAN9646 Gigabit switch overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan9646.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt_gmac_lan8870 {
+			description = "Device Tree blob for LAN8870 Gigabit PHY overlay";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan8870.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
 	};
 
 	configurations {
@@ -159,6 +278,51 @@
 		tcb_pwm {
 			description = "FDT overlay blob for tcb pwm";
 			fdt = "fdt_tcb_pwm";
+		};
+
+		rmii-phy {
+			description = "FDT overlay blob for an RMII PHY";
+			fdt = "fdt_gmac_rmii-phy";
+		};
+
+		lan8840 {
+			description = "FDT overlay blob for a LAN8840 PHY";
+			fdt = "fdt_gmac_lan8840";
+		};
+
+		ksz9131 {
+			description = "FDT overlay blob for KSZ9131";
+			fdt = "fdt_gmac_lan8840";
+		};
+
+		ksz9477 {
+			description = "FDT overlay blob for KSZ9477";
+			fdt = "fdt_gmac_ksz9477";
+		};
+
+		ksz9563 {
+			description = "FDT overlay blob for KSZ9563";
+			fdt = "fdt_gmac_ksz9563";
+		};
+
+		ksz8795 {
+			description = "FDT overlay blob for KSZ8795";
+			fdt = "fdt_gmac_ksz8795";
+		};
+
+		ksz8895 {
+			description = "FDT overlay blob for KSZ8895";
+			fdt = "fdt_gmac_ksz8895";
+		};
+
+		lan9646 {
+			description = "FDT overlay blob for LAN9646";
+			fdt = "fdt_gmac_lan9646";
+		};
+
+		lan8870 {
+			description = "FDT overlay blob for LAN8870";
+			fdt = "fdt_gmac_lan8870";
 		};
 	};
 };

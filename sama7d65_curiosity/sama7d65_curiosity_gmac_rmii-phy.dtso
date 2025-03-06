@@ -1,0 +1,76 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for the SAMA7D65-CURIOSITY board
+ *  to use a single-port RMII PHY daughter card.
+ *
+ *  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+&{/}
+{
+	model = "Microchip SAMA7D65 Curiosity single-port RMII";
+};
+
+&flx4 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+&gmac1 {
+	phy-mode = "rmii";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gmac1_rmii_default
+		     &pinctrl_gmac1_rxer_default
+		     &pinctrl_gmac1_mdc_default
+		     &pinctrl_gmac1_mdio_default
+		     &pinctrl_gmac1_phy_irq>;
+	status = "okay";
+
+	ethernet-phy@1 {
+		status = "okay";
+	};
+};
+
+&i2c10 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+};
+
+&pioA {
+	pinctrl_gmac1_rmii_default: gmac1-rmii-default{
+		pinmux = <PIN_PD22__G1_TX0>,
+			 <PIN_PD23__G1_TX1>,
+			 <PIN_PD27__G1_RX0>,
+			 <PIN_PD28__G1_RX1>,
+			 <PIN_PD29__G1_REFCK>,
+			 <PIN_PD21__G1_TXCTL>,
+			 <PIN_PD24__G1_RXCTL>;
+		slew-rate = <0>;
+		bias-disable;
+	};
+
+	pinctrl_gmac1_rxer_default: gmac1-rxer-default{
+		pinmux = <PIN_PD30__G1_RXER>;	/* ETH_RXER in RMII  */
+		bias-pull-down;
+	};
+};
