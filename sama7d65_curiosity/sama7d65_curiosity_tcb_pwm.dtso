@@ -20,6 +20,8 @@
 };
 
 &tcb0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	status = "okay";
 
 	tcb0_pwm: pwm@1 {
