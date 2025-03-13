@@ -46,21 +46,21 @@ declare -A DTSO_DIR_TO_DT=(							\
 	["mpfs_icicle_amp"]="microchip/mpfs-icicle-kit-context-a.dt"		\
 	["mpfs_video"]="microchip/mpfs-video-kit.dt"				\
 	["pic64gx_curiosity_kit"]="microchip/pic64gx-curiosity-kit.dt"		\
-	["sam9x60ek"]="at91-sam9x60ek.dt"					\
-	["sam9x75eb"]="at91-sam9x75eb.dt"					\
-	["sam9x75_curiosity"]="at91-sam9x75_curiosity.dt"			\
-	["sama5d2_icp"]="at91-sama5d2_icp.dt"					\
-	["sama5d2_ptc_ek"]="at91-sama5d2_ptc_ek.dt"				\
-	["sama5d2_xplained"]="at91-sama5d2_xplained.dt"				\
-	["sama5d2_xplained_grts"]="at91-sama5d2_xplained.dt"			\
-	["sama5d27_som1_ek"]="at91-sama5d27_som1_ek.dt"				\
-	["sama5d27_wlsom1_ek"]="at91-sama5d27_wlsom1_ek.dt"			\
-	["sama5d29_curiosity"]="at91-sama5d29_curiosity.dt"			\
-	["sama5d3_eds"]="at91-sama5d3_eds.dt"					\
-	["sama5d3_xplained"]="at91-sama5d3_xplained.dt"				\
-	["sama5d4_xplained"]="at91-sama5d4_xplained.dt"				\
-	["sama7g5ek"]="at91-sama7g5ek.dt"					\
-	["sama7g54_curiosity"]="at91-sama7g54_curiosity.dt"			\
+	["sam9x60ek"]="microchip/at91-sam9x60ek.dt"					\
+	["sam9x75eb"]="microchip/at91-sam9x75eb.dt"					\
+	["sam9x75_curiosity"]="microchip/at91-sam9x75_curiosity.dt"			\
+	["sama5d2_icp"]="microchip/at91-sama5d2_icp.dt"					\
+	["sama5d2_ptc_ek"]="microchip/at91-sama5d2_ptc_ek.dt"				\
+	["sama5d2_xplained"]="microchip/at91-sama5d2_xplained.dt"				\
+	["sama5d2_xplained_grts"]="microchip/at91-sama5d2_xplained.dt"			\
+	["sama5d27_som1_ek"]="microchip/at91-sama5d27_som1_ek.dt"				\
+	["sama5d27_wlsom1_ek"]="microchip/at91-sama5d27_wlsom1_ek.dt"			\
+	["sama5d29_curiosity"]="microchip/at91-sama5d29_curiosity.dt"			\
+	["sama5d3_eds"]="microchip/at91-sama5d3_eds.dt"					\
+	["sama5d3_xplained"]="microchip/at91-sama5d3_xplained.dt"				\
+	["sama5d4_xplained"]="microchip/at91-sama5d4_xplained.dt"				\
+	["sama7g5ek"]="microchip/at91-sama7g5ek.dt"					\
+	["sama7g54_curiosity"]="microchip/at91-sama7g54_curiosity.dt"			\
 			);
 
 print_options() {
