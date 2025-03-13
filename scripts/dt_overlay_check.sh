@@ -36,6 +36,7 @@ declare -A DTSO_DIR_TO_CFG=(							\
 	["sama5d3_eds"]="sama5_defconfig"					\
 	["sama5d3_xplained"]="sama5_defconfig"					\
 	["sama5d4_xplained"]="sama5_defconfig"					\
+	["sama7d65_curiosity"]="sama7_defconfig"				\
 	["sama7g5ek"]="sama7_defconfig"						\
 	["sama7g54_curiosity"]="sama7_defconfig"				\
 			);
@@ -59,6 +60,7 @@ declare -A DTSO_DIR_TO_DT=(							\
 	["sama5d3_eds"]="microchip/at91-sama5d3_eds.dt"					\
 	["sama5d3_xplained"]="microchip/at91-sama5d3_xplained.dt"				\
 	["sama5d4_xplained"]="microchip/at91-sama5d4_xplained.dt"				\
+	["sama7d65_curiosity"]="microchip/at91-sama7d65_curiosity.dt"			\
 	["sama7g5ek"]="microchip/at91-sama7g5ek.dt"					\
 	["sama7g54_curiosity"]="microchip/at91-sama7g54_curiosity.dt"			\
 			);
