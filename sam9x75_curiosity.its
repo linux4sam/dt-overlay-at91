@@ -135,6 +135,21 @@
 			};
 		};
 
+		fdt_gmac_ksz8795 {
+			description = "Device Tree blob for KSZ8795 RMII switch overlay";
+			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_ksz8795.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x23120000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_gmac_ksz9477 {
 			description = "Device Tree blob for KSZ9477 RGMII switch overlay";
 			data = /incbin/("./sam9x75_curiosity/sam9x75_curiosity_gmac_ksz9477.dtbo");
@@ -290,6 +305,11 @@
 			fdt = "fdt_gmac_lan9646";
 		};
 
+		ksz8795 {
+			description = "FDT overlay blob for KSZ8795 RGMII switch Daughter Card";
+			fdt = "fdt_gmac_ksz8795";
+		};
+
 		ksz9477 {
 			description = "FDT overlay blob for KSZ9477 RGMII switch Daughter Card";
 			fdt = "fdt_gmac_ksz9477";
@@ -310,10 +330,10 @@
 			fdt = "fdt_mipi_panel";
 		};
 
-                pwm {
-                        description = "FDT overlay blob for PWM";
-                        fdt = "fdt_pwm";
-                };
+		pwm {
+			description = "FDT overlay blob for PWM";
+			fdt = "fdt_pwm";
+		};
 
 		spi_click {
 			description = "FDT overlay blob for at25ff321a spi flash clickboard";
