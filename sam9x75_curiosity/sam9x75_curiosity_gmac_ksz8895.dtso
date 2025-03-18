@@ -1,0 +1,176 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 CURIOSITY board overlay blob supporting the
+ * KSZ8895 5-port 10/100 switch Daughter Card using SPI and RMII.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ * Author: Jerry Ray <jerry.ray@microchip.com>
+ *
+ * Refer to the EV45A66A (KSZ8895-EDS2 daughter card)
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&flx3 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+	status = "okay";
+};
+
+&flx7 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&gmac {
+	phy-mode = "rmii";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gmac_rmii_default>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	fixed-link {
+		speed = <100>;
+		full-duplex;
+		pause;
+	};
+};
+
+&i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flx7_twi_default>;
+	i2c-analog-filter;
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	eeprom@54 {
+		compatible = "atmel,24c01";
+		reg = <0x54>;
+		pagesize = <8>;
+		status = "okay";
+	};
+};
+
+&pinctrl {
+	flexcom {
+		pinctrl_flx3_default: flx3-spi-default {
+			atmel,pins =
+				<AT91_PIOC 22 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 23 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 25 AT91_PERIPH_B AT91_PINCTRL_NONE
+				 AT91_PIOC 26 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_flx7_twi_default: flx7-twi-default {
+			atmel,pins =
+				<AT91_PIOC 0 AT91_PERIPH_C AT91_PINCTRL_NONE
+				 AT91_PIOC 1 AT91_PERIPH_C AT91_PINCTRL_NONE>;
+		};
+	};
+
+	gmac-pins {
+		pinctrl_gmac_rmii_default: gmac-rmii-default {
+			atmel,pins =
+				<AT91_PIOB 13 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX0   */
+				 AT91_PIOB 14 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TX1   */
+				 AT91_PIOB 7  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_TXEN  */
+				 AT91_PIOB 6  AT91_PERIPH_A  (AT91_PINCTRL_SLEWRATE_DIS | AT91_PINCTRL_DIS_SCHMIT)				/* ETH_TXCK (REFCLK) */
+				 AT91_PIOB 11 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX0   */
+				 AT91_PIOB 12 AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RX1   */
+				 AT91_PIOB 0  AT91_PERIPH_C  AT91_PINCTRL_PULL_DOWN				/* ETH_RXER in RMII  */
+				 AT91_PIOB 3  AT91_PERIPH_A  AT91_PINCTRL_SLEWRATE_DIS				/* ETH_RXDV */
+				 AT91_PIOB 10 AT91_PERIPH_A  AT91_PINCTRL_NONE					/* ETH_MDC   */
+				 AT91_PIOB 9  AT91_PERIPH_A  AT91_PINCTRL_NONE					/* ETH_MDIO  */
+				 AT91_PIOD 5  AT91_PERIPH_GPIO	AT91_PINCTRL_NONE>;				/* ETH_INT   */
+		};
+	};
+};
+
+&spi3 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flx3_default>;
+	dmas = <0>, <0>;
+	status = "okay";
+
+	ksz8895spi: ksz8895-switch@0 {
+		compatible = "microchip,ksz8895";
+		reg = <0>;
+		interrupt-parent = <&pioD>;
+		interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+		spi-max-frequency = <10000000>;
+
+		spi-cpha;
+		spi-cpol;
+		status = "okay";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				phy-handle = <&swphy0>;
+			};
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				phy-handle = <&swphy1>;
+			};
+			port@2 {
+				reg = <2>;
+				label = "lan3";
+				phy-handle = <&swphy2>;
+			};
+			port@3 {
+				reg = <3>;
+				label = "lan4";
+				phy-handle = <&swphy3>;
+			};
+			port@4 {
+				reg = <4>;
+				label = "cpu";
+				phy-mode = "rmii";
+			//	rx-internal-delay-ps = <2000>;
+			//	tx-internal-delay-ps = <2000>;
+				ethernet = <&gmac>;
+				fixed-link {
+					speed = <100>;
+					full-duplex;
+					pause;
+				};
+			};
+		};
+		mdio {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			swphy0: ethernet-phy@0 {
+				reg = <0>;
+			};
+			swphy1: ethernet-phy@1 {
+				reg = <1>;
+			};
+			swphy2: ethernet-phy@2 {
+				reg = <2>;
+			};
+			swphy3: ethernet-phy@3 {
+				reg = <3>;
+			};
+		};
+	};
+};
+
+&{/} {
+	model = "SAM9X75-Curiosity: KSZ8895 RMII PHY Daughter Card";
+};
