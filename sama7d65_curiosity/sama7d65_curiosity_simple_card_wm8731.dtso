@@ -1,0 +1,87 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7D65-CURIOSITY board
+ * overlay blob for simple-audio-card with I2SMCC1 and WM8731 codec.
+ * The blob uses flx0, i2c0 and i2s1.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries
+ * Author: Andrei Simion <andrei.simion@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&{/} {
+	sound: sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "sama7d65 audio";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		assigned-clocks = <&pmc PMC_TYPE_CORE PMC_AUDIOIOPLL>;
+		assigned-clock-rates = <12288000>;  // Adjust the clock rate as needed
+
+		simple-audio-card,dai-link@0 {
+			reg = <0>;
+			format = "i2s";
+			frame-master = <&dailink0_master>;
+			bitclock-master = <&dailink0_master>;
+			convert-channels = <2>;
+
+			dailink0_master: cpu {		/* make sure label is unique */
+				sound-dai = <&i2s1>;
+				system-clock-frequency = <12288000>;
+			};
+			codec {
+				sound-dai = <&wm8731>;
+				system-clock-frequency = <12288000>;
+			};
+		};
+	};
+};
+
+&flx0 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+
+	i2c0: i2c@600 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c0_default>;
+		i2c-analog-filter;
+		i2c-digital-filter;
+		i2c-digital-filter-width-ns = <35>;
+		status = "okay";
+
+		wm8731: codec@1a {
+			compatible = "wlf,wm8731";
+			reg = <0x1a>;
+			#sound-dai-cells = <0>;
+		};
+	};
+};
+
+&i2s1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2s1_default>;
+	status = "okay";
+};
+
+&pioa {
+	pinctrl_i2c0_default: i2c0-default {
+		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
+			 <PIN_PC6__FLEXCOM0_IO1>;
+		bias-disable;
+	};
+
+	pinctrl_i2s1_default: i2s1-default {
+		pinmux = <PIN_PC16__I2SMCC1_CK>,
+			 <PIN_PC15__I2SMCC1_WS>,
+			 <PIN_PC14__I2SMCC1_DIN0>,
+			 <PIN_PC17__I2SMCC1_DOUT0>;
+		bias-disable;
+	};
+};
