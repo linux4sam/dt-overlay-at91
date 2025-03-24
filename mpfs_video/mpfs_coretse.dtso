@@ -29,6 +29,18 @@
 		linux,uio-name = "mchp_pi";
 		status = "okay";
 	};
+
+	tsnclk: tsn-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+       };
+
+	tsncfgclk: tsn-cfg-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <50000000>;
+       };
 };
 
 &fabric_bus {
@@ -68,6 +80,13 @@
 
 	pcdma: pcdma@60020000 {
 		reg = <0x00 0x60020000 0x00 0x1000>;
+	};
+
+	tsn: tsn@40000000{
+		compatible = "microchip,coretsn-rtl-v2";
+		reg = <0x0 0x40000000 0x0 0x1000>;
+		clocks = <&tsncfgclk>, <&tsnclk>;
+		clock-names = "apb", "core";
 	};
 };
 
