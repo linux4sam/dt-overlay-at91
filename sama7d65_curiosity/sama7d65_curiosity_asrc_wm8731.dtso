@@ -1,0 +1,93 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7D65-CURIOSITY board
+ * overlay blob for asrc-card with I2SMCC1 DAI and WM8731 codec.
+ * The blob uses asrc, flx0, i2c0 and i2s1.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries
+ * Author: Andrei Simion <andrei.simion@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "dt-bindings/sound/microchip,asrc-card.h"
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+&{/} {
+	sound: sound {
+		compatible = "microchip,asrc-card";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		assigned-clocks = <&pmc PMC_TYPE_CORE PMC_AUDIOPMCPLL>;
+		assigned-clock-rates = <196608000>;
+		microchip,model = "mchp-asrc-card @ sama7d65";
+
+		microchip,audio-asrc = <&asrc 0>, <&asrc 1>, <&asrc 2>, <&asrc 3>;
+		microchip,dai-link@0 {
+			reg = <0>;
+			microchip,format = "i2s";
+			microchip,frame-master = <&dailink0_master>;
+			microchip,bitclock-master = <&dailink0_master>;
+			microchip,convert-channels = <2>;
+			microchip,convert-rate = <48000>;
+			microchip,convert-sample-format = <MCHP_ASRC_PCM_FORMAT_S24_LE>;
+
+			dailink0_master: cpu {		/* make sure label is unique */
+				sound-dai = <&i2s1>;
+			};
+			codec {
+				sound-dai = <&wm8731>;
+			};
+		};
+	};
+};
+
+&asrc {
+	status = "okay";
+};
+
+&flx0 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+
+	i2c0: i2c@600 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c0_default>;
+		i2c-analog-filter;
+		i2c-digital-filter;
+		i2c-digital-filter-width-ns = <35>;
+		status = "okay";
+
+		wm8731: codec@1a {
+			compatible = "wlf,wm8731";
+			reg = <0x1a>;
+			#sound-dai-cells = <0>;
+		};
+	};
+};
+
+&i2s1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2s1_default>;
+	status = "okay";
+};
+
+&pioa {
+	pinctrl_i2c0_default: i2c0-default {
+		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
+			 <PIN_PC6__FLEXCOM0_IO1>;
+		bias-disable;
+	};
+
+	pinctrl_i2s1_default: i2s1-default {
+		pinmux = <PIN_PC16__I2SMCC1_CK>,
+			 <PIN_PC15__I2SMCC1_WS>,
+			 <PIN_PC14__I2SMCC1_DIN0>,
+			 <PIN_PC17__I2SMCC1_DOUT0>;
+		bias-disable;
+	};
+};
