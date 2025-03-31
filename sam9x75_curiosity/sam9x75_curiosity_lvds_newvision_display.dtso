@@ -86,6 +86,10 @@
 	};
 };
 
+&gpu {
+	status = "okay";
+};
+
 &hlcdc {
 	clocks = <&pmc PMC_TYPE_PERIPHERAL 25>, <&pmc PMC_TYPE_CORE PMC_LVDSPLL>, <&clk32k 1>;
 	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
