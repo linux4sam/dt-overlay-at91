@@ -38,6 +38,10 @@
 	};
 };
 
+&gpu {
+	status = "okay";
+};
+
 &hlcdc {
 	status = "okay";
 
