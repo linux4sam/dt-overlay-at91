@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
  * Device Tree file for SAMA7D65-CURIOSITY board
- * overlay blob for simple-audio-card with I2SMCC1 and WM8731 codec.
- * The blob uses flx0, i2c0 and i2s1.
+ * overlay blob for simple-audio-card with I2SMCC1 and WM8731
+ * Mikroe Proto board. The blob uses flx0, i2c0 and i2s1.
  *
  * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries
  * Author: Andrei Simion <andrei.simion@microchip.com>
@@ -15,30 +15,12 @@
 #include <dt-bindings/mfd/atmel-flexcom.h>
 
 &{/} {
-	sound: sound {
-		compatible = "simple-audio-card";
-		simple-audio-card,name = "sama7d65 audio";
-		#address-cells = <1>;
-		#size-cells = <0>;
-		assigned-clocks = <&pmc PMC_TYPE_CORE PMC_AUDIOIOPLL>;
-		assigned-clock-rates = <12288000>;  // Adjust the clock rate as needed
-
-		simple-audio-card,dai-link@0 {
-			reg = <0>;
-			format = "i2s";
-			frame-master = <&dailink0_master>;
-			bitclock-master = <&dailink0_master>;
-			convert-channels = <2>;
-
-			dailink0_master: cpu {		/* make sure label is unique */
-				sound-dai = <&i2s1>;
-				system-clock-frequency = <12288000>;
-			};
-			codec {
-				sound-dai = <&wm8731>;
-				system-clock-frequency = <12288000>;
-			};
-		};
+  sound: sound {
+		compatible = "mikroe,mikroe-proto";
+		model = "wm8731 @ sama7d65_curiosity";
+		i2s-controller = <&i2s1>;
+		audio-codec = <&wm8731>;
+		dai-format = "i2s";
 	};
 };
 

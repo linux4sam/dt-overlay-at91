@@ -255,8 +255,8 @@
 			};
 		};
 
-		fdt_simple_card_wm8731 {
-			description = "Device Tree blob for simple audio card with WM8731 codec overlay";
+		fdt_wm8731_proto {
+			description = "Device Tree blob for WM8731 Mikroe PROTO codec board overlay";
 			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_simple_card_wm8731.dtbo");
 			type = "flat_dt";
 			arch = "arm";
@@ -361,8 +361,8 @@
 		};
 
 		i2s1_wm8731 {
-			description = "FDT overlay blob simple-audio-card with WM8731 codec";
-			fdt = "fdt_simple_card_wm8731";
+			description = "FDT overlay blob with WM8731 Mikroe PROTO codec";
+			fdt = "fdt_wm8731_proto";
 		};
 	};
 };
