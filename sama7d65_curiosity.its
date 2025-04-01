@@ -257,7 +257,7 @@
 
 		fdt_wm8731_proto {
 			description = "Device Tree blob for WM8731 Mikroe PROTO codec board overlay";
-			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_simple_card_wm8731.dtbo");
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_wm8731_proto.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
