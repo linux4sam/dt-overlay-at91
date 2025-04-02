@@ -107,8 +107,6 @@
 	ksz8895spi: ksz8895-switch@0 {
 		compatible = "microchip,ksz8895";
 		reg = <0>;
-		interrupt-parent = <&pioD>;
-		interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
 		spi-max-frequency = <10000000>;
 
 		spi-cpha;
