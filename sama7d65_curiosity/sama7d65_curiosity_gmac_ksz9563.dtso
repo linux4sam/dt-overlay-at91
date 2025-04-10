@@ -61,7 +61,7 @@
 	ksz9563i2c: ksz9563i2c-switch@5f {
 		compatible = "microchip,ksz9563";
 		reg = <95>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		status = "okay";
 
@@ -92,7 +92,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_spi4_default: spi4-default{
 		pinmux = <PIN_PA18__FLEXCOM4_IO0>,	/* MOSI */
 			 <PIN_PA17__FLEXCOM4_IO1>,	/* MISO */
@@ -115,7 +115,7 @@
 	ksz9563: ksz9563-switch@3 {
 		compatible = "microchip,ksz9563";
 		reg = <3>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		spi-max-frequency = <10000000>;		/* 10MHz until proven */
 		spi-cpha;

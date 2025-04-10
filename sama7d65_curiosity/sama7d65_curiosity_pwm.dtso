@@ -22,7 +22,7 @@
     };
 };
 
-&pioA {
+&pioa {
     pinctrl_lcd_pwm: lcd-pwm {
 		pinmux = <PIN_PB14__PWMH3>;
 		bias-disable;

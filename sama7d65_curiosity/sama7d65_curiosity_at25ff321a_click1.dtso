@@ -37,7 +37,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_spi4_cs: spi4-cs {
                 pinmux = <PIN_PA15__FLEXCOM4_IO3>;
                 bias-disable;

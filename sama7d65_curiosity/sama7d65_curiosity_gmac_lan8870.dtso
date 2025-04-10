@@ -39,7 +39,7 @@
 
 	ethernet-phy@1 {
 		reg = <1>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		phy-mode = "rgmii-id";
 		status = "okay";

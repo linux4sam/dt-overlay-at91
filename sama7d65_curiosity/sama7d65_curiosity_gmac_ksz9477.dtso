@@ -64,7 +64,7 @@
 	ksz9477i2c: ksz9477i-switch@5f {
 		compatible = "microchip,ksz9477";
 		reg = <0x5f>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		status = "okay";
 
@@ -150,7 +150,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_spi4_default: spi4-default{
 		pinmux = <PIN_PA18__FLEXCOM4_IO0>,	/* MOSI */
 			 <PIN_PA17__FLEXCOM4_IO1>,	/* MISO */
@@ -173,7 +173,7 @@
 	ksz9477: ksz9477@3 {
 		compatible = "microchip,ksz9477";
 		reg = <3>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		spi-max-frequency = <10000000>;		/* 10MHz until proven */
 		spi-cpha;

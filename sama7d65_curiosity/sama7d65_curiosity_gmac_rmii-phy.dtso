@@ -56,7 +56,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_gmac1_rmii_default: gmac1-rmii-default{
 		pinmux = <PIN_PD22__G1_TX0>,
 			 <PIN_PD23__G1_TX1>,

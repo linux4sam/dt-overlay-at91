@@ -58,7 +58,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_spi4_default: spi4-default{
 		pinmux = <PIN_PA18__FLEXCOM4_IO0>,	/* MOSI */
 			 <PIN_PA17__FLEXCOM4_IO1>,	/* MISO */
@@ -81,7 +81,7 @@
 	ksz8795spi: ksz8795-switch@3 {
 		compatible = "microchip,ksz8795";
 		reg = <3>;
-	//	interrupt-parent = <&pioA>;
+	//	interrupt-parent = <&pioa>;
 	//	interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 		spi-max-frequency = <10000000>;		/* 10MHz until proven */
 		spi-cpha;

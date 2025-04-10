@@ -37,7 +37,7 @@
 
 	ethernet-phy@1 {
 		reg = <0x1>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PE3 IRQ_TYPE_LEVEL_LOW>;
 //		rxc-skew-psec = <800>;
 		status = "okay";

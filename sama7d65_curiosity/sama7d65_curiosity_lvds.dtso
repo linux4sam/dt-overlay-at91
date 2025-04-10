@@ -49,7 +49,7 @@
 		regulator-name = "panel-power-supply";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
-		gpios = <&pioA PIN_PB18 GPIO_ACTIVE_HIGH>;
+		gpios = <&pioa PIN_PB18 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 	};
 
@@ -74,8 +74,8 @@
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c0_default>;
 	pinctrl-1 = <&pinctrl_i2c0_gpio>;
-	sda-gpios = <&pioA PIN_PC6 GPIO_ACTIVE_HIGH>;
-	scl-gpios = <&pioA PIN_PC7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+	sda-gpios = <&pioa PIN_PC6 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&pioa PIN_PC7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 	i2c-analog-filter;
 	i2c-digital-filter;
 	i2c-digital-filter-width-ns = <35>;
@@ -84,7 +84,7 @@
 	mxt: atmel-mxt-ts@4a {
 		compatible = "atmel,maxtouch";
 		reg = <0x4a>;
-		interrupt-parent = <&pioA>;
+		interrupt-parent = <&pioa>;
 		interrupts = <PIN_PB16 0x0>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_mxt_irq>;
@@ -115,7 +115,7 @@
 	};
 };
 
-&pioA {
+&pioa {
 	pinctrl_i2c0_default: i2c0-default {
 		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
 			<PIN_PC6__FLEXCOM0_IO1>;

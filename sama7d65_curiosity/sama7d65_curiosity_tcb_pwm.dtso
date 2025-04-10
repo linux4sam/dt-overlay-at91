@@ -12,7 +12,7 @@
 /plugin/;
 #include "sama7d65-pinfunc.h"
 
-&pioA {
+&pioa {
 	pinctrl_tcb0_tioa1: tcb0-tioa1-default {
 		pinmux = <PIN_PC16__TIOA1>;
 		bias-disable;
