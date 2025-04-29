@@ -1,0 +1,180 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for sama7d65-curiosity board in order to use
+ *  10.1inch new vision lvds display panel
+ *
+ *  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Sandeep Sheriker M <sandeep.sheriker@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/clock/at91.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include "sama7d65-pinfunc.h"
+
+&{/}
+{
+	model = "Microchip SAMA7D65 Curiosity LVDS";
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm 3 1000000 0>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&vdd_5v>;
+	};
+
+	display {
+		compatible = "panel-lvds";
+		power-supply = <&panel_reg>;
+		backlight = <&backlight>;
+		width-mm = <216>;
+		height-mm = <135>;
+		data-mapping = "vesa-24";
+
+		panel-timing {
+			clock-frequency = <65000000>;
+			hactive = <1280>;
+			vactive = <800>;
+			hfront-porch = <48>;
+			hback-porch = <80>;
+			hsync-len = <32>;
+			vfront-porch = <8>;
+			vback-porch = <16>;
+			vsync-len = <8>;
+		};
+
+
+		port {
+			lcd_lvds_in: endpoint {
+				remote-endpoint = <&lvdsc_out>;
+			};
+		};
+	};
+
+	panel_reg: mic23150-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "panel-power-supply";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpios = <&pioa PIN_PB18 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		regulator-always-on;
+	};
+
+	vdd_5v: fixed-regulator-vdd-5v {
+		compatible = "regulator-fixed";
+		regulator-name = "VDD_5V";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-always-on;
+	};
+
+};
+
+&flx0 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
+	status = "okay";
+};
+
+&i2c0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	pinctrl-names = "default", "gpio";
+	pinctrl-0 = <&pinctrl_i2c0_default>;
+	pinctrl-1 = <&pinctrl_i2c0_gpio>;
+	sda-gpios = <&pioa PIN_PC6 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&pioa PIN_PC7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+	i2c-analog-filter;
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+	status = "okay";
+
+	mxt: atmel-mxt-ts@4a {
+		compatible = "atmel,maxtouch";
+		reg = <0x4a>;
+		interrupt-parent = <&pioa>;
+		interrupts = <PIN_PB16 0x0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mxt_irq>;
+		vdda-supply = <&panel_reg>;
+		vdd-supply = <&vdd_3v3>;
+	};
+};
+
+&lvdsc {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	port@0 {
+		reg = <0>;
+
+		lvdsc_in: endpoint {
+			remote-endpoint = <&xlcdc_out>;
+		};
+	};
+
+	port@1 {
+		reg = <1>;
+
+		lvdsc_out: endpoint {
+			remote-endpoint = <&lcd_lvds_in>;
+		};
+	};
+};
+
+&pioa {
+	pinctrl_i2c0_default: i2c0-default {
+		pinmux = <PIN_PC7__FLEXCOM0_IO0>,
+			<PIN_PC6__FLEXCOM0_IO1>;
+		bias-pull-up;
+	};
+
+	pinctrl_i2c0_gpio: i2c0-gpio{
+		pinmux = <PIN_PC7__GPIO>,
+			 <PIN_PC6__GPIO>;
+		bias-disable;
+	};
+
+	pinctrl_lcd_pwm: lcd-pwm {
+		pinmux = <PIN_PB14__PWMH3>;
+		bias-disable;
+	};
+
+	pinctrl_mxt_irq: pinctrl-mxt-irq {
+		pinmux = <PIN_PB16__GPIO>;
+		bias-pull-up;
+		input-debounce = <1>;
+	};
+};
+
+&pwm {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_lcd_pwm>;
+	status = "okay";
+};
+
+&xlcdc {
+	clocks = <&pmc PMC_TYPE_PERIPHERAL 56>, <&pmc PMC_TYPE_CORE PMC_LVDSPLL>, <&clk32k 1>;
+	clock-names = "periph_clk", "lvds_pll_clk", "slow_clk";
+	assigned-clocks = <&pmc PMC_TYPE_CORE PMC_MCK3>;
+	assigned-clock-rates = <266500000>;
+	status = "okay";
+
+	hlcdc-display-controller {
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			xlcdc_out: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&lvdsc_in>;
+			};
+		};
+	};
+};
