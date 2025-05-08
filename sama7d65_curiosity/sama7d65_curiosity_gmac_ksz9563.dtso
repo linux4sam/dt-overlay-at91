@@ -81,7 +81,7 @@
 				phy-mode = "rgmii-id";
 				rx-internal-delay-ps = <2000>;
 				tx-internal-delay-ps = <2000>;
-				ethernet = <&gmac>;
+				ethernet = <&gmac1>;
 				fixed-link {
 					speed = <1000>;
 					full-duplex;
