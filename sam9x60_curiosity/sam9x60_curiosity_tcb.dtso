@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X60-CURIOSITY board
+ * overlay blob for TCB example.
+ *
+ * Copyright (C) 2025 Microchip Technology, Inc. and its subsidiaries
+ * Author: Dharma Balasubiramani <dharma.b@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "dt-bindings/pinctrl/at91.h"
+
+&tcb0 {
+	status="okay";
+	counter: counter@0 {
+		compatible = "microchip,tcb-capture";
+		reg = <0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_tcb0_default>;
+	};
+};
+
+&pinctrl {
+	tcb0 {
+		pinctrl_tcb0_default: tcb0-default {
+			atmel,pins = <AT91_PIOA 21 AT91_PERIPH_A AT91_PINCTRL_NONE>;
+		};
+	};
+};
