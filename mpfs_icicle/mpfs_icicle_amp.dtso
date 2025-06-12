@@ -11,16 +11,18 @@
 /plugin/;
 
 / {
-	compatible = "microchip,mpfs-icicle-reference-rtlv2210", "microchip,mpfs-icicle-kit", "microchip,mpfs";
+	compatible = "microchip,mpfs-icicle-es-reference-rtl-v2507", "microchip,mpfs-icicle-kit","microchip,mpfs";
 };
 
 &{/} {
 	rproc_contextb: remote-context {
-		compatible = "microchip,miv-remoteproc";
-		memory-region = <&vdev0buffer>, <&rsctable>,
-				<&contextb_reserved>, <&vdev0vring0>,
+		compatible = "microchip,ipc-sbi-remoteproc";
+		memory-region = <&contextb_reserved>, <&rsctable>,
+				<&vdev0vring0>, <&vdev0buffer>,
 				<&vdev0vring1>;
-		mboxes= <&ihc 0>;
+		memory-region-names = "firmware", "rsc-table",
+				      "vring0", "buffer", "vring1";
+		mboxes= <&ihc 8>;
 		status = "okay";
 	};
 
