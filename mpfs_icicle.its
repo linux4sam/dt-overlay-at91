@@ -82,6 +82,17 @@
 					algo = "sha256";
 				};
 			};
+			fdt_opp {
+				description = "Device Tree blob for CPU Operating Points";
+				data = /incbin/("./mpfs_icicle/mpfs_icicle_cpu_opp.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a0c0000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
 		};
 
 		configurations {

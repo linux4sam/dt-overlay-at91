@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay for CPU Operating Points (OPP)
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries.
+ * Author: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "microchip,mpfs-icicle-es-reference-rtl-v2507", "microchip,mpfs-icicle-kit","microchip,mpfs";
+};
+
+&{/} {
+	cpu_opp_table: opp-table-cpu {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-600000000 {
+			opp-hz = /bits/ 64 <600000000>;
+			opp-microvolt = <1000000>;
+		};
+
+		opp-300000000 {
+			opp-hz = /bits/ 64 <300000000>;
+			opp-microvolt = <1000000>;
+		};
+
+		opp-150000000 {
+			opp-hz = /bits/ 64 <150000000>;
+			opp-microvolt = <1000000>;
+		};
+	};
+};
+
+&cpu1 {
+	operating-points-v2 = <&cpu_opp_table>;
+};
+
+&cpu2 {
+	operating-points-v2 = <&cpu_opp_table>;
+};
+
+&cpu3 {
+	operating-points-v2 = <&cpu_opp_table>;
+};
+
+&cpu4 {
+	operating-points-v2 = <&cpu_opp_table>;
+};
