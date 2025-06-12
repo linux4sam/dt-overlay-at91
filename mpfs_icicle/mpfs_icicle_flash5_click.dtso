@@ -11,7 +11,7 @@
 /plugin/;
 
 / {
-	compatible = "microchip,mpfs-icicle-reference-rtlv2209", "microchip,mpfs-icicle-kit","microchip,mpfs";
+	compatible = "microchip,mpfs-icicle-es-reference-rtl-v2507", "microchip,mpfs-icicle-kit","microchip,mpfs";
 };
 
 &qspi {
