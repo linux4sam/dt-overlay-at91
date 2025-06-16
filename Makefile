@@ -14,6 +14,7 @@ AT91SAM9X5EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard at91sam9x5ek/*.d
 MPFS_ICICLE_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs_icicle/*.dtso))
 MPFS_ICICLE_AMP_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs_icicle_amp/*.dtso))
 MPFS_VIDEO_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs_video/*.dtso))
+MPFS_DISCOVERY_KIT_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard mpfs_discovery_kit/*.dtso))
 PIC64GX_CURIOSITY_KIT_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard pic64gx_curiosity_kit/*.dtso))
 SAM9X60EK_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60ek/*.dtso))
 SAM9X60_CURIOSITY_DTBO_OBJECTS:= $(patsubst %.dtso,%.dtbo,$(wildcard sam9x60_curiosity/*.dtso))
@@ -49,6 +50,8 @@ mpfs_icicle_dtbos: $(MPFS_ICICLE_DTBO_OBJECTS)
 mpfs_icicle_amp_dtbos: $(MPFS_ICICLE_AMP_DTBO_OBJECTS)
 
 mpfs_video_dtbos: $(MPFS_VIDEO_DTBO_OBJECTS)
+
+mpfs_discovery_kit_dtbos: $(MPFS_DISCOVERY_KIT_DTBO_OBJECTS)
 
 pic64gx_curiosity_kit_dtbos: $(PIC64GX_CURIOSITY_KIT_DTBO_OBJECTS)
 
