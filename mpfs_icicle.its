@@ -27,7 +27,7 @@
 					algo = "sha256";
 				};
 			};
-			base_fdt {
+			fdt-mpfs-icicle-kit.dtb {
 				description = "Flattened Device Tree blob";
 				data = /incbin/("./dts/microchip/mpfs-icicle-kit.dtb");
 				type = "flat_dt";
@@ -38,7 +38,18 @@
 					algo = "sha256";
 				};
 			};
-			fdt_rpi {
+			fdt-mpfs-icicle-kit-prod.dtb {
+				description = "Flattened Device Tree blob";
+				data = /incbin/("./dts/microchip/mpfs-icicle-kit-prod.dtb");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x8a000000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
+			fdt-mpfs-icicle-rpi-sense-hat.dtbo {
 				description = "Device Tree blob RPI Sense Hat";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_rpi_sense_hat.dtbo");
 				type = "flat_dt";
@@ -49,7 +60,7 @@
 					algo = "sha256";
 				};
 			};
-			fdt_f5c {
+			fdt-mpfs-icicle-flash5-click.dtbo {
 				description = "Device Tree blob Flash 5 Click";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_flash5_click.dtbo");
 				type = "flat_dt";
@@ -60,7 +71,7 @@
 					algo = "sha256";
 				};
 			};
-			fdt_pmod3 {
+			fdt-mpfs-icicle-pmod-sf3.dtbo {
 				description = "Device Tree blob Pmod SF3";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_pmod_sf3.dtbo");
 				type = "flat_dt";
@@ -71,7 +82,7 @@
 					algo = "sha256";
 				};
 			};
-			fdt_amp {
+			fdt-mpfs-icicle-amp.dtbo {
 				description = "Device Tree blob for AMP";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_amp.dtbo");
 				type = "flat_dt";
@@ -82,7 +93,7 @@
 					algo = "sha256";
 				};
 			};
-			fdt_opp {
+			fdt-mpfs-icicle-cpu-opp {
 				description = "Device Tree blob for CPU Operating Points";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_cpu_opp.dtbo");
 				type = "flat_dt";
@@ -96,36 +107,47 @@
 		};
 
 		configurations {
-			default = "kernel_dtb";
-			kernel_dtb {
+			default = "conf-microchip,mpfs-icicle-kit-prod";
+			conf-microchip,mpfs-icicle-kit {
 				description = "1 Linux kernel, FDT blob";
 				kernel = "kernel";
-				fdt = "base_fdt";
+				fdt = "fdt-mpfs-icicle-kit.dtb";
 			};
 
-			base_dtb {
-				description = "Base FDT blob for MPFS Icicle board";
-				fdt = "base_fdt";
+			conf-microchip,mpfs-icicle-kit-prod {
+				description = "1 Linux kernel, FDT blob";
+				kernel = "kernel";
+				fdt = "fdt-mpfs-icicle-kit-prod.dtb";
 			};
 
-			rpi {
+			conf-microchip,mpfs-icicle-rpi-sense-hat {
 				description = "FDT overlay blob for RPI Sense Hat";
-				fdt = "fdt_rpi";
+				fdt = "fdt-mpfs-icicle-rpi-sense-hat.dtbo";
 			};
 
-			f5c {
+			conf-microchip,mpfs-icicle-flash5-click {
 				description = "FDT overlay blob for Flash 5 Click";
-				fdt = "fdt_f5c";
+				fdt = "fdt-mpfs-icicle-flash5-click.dtbo";
 			};
 
-			pmod3 {
+			conf-microchip,mpfs-icicle-pmod-sf3 {
 				description = "FDT overlay blob for Pmod SF3";
-				fdt = "fdt_pmod3";
+				fdt = "fdt-mpfs-icicle-pmod-sf3.dtbo";
 			};
 
-			amp {
+			conf-microchip,mpfs-icicle-amp {
 				description = "FDT overlay blob for AMP";
-				fdt = "fdt_amp";
+				fdt = "fdt-mpfs-icicle-amp.dtbo";
+			};
+
+			conf-microchip,fdt-mpfs-icicle-kit.dtb {
+				description = "Base FDT blob for MPFS Icicle board";
+				fdt = "fdt-mpfs-icicle-kit.dtb";
+			};
+
+			conf-microchip,fdt-mpfs-icicle-kit-prod.dtb {
+				description = "Base FDT blob for MPFS Icicle Production board";
+				fdt = "fdt-mpfs-icicle-kit-prod.dtb";
 			};
 		};
 };
