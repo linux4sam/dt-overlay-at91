@@ -93,7 +93,7 @@
 					algo = "sha256";
 				};
 			};
-			fdt-mpfs-icicle-cpu-opp {
+			fdt-mpfs-icicle-cpu-opp.dtbo {
 				description = "Device Tree blob for CPU Operating Points";
 				data = /incbin/("./mpfs_icicle/mpfs_icicle_cpu_opp.dtbo");
 				type = "flat_dt";
@@ -138,6 +138,11 @@
 			conf-microchip,mpfs-icicle-amp {
 				description = "FDT overlay blob for AMP";
 				fdt = "fdt-mpfs-icicle-amp.dtbo";
+			};
+
+			conf-microchip,mpfs-icicle-cpu-opp {
+				description = "FDT overlay blob for CPU Operating Points";
+				fdt = "fdt-mpfs-icicle-cpu-opp.dtbo";
 			};
 
 			conf-microchip,fdt-mpfs-icicle-kit.dtb {
