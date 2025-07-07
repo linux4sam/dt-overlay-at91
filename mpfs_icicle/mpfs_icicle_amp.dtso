@@ -71,3 +71,7 @@
 	status = "disabled"; // in use by context b
 };
 
+&wdt4 {
+	status = "disabled";
+};
+
