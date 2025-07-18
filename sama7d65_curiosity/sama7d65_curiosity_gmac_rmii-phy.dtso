@@ -35,6 +35,7 @@
 		     &pinctrl_gmac1_mdc_default
 		     &pinctrl_gmac1_mdio_default
 		     &pinctrl_gmac1_phy_irq>;
+	cdns,refclk-ext;
 	status = "okay";
 
 	ethernet-phy@1 {
