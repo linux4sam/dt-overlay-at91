@@ -28,6 +28,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gmac_rmii_default>;
 //	magic-packet;
+	cdns,refclk-ext;
 	status = "okay";
 
 	ethernet-phy@1 {

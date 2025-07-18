@@ -33,6 +33,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gmac_rmii_default>;
 	dmas = <0>, <0>;
+	cdns,refclk-ext;
 	status = "okay";
 
 	fixed-link {
