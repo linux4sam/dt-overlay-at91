@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY-PRO board
+ *  in order to enable pwms.
+ *
+ *  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&{/}
+{
+    leds {
+	status = "disabled";
+    };
+};
+
+&pioa {
+    pinctrl_lcd_pwm: lcd-pwm {
+		pinmux = <PIN_PB14__PWMH3>;
+		bias-disable;
+	};
+
+    pinctrl_mikrobus1_pwm0_default: mikrobus1-pwm0-default {
+        pinmux = <PIN_PB15__PWML0>;
+        bias-disable;
+    };
+
+    pinctrl_mikrobus2_pwm1_default: mikrobus2-pwm1-default {
+        pinmux = <PIN_PB17__PWML1>;
+        bias-disable;
+    };
+};
+
+&pwm {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_lcd_pwm &pinctrl_mikrobus1_pwm0_default &pinctrl_mikrobus2_pwm1_default>;
+	status = "okay";
+};

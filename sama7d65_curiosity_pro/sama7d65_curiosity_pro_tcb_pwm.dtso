@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY-PRO board
+ *  in order to enable tcb0 pwm0.
+ *
+ *  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+
+&pioa {
+	pinctrl_tcb0_tioa1: tcb0-tioa1-default {
+		pinmux = <PIN_PC16__TIOA1>;
+		bias-disable;
+	};
+};
+
+&tcb0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	tcb0_pwm: pwm@1 {
+		compatible = "atmel,tcb-pwm";
+		reg = <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_tcb0_tioa1>;
+		status = "okay";
+	};
+};
+
