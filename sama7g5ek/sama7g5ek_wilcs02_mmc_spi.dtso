@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+*  Device Tree overlay for SAMA7G5-EK board
+*  to add WILCS02 WiFi module on mikroBUS1 (FLEXCOM11 SPI)
+*
+*  Copyright (c) 2025 Microchip Technology Inc. and its subsidiaries
+*
+*  Author: Prasurjya Rohan Saikia <prasurjya.rohansaikia@microchip.com> 
+*/
+ 
+/dts-v1/;
+/plugin/;
+
+#include "sama7g5-pinfunc.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/clock/at91.h>
+
+&spi11 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	clocks = <&pmc PMC_TYPE_PERIPHERAL 49>, <&pmc PMC_TYPE_GCK 49>;
+	clock-names = "spi_clk", "spi_gclk";
+	assigned-clocks = <&pmc PMC_TYPE_GCK 49>;
+	assigned-clock-rates = <80000000>;
+	cs-gpios = <&pioA PIN_PB6 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	wifi_spi@0 {
+		compatible = "mmc-spi-slot";
+		reg = <0>;
+		spi-max-frequency = <45000000>;
+		interrupt-parent = <&pioA>;
+		interrupts = <PIN_PC17 0>;
+		intr-gpios = <&pioA PIN_PC21 0>;
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <1>;
+		cap-mmc-highspeed;
+		cap-sd-highspeed;
+		status="okay";
+	};
+};
