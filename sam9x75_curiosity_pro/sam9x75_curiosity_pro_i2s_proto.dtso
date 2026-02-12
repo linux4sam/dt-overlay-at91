@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAM9X75 Curiosity Pro board overlay blob for
+ * I2S with PROTO board. The blob uses i2s0 and i2c on flx7.
+ *
+ * Copyright (C) 2026 Microchip Technology, Inc.
+ * Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include "dt-bindings/pinctrl/at91.h"
+
+&i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	wm8731: codec@1a {
+		compatible = "wlf,wm8731";
+		reg = <0x1a>;
+	};
+};
+
+&i2s {
+	status = "okay";
+};
+
+&{/} {
+	sound {
+		compatible = "mikroe,mikroe-proto";
+		model = "wm8731 @ sam9x75_curiosity";
+		i2s-controller = <&i2s>;
+		audio-codec = <&wm8731>;
+		dai-format = "i2s";
+	};
+};
