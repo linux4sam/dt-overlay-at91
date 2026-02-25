@@ -32,13 +32,15 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gmac0_rmii_default
 		     &pinctrl_gmac0_rxer_default
-		     &pinctrl_gmac0_mdc_default
 		     &pinctrl_gmac0_mdio_default
 		     &pinctrl_gmac0_phy_irq>;
 	cdns,refclk-ext;
 	status = "okay";
 
 	ethernet-phy@1 {
+		reg = <0x1>;
+		interrupt-parent = <&pioa>;
+		interrupts = <PIN_PC1 IRQ_TYPE_LEVEL_LOW>;
 		status = "okay";
 	};
 };
@@ -73,5 +75,16 @@
 	pinctrl_gmac0_rxer_default: gmac0-rxer-default{
 		pinmux = <PIN_PB2__G0_RXER>;	/* ETH_RXER in RMII  */
 		bias-pull-down;
+	};
+
+	pinctrl_gmac0_mdio_default: gmac0-mdio-default {
+		pinmux = <PIN_PA31__G0_MDC>,
+			 <PIN_PB0__G0_MDIO>;
+		bias-disable;
+	};
+
+	pinctrl_gmac0_phy_irq: gmac0-phy-irq {
+		pinmux = <PIN_PC1__GPIO>;
+		bias-disable;
 	};
 };
