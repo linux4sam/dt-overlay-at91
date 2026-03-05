@@ -135,9 +135,9 @@
 			};
 		};
 
-		fdt_gmac_lan8840 {
+		fdt_gmac_rgmii-phy {
 			description = "Device Tree blob for a Gigabit PHY overlay";
-			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan8840.dtbo");
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_rgmii-phy.dtbo");
 			type = "flat_dt";
 			arch = "arm";
 			compression = "none";
@@ -365,14 +365,19 @@
 			fdt = "fdt_gmac_rmii-phy";
 		};
 
+		rgmii-phy {
+			description = "FDT overlay blob for a RGMII PHY";
+			fdt = "fdt_gmac_rgmii-phy";
+		};
+
 		lan8840 {
 			description = "FDT overlay blob for a LAN8840 PHY";
-			fdt = "fdt_gmac_lan8840";
+			fdt = "fdt_gmac_rgmii-phy";
 		};
 
 		ksz9131 {
 			description = "FDT overlay blob for KSZ9131";
-			fdt = "fdt_gmac_lan8840";
+			fdt = "fdt_gmac_rgmii-phy";
 		};
 
 		ksz9477 {

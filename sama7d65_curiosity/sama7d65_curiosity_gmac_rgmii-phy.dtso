@@ -21,7 +21,7 @@
 
 &{/}
 {
-	model = "Microchip SAMA7D65 Curiosity LAN8840";
+	model = "Microchip SAMA7D65 Curiosity single-port RGMII PHY";
 };
 
 &flx10 {
