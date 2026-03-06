@@ -7,7 +7,6 @@
  *
  *  Author: Ryan Wanner <ryan.wanner@microchip.com>
  *
- * Refer to the EV12N54A (LAN8840-EDS2 daughter card)
  *
  */
 /dts-v1/;
@@ -21,7 +20,7 @@
 
 &{/}
 {
-	model = "Microchip SAMA7D65 Curiosity Pro LAN8840";
+	model = "Microchip SAMA7D65 Curiosity Pro single-port RGMII";
 };
 
 &gmac0 {
