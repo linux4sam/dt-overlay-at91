@@ -104,7 +104,9 @@
 			port@5 {
 				reg = <6>;
 				label = "lan5";
-				phy-handle = <&swphy_6>;
+				phy-mode = "sgmii";
+				sfp = <&sfp>;
+				managed = "in-band-status";
 			};
 		};
 		mdio {
@@ -127,11 +129,6 @@
 			};
 			swphy_3: ethernet-phy@3 {
 				reg = <3>;
-				eee-broken-100tx;
-				eee-broken-1000t;
-			};
-			swphy_6: ethernet-phy@6 {
-				reg = <6>;
 				eee-broken-100tx;
 				eee-broken-1000t;
 			};
@@ -242,7 +239,9 @@
 			port@5 {
 				reg = <6>;
 				label = "lan5";
-				phy-handle = <&swphy6>;
+				phy-mode = "sgmii";
+				sfp = <&sfp>;
+				managed = "in-band-status";
 			};
 		};
 		mdio {
@@ -268,15 +267,15 @@
 				eee-broken-100tx;
 				eee-broken-1000t;
 			};
-			swphy6: ethernet-phy@6 {
-				reg = <6>;
-				eee-broken-100tx;
-				eee-broken-1000t;
-			};
 		};
 	};
 };
 
 &{/} {
-	model = "SAM9X75-Curiosity: LAN9646 RGMII PHY Daughter Card";
+	model = "SAM9X75-Curiosity: LAN9646 RGMII Switch Daughter Card";
+
+	sfp: sfp {
+		compatible = "sff,sfp";
+		i2c-bus = <&i2c7>;
+	};
 };
