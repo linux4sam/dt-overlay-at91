@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * Device Tree file for SAM9X75 CURIOSITY Pro board overlay blob for the LAN8840 RGMII PHY Daughter Card.
+ * Device Tree file for SAM9X75 CURIOSITY Pro board overlay blob for the Single-Port RGMII PHY Daughter Card.
  *
  * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries
  *
@@ -76,5 +76,5 @@
 };
 
 &{/} {
-	model = "SAM9X75-Curiosity-Pro: LAN8840 RGMII PHY Daughter Card";
+	model = "SAM9X75-Curiosity-Pro: Singe-Port RGMII PHY Daughter Card";
 };
