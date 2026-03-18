@@ -91,7 +91,7 @@
 		};
 
 		fdt_gmac_rmii_phy {
-			description = "Device Tree blob for LAN8840 RGMII PHY overlay";
+			description = "Device Tree blob for Generic RMII PHY overlay";
 			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_gmac_rmii-phy.dtbo");
 			type = "flat_dt";
 			arch = "arm";
@@ -106,7 +106,7 @@
 		};
 
 		fdt_gmac_rgmii_phy {
-			description = "Device Tree blob for LAN8840 RGMII PHY overlay";
+			description = "Device Tree blob for Generic RGMII PHY overlay";
 			data = /incbin/("./sam9x75_curiosity_pro/sam9x75_curiosity_pro_gmac_rgmii-phy.dtbo");
 			type = "flat_dt";
 			arch = "arm";
