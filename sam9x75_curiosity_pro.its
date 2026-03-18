@@ -305,6 +305,11 @@
 			fdt = "fdt_gmac_rgmii_phy";
 		};
 
+		vsc8541 {
+			description = "FDT overlay blob for VSC8541 RGMII PHY EDS2 Daughter Card";
+			fdt = "fdt_gmac_rgmii_phy";
+		};
+
 		lan9646 {
 			description = "FDT overlay blob for LAN9646 RGMII switch Daughter Card";
 			fdt = "fdt_gmac_lan9646";
