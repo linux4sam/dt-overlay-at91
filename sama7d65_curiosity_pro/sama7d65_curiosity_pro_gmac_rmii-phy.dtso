@@ -22,8 +22,8 @@
 	model = "Microchip SAMA7D65 Curiosity Pro single-port RMII";
 };
 
-&flx4 {
-	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_SPI>;
+&flx10 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_TWI>;
 	status = "okay";
 };
 
