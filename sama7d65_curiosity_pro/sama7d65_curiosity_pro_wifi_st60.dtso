@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY-PRO board
+ *  in order to use ST60 M.2 WIFI chip with USART for HCI
+ *
+ *  Copyright (c) 2026 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&flx1 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_USART>;
+	status = "okay";
+};
+
+&uart1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart1_default>;
+	status = "okay";
+
+	bluetooth {
+		compatible = "mrvl,88w8897";
+	};
+};
+
+&sdmmc2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	non-removable;
+	status = "okay";
+
+	wifi@1 {
+		compatible = "marvell,sd8897";
+		reg = <1>;
+	};
+
+};
+
+&pioa {
+	pinctrl_uart1_default: uart1-default {
+		pinmux = <PIN_PD7__FLEXCOM1_IO0>,
+			 <PIN_PD6__FLEXCOM1_IO1>,
+			 <PIN_PD5__FLEXCOM1_IO3>,
+			 <PIN_PD3__FLEXCOM1_IO4>;
+		bias-disable;
+	};
+};

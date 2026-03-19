@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAMA7D65-CURIOSITY-PRO board
+ *  in order to use MT320 M.2 WIFI/BLE chip
+ *
+ *  Copyright (c) 2026 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&sdmmc2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	non-removable;
+	status = "okay";
+
+	bluetooth@2 {
+		compatible = "mediatek,mt7921s-bluetooth";
+		reg = <2>;
+	};
+};
