@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ *  Device Tree overlay for SAM9x75-CURIOSITY-PRO board
+ *  in order to use ST60 M.2 SDIO/UART WIFI/BLE chip
+ *
+ *  Copyright (c) 2026 Microchip Technology Inc. and its subsidiaries
+ *
+ *  Author: Ryan Wanner <ryan.wanner@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+&flx5 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_USART>;
+	status = "okay";
+
+	uart5: serial@200 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_uart5_default>;
+		status = "okay";
+
+		bluetooth {
+			compatible = "mrvl,88w8897";
+		};
+	};
+};
+
+&sdmmc1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	non-removable;
+	status = "okay";
+
+	wifi@1 {
+		reg = <1>;
+		compatible = "marvell,sd8897";
+	};
+};
+
+&pinctrl {
+	flexcom {
+		pinctrl_uart5_default: uart5-default {
+			atmel,pins =
+				<AT91_PIOA 14 AT91_PERIPH_B AT91_PINCTRL_NONE>,
+				<AT91_PIOA 15 AT91_PERIPH_B AT91_PINCTRL_NONE>,
+				<AT91_PIOA 16 AT91_PERIPH_B AT91_PINCTRL_NONE>,
+				<AT91_PIOA 30 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+		};
+	};
+};
