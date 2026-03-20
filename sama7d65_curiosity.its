@@ -240,6 +240,21 @@
 			};
 		};
 
+		fdt_gmac_lan8670 {
+			description = "Device Tree overlay for a LAN8670 RMII 10BaseT1S PHY";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan8670.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61500000>;
+			hash-1 {
+				algo = "crc32";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
 		fdt_gmac_lan8870 {
 			description = "Device Tree blob for LAN8870 Gigabit PHY overlay";
 			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_gmac_lan8870.dtbo");
@@ -403,6 +418,11 @@
 		lan9646 {
 			description = "FDT overlay blob for LAN9646";
 			fdt = "fdt_gmac_lan9646";
+		};
+
+		lan8670 {
+			description = "FDT overlay blob for a LAN8670 T1S PHY";
+			fdt = "fdt_gmac_lan8670";
 		};
 
 		lan8870 {
