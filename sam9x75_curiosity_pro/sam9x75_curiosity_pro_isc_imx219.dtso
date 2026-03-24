@@ -91,7 +91,7 @@
 	};
 };
 
-&i2c6 {
+&i2c7 {
 	/*
 	 * Camera sensor add-on board Raspberry Pi v2.1 Camera extension
 	 *
