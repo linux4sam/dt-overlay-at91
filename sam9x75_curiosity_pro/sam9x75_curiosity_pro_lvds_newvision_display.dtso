@@ -72,7 +72,7 @@
 	status = "okay";
 };
 
-&i2c6 {
+&i2c7 {
 	#address-cells = <1>;
 	#size-cells = <0>;
 	atmel_mxt_ts@4a {
