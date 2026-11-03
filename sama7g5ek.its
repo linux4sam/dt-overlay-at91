@@ -134,6 +134,30 @@
 				algo = "sha256";
 			};
 		};
+
+		fdt_mikro_lin {
+			description = "Device Tree blob for MikroE LIN Click overlay (commander)";
+			data = /incbin/("./sama7g5ek/sama7g5ek_mikro_lin.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61a00000>;
+			hash {
+				algo = "sha256";
+			};
+		};
+
+		fdt_mikro_lin_responder {
+			description = "Device Tree blob for MikroE LIN Click overlay (responder)";
+			data = /incbin/("./sama7g5ek/sama7g5ek_mikro_lin_responder.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61b00000>;
+			hash {
+				algo = "sha256";
+			};
+		};
 	};
 
 	configurations {
@@ -188,6 +212,16 @@
 		wilc_mmc_spi {
 			description = "FDT overlay blob for WILCS02 mmc-spi devices";
 			fdt = "fdt_wilcs02_mmc_spi";
+		};
+
+		lin {
+			description = "FDT overlay blob for MikroE LIN Click (commander)";
+			fdt = "fdt_mikro_lin";
+		};
+
+		lin_resp {
+			description = "FDT overlay blob for MikroE LIN Click (responder)";
+			fdt = "fdt_mikro_lin_responder";
 		};
 	};
 };

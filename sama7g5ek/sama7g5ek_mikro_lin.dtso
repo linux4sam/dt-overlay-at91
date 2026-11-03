@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7G5-EK board
+ * overlay blob for the MikroE LIN Click board.
+ *
+ * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries
+ * Author: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+
+/* mikroBUS 1 LIN interface (commander). flx4 is already a USART, so only the compatible changes */
+&uart4 {
+	compatible = "microchip,sama7g5-usart-lin", "microchip,sama5d2-usart-lin";
+	/* mikroBUS 1 CS (PB6) is spi11's chip select and idles high, which enables the transceiver */
+};
