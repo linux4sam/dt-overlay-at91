@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for SAMA7D65-CURIOSITY board
+ * overlay blob for the MikroE LIN Click board (responder).
+ *
+ * Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries
+ * Author: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+ *
+ */
+/dts-v1/;
+/plugin/;
+#include "sama7d65-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/atmel-flexcom.h>
+
+/* mikroBUS 1 LIN interface (responder) */
+&flx7 {
+	atmel,flexcom-mode = <ATMEL_FLEXCOM_MODE_USART>;
+	status = "okay";
+};
+
+&uart7 {
+	compatible = "microchip,sama7d65-usart-lin", "microchip,sama5d2-usart-lin";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_mikrobus1_lin>;
+	lin-responder;
+	status = "okay";
+};
+
+&pioa {
+	pinctrl_mikrobus1_lin: mikrobus1-lin {
+		pinmux = <PIN_PD8__FLEXCOM7_IO0>,
+			 <PIN_PD9__FLEXCOM7_IO1>;
+		bias-disable;
+	};
+
+	/*
+	 * mikroBUS 1 CS enables the LIN transceiver, hold it high. PA15 is
+	 * FLEXCOM4_IO3 (CS0), so this conflicts with the FLEXCOM4 SPI
+	 * overlays.
+	 */
+	lin-en-hog {
+		gpio-hog;
+		gpios = <PIN_PA15 GPIO_ACTIVE_HIGH>;
+		output-high;
+		line-name = "lin-en";
+	};
+};

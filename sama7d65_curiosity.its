@@ -290,6 +290,30 @@
 				algo = "sha256";
 			};
 		};
+
+		fdt_mikro_lin {
+			description = "Device Tree blob for MikroE LIN Click overlay (commander)";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_mikro_lin.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61a00000>;
+			hash {
+				algo = "sha256";
+			};
+		};
+
+		fdt_mikro_lin_responder {
+			description = "Device Tree blob for MikroE LIN Click overlay (responder)";
+			data = /incbin/("./sama7d65_curiosity/sama7d65_curiosity_mikro_lin_responder.dtbo");
+			type = "flat_dt";
+			arch = "arm";
+			compression = "none";
+			load = <0x61b00000>;
+			hash {
+				algo = "sha256";
+			};
+		};
 	};
 
 	configurations {
@@ -399,6 +423,16 @@
 		lan8650 {
 			description = "FDT overlay blob for LAN8650";
 			fdt = "fdt_mikro_lan8650";
+		};
+
+		lin {
+			description = "FDT overlay blob for MikroE LIN Click (commander)";
+			fdt = "fdt_mikro_lin";
+		};
+
+		lin_resp {
+			description = "FDT overlay blob for MikroE LIN Click (responder)";
+			fdt = "fdt_mikro_lin_responder";
 		};
 
 		asrc_i2s1_wm8731 {
