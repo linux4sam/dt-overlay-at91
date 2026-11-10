@@ -74,8 +74,8 @@
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c0_default>;
 	pinctrl-1 = <&pinctrl_i2c0_gpio>;
-	sda-gpios = <&pioa PIN_PC6 GPIO_ACTIVE_HIGH>;
-	scl-gpios = <&pioa PIN_PC7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+	sda-gpios = <&pioa PIN_PC7 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&pioa PIN_PC6 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 	i2c-analog-filter;
 	i2c-digital-filter;
 	i2c-digital-filter-width-ns = <35>;
